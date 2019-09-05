@@ -363,17 +363,18 @@
                     <webApp>
                         <contextPath>/</contextPath>
                     </webApp>
-                    <!--<httpConnector>
+                    <httpConnector>
                         <port>1111</port>
-                    </httpConnector>-->
-                    <jettyConfig>src/main/resources/config/jetty.xml,src/main/resources/config/jetty-ssl.xml,src/main/resources/config/jetty-https.xml</jettyConfig>
+                    </httpConnector>
+                    <!-- SSL配置-->
+                    <!--<jettyConfig>src/main/resources/config/jetty.xml,src/main/resources/config/jetty-ssl.xml,src/main/resources/config/jetty-https.xml</jettyConfig>
                     <stopKey>STOP</stopKey>
                     <stopPort>9999</stopPort>
                     <stopWait>5</stopWait>
                     <scanTargets>
                         <scanTarget>src/main</scanTarget>
                         <scanTarget>src/test</scanTarget>
-                    </scanTargets>
+                    </scanTargets>-->
 
 
                     <reload>automatic</reload>

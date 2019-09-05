@@ -8,9 +8,9 @@
     <context:property-placeholder location="classpath*:common.properties"/>
 
     <!-- Shiro开启SSL -->
-    <bean id="sslFilter" class="org.apache.shiro.web.filter.authz.SslFilter">
+    <!--<bean id="sslFilter" class="org.apache.shiro.web.filter.authz.SslFilter">
         <property name="port" value="1443"/>
-    </bean>
+    </bean>-->
     <!-- Shiro的Web过滤器 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
@@ -20,12 +20,12 @@
         <property name="filters">
             <util:map>
                 <entry key="authc" value-ref="upmsAuthenticationFilter"/>
-                <entry key="ssl" value-ref="sslFilter"/>
+                <!--<entry key="ssl" value-ref="sslFilter"/>-->
             </util:map>
         </property>
         <property name="filterChainDefinitions">
             <value>
-                /login = ssl
+                <!--/login = ssl-->
                 /system/** = upmsSessionForceLogout,authc
                 /system/index = user
                 /druid/** = user
