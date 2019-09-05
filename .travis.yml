@@ -2,7 +2,6 @@
 language: java
 sudo: false
 jdk:
-  - oraclejdk9
-script: "mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dmaven.wagon.http.ssl.insecure=true"
+  - openjdk8
 notifications:
   email: false
