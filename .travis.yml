@@ -3,6 +3,6 @@ language: java
 sudo: false
 jdk:
   - oraclejdk9
-  script: "mvn clean install -DskipTests=true -Dcheckstyle.skip=true -Dmaven.wagon.http.ssl.insecure=true"
+script: "mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dmaven.wagon.http.ssl.insecure=true"
 notifications:
   email: false
