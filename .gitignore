@@ -15,4 +15,4 @@ generatorConfig.xml
 rebel.xml
 *.bak
 **/mtx-admin/META-INF
-#/mtx-admin/src/main/resources/config/
+/mtx-admin/src/main/resources/config/
