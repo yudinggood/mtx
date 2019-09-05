@@ -1,0 +1,385 @@
+/*main 页面的上面菜单的展开*/
+.sysmenu{
+    position: absolute;
+    left: 80px;
+    top: 0;
+    height: 50px;
+    list-style-type: none;
+    background: #367fa9;
+    z-index: 99990;
+    box-shadow: 0 0 0 rgba(0,0,0,.3),3px 0 5px rgba(0,0,0,.3),0 0 0 rgba(0,0,0,.3),0 0 0 rgba(0,0,0,.3);
+    transition: all .4s ease-in-out;
+    list-style-position: initial;
+    -webkit-transition: all .4s ease-in-out;
+    -moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+    -webkit-transform: translateX(-50px);
+    -moz-transform: translateX(-50px);
+    -o-transform: translateX(-50px);
+    transform: translateX(-50px);
+    visibility: hidden;
+    opacity: 0;
+    display: none\0;
+}
+ul.open{
+    visibility: visible;
+    opacity: 1;
+    -webkit-transform: translateX(0px);
+    -moz-transform: translateX(0px);
+    -o-transform: translateX(0px);
+    transform: translateX(0px);
+    display: block;
+}
+.sysmenu li{
+     float: left;
+     color: #ffffff;
+     position: relative;
+     cursor: pointer;
+     content:'';
+     list-style-type:none;
+     text-align:center;
+
+ }
+.sysmenu li.active{
+
+    background-color: #3c8dbc;
+    border-bottom: solid 0px #f1a417;
+}
+.sysmenu li a{
+    color:#ffffff;
+    display: block;
+    height: 50px;
+    padding: 0px 20px 0;
+}
+.sysmenu li:before {
+
+}
+.sysmenu li:hover {
+    color: #f6f6f6;
+
+    background-color: #3c8dbc;
+}
+.sysmenu .li:focus,
+.sysmenu .li:active {
+    background: transparent;
+}
+/*myloading*/
+.mloading-bar {
+    width: 250px;
+    min-height: 22px;
+    text-align: center;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.27);
+    border-radius: 7px;
+    padding: 20px 15px;
+    font-size: 14px;
+    color: #999;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -140px;
+    margin-top: -30px;
+    word-break: break-all;
+}
+@media (max-width: 300px) {
+    .mloading-bar {
+        width: 62px;
+        height: 56px;
+        margin-left: -30px !important;
+        margin-top: -30px !important;
+        padding: 0;
+        line-height: 56px;
+    }
+    .mloading-bar > .mloading-text {
+        display: none;
+    }
+}
+.mloading-bar-sm {
+    width: 62px;
+    height: 56px;
+    margin-left: -30px !important;
+    margin-top: -30px !important;
+    padding: 0;
+    line-height: 56px;
+}
+.mloading-bar-sm > .mloading-text {
+    display: none;
+}
+.mloading-icon {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+}
+.mloading-text {
+    margin-left: 10px;
+}
+/*系统top菜单*/
+.main-header .top-menu {
+    float: left;
+    background-color: transparent;
+    background-image: none;
+    padding: 15px 15px;
+    color: #ffffff;
+    font-family: fontAwesome;
+}
+.main-header .top-menu:before {
+    content: "\f009";
+}
+.main-header .top-menu:hover {
+    color: #f6f6f6;
+    background: rgba(0, 0, 0, 0.1);
+    /*background-color: #367fa9;*/
+    height: 50px;
+}
+.main-header .top-menu:focus,
+.main-header .top-menu:active {
+    background: transparent;
+}
+/*系统top菜单2*/
+.main-header .fs-toggle {
+    float: left;
+    background-color: transparent;
+    background-image: none;
+    padding: 15px 15px;
+    color: #ffffff;
+    font-family: fontAwesome;
+}
+.main-header .fs-toggle:before {
+    content: "\f26c";
+}
+.main-header .fs-toggle:hover {
+    color: #f6f6f6;
+    background: rgba(0, 0, 0, 0.1);
+    /*background-color: #367fa9;*/
+    height: 50px;
+}
+.main-header .fs-toggle:focus,
+.main-header .fs-toggle:active {
+    background: transparent;
+}
+/*loading 时灰色的半透明阴影*/
+.commitopacity{
+	position:absolute; width:100%; height:1000px; background:#7f7f7f; filter:alpha(opacity=50); -moz-opacity:0.8; -khtml-opacity: 0.5; opacity: 0.5; top:0px; z-index:99999;
+}
+/*body*/
+.body-main {
+    background-color: #ecf0f5;
+}
+/*table*/
+.form_table {
+    width: 98%;
+    background-color: #dbdbdb; /*模拟间隔线#B5BCCE*/
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-spacing: 1px;
+    border-collapse: inherit;
+}
+.form_table thead th {
+    text-align: left;
+    color: #000;
+    padding: 0 2px;
+    background-color: #f3f3f3;
+    height: 26px;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.form_table tfoot tr td {
+    text-align: center;
+    vertical-align: middle;
+    height: 26px;
+    background-color: #f3f3f3;
+    padding: 0 5px;
+}
+
+.form_table tfoot p {
+    text-align: center;
+    width: 100%;
+    height: 26px;
+}
+
+.form_table tbody th {
+    table-layout: fixed;
+    text-align: right;
+    color: #000;
+    padding: 2px 10px;
+    /*background-color: #eef6f9;*/
+    background-color: #f3f3f3;
+    height: 26px;
+    font-weight: normal;
+    text-indent: 5px;
+}
+
+.form_table td {
+    text-align: left;
+    padding: 2px 10px;
+    color: #666666;
+    vertical-align: middle;
+    background-color: #ffffff;
+    height: 22px;
+    /*text-indent: 5px;*/
+}
+/*弹出框样式*/
+.bootstrap-heading{
+    padding:8px 0 8px 15px;
+    border-bottom:1px solid transparent;
+    border-top-left-radius:3px;border-top-right-radius:3px
+}
+.panel-heading{
+    padding:10px 15px;padding:0 0 0 15px;
+    border-bottom:1px solid transparent;
+    border-top-left-radius:3px;border-top-right-radius:3px
+}
+.panel-attach {
+}
+
+.panel-attach .panel-body {
+    padding: 1px;
+}
+
+.panel-heading > .ion {
+    font-size: 16px;
+    line-height: 26px;
+
+}
+
+.panel-heading > label {
+    font-size: 14px;
+    line-height: 26px;
+    margin: 0;
+}
+
+form .panel-heading {
+    padding: 5px 15px;
+}
+
+.panel-popwin {
+    border: 1px solid rgba(0, 0, 0, .15);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .275);
+}
+/*main页面下面部分样式*/
+.titlerow{
+    display:table;
+    width: 150px;
+    position: absolute;
+    top: 50%;
+    margin-top: -13px;
+    left: 450px;
+    margin-bottom: 0;
+    opacity: .50;
+    filter: alpha(opacity=50);
+    background-color: rgba(255, 255, 255, 0.20);
+}
+.titlecell{
+    width:100%;
+    position: relative;
+    vertical-align: middle;
+    padding: 0;
+    line-height: 24px;
+}
+
+.searchbox{
+    border-radius: 0;
+    color: #ddd;
+    border-width: 1px;
+    border-style: solid;
+    line-height: 16px;
+    outline: none;
+    background-color: transparent;
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    margin: 0em 0em 0em 0em;
+    font: 12.6667px Arial;padding: 4px 6px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.searchbox-focus{color: #fff;}
+.ui-iconss-focus{color: #fff;}
+.searchbox-focusbg{
+    background-color:rgba(255, 255, 255, 0.10);
+}
+.ui-iconss-focus i{
+    color: #fff;
+    font-size:17px;
+}
+.ui-iconss{
+    box-sizing: border-box;
+    min-width: 20px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 16px;
+    vertical-align: top;
+    min-height: 16px;
+    color: #ddd;
+    display: inline-block;
+    font: normal normal normal 16px/1 FontAwesome;
+    font-weight:900;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-indent: 0;
+}
+.iconssdiv{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -6.5px;
+    margin-right: 3px;
+    border-bottom-right-radius: 4px;font-size: 13px;
+}
+.header-bar li{margin-left:5px;}
+a.active .tab-bottom-separator,a.active .sepmm{
+    position:relative;
+    top:-6px;
+    width:100%;
+    display: block;
+    height: 2px;
+    background-color: #007465;
+    padding:0 15px;
+    left:-15px;
+}
+
+.colorgray{color:#888;font-size:16px !important;}
+.content-tab.active .colorgray{color:#007465}
+.f-tabstrip-header-inkbar{
+    position: absolute;
+    left:27px;
+    width:78px;
+    z-index: 1;
+    bottom: -1px;
+    display: block;
+    height: 3px;
+    background-color: #007465; /* #007465; */
+    -webkit-transition: width .3s,left .3s;
+    transition: width .3s,left .3s;
+}
+.mytabbtn:hover{
+    color:#007465;
+    background-color: #ddd;
+}
+a:hover { color:blue; }
+/*提交的table*/
+.table tbody > tr > td, .table tbody > tr > th {
+    vertical-align: middle;
+}
+
+.table-form tbody th {
+    text-align: right;
+}
+
+.table-form > tbody > tr > th {
+    text-align: right;
+}
+
+.table-form tfoot td {
+    text-align: center;
+}
+/**/

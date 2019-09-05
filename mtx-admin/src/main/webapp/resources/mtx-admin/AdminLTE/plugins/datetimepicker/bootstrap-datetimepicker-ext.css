@@ -1,0 +1,5 @@
+.datetimepicker .datetimepicker-hours fieldset legend, .datetimepicker .datetimepicker-minutes fieldset legend {
+    margin-bottom: inherit;
+    line-height: 20px;
+    font-size: 18px;
+}

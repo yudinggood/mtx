@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mtx.system.rpc.mapper.SystemLogExtMapper" >
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+    <resultMap id="BaseResultMap" type="com.mtx.system.dao.model.SystemLog">
+        <id column="log_id" jdbcType="INTEGER" property="logId" />
+        <result column="used_time" jdbcType="INTEGER" property="usedTime" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="domain" jdbcType="VARCHAR" property="domain" />
+        <result column="uri" jdbcType="VARCHAR" property="uri" />
+        <result column="method" jdbcType="VARCHAR" property="method" />
+        <result column="user_agent" jdbcType="VARCHAR" property="userAgent" />
+        <result column="ip" jdbcType="VARCHAR" property="ip" />
+        <result column="permission" jdbcType="VARCHAR" property="permission" />
+        <result column="edit_user" jdbcType="INTEGER" property="editUser" />
+        <result column="edit_date" jdbcType="TIMESTAMP" property="editDate" />
+        <result column="deleted" jdbcType="TINYINT" property="deleted" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM system_log where 1=1
+        <if test="search!= null and search != ''">
+            and
+            (
+            uri LIKE CONCAT(CONCAT('%', #{search}),'%')  or
+            description LIKE CONCAT(CONCAT('%', #{search}),'%')
+            )
+        </if>
+
+        <choose>
+            <when test="orderByField != null and orderByField !=''">
+                <choose>
+                    <when test="isAsc == true">
+                        order by ${orderByField} ASC
+                    </when>
+                    <otherwise>
+                        order by ${orderByField} DESC
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                order by log_id desc
+            </otherwise>
+        </choose>
+
+    </select>
+
+
+
+
+</mapper>

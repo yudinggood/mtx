@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mtx.system.rpc.mapper.SystemPermissionExtMapper" >
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache" /><!-- mybatis的ehcache缓存 -->
+    <resultMap id="BaseResultMap" type="com.mtx.system.dao.model.SystemPermission">
+        <id column="permission_id" jdbcType="INTEGER" property="permissionId" />
+        <result column="system_id" jdbcType="INTEGER" property="systemId" />
+        <result column="permission_pid" jdbcType="INTEGER" property="permissionPid" />
+        <result column="permission_order" jdbcType="INTEGER" property="permissionOrder" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="permission_value" jdbcType="VARCHAR" property="permissionValue" />
+        <result column="uri" jdbcType="VARCHAR" property="uri" />
+        <result column="icon" jdbcType="VARCHAR" property="icon" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="type" jdbcType="TINYINT" property="type" />
+        <result column="status" jdbcType="TINYINT" property="status" />
+        <result column="menu_level" jdbcType="TINYINT" property="menuLevel" />
+        <result column="edit_date" jdbcType="TIMESTAMP" property="editDate" />
+        <result column="edit_user" jdbcType="INTEGER" property="editUser" />
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="UpmsPermissionVO" type="com.mtx.system.dao.vo.SystemPermissionVo">
+    </resultMap>
+
+    <!-- 获取权限完整信息 -->
+    <select id="selectByIdWithLeft" resultMap="UpmsPermissionVO" parameterType="java.lang.Integer">
+        SELECT p.name AS parentName,y.name AS systemName,s.* FROM system_permission s
+        LEFT JOIN system_permission p ON p.permission_id = s.permission_pid
+        LEFT JOIN system_system y ON y.system_id = s.system_id
+        WHERE s.permission_id = #{permissionId,jdbcType=INTEGER}
+    </select>
+
+    <!-- 获取左侧菜单的权限 -->
+    <select id="selectByroleList" resultMap="BaseResultMap" parameterType="java.util.List">
+        SELECT * FROM system_permission WHERE TYPE = 2
+        AND permission_id IN
+        (SELECT permission_id FROM system_role$permission WHERE role_id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item,jdbcType=INTEGER}
+        </foreach>
+        )
+        ORDER BY permission_order ASC
+    </select>
+
+</mapper>

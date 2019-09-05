@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mtx.system.rpc.mapper.SystemRoleExtMapper" >
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+    <resultMap id="BaseResultMap" type="com.mtx.system.dao.model.SystemRole">
+        <id column="role_id" jdbcType="INTEGER" property="roleId" />
+        <result column="orders" jdbcType="INTEGER" property="orders" />
+        <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+        <result column="role_code" jdbcType="VARCHAR" property="roleCode" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="edit_date" jdbcType="TIMESTAMP" property="editDate" />
+        <result column="edit_user" jdbcType="INTEGER" property="editUser" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM system_role where 1=1
+        <if test="search!= null and search != ''">
+            and
+            (
+            role_name LIKE CONCAT(CONCAT('%', #{search}),'%')  or
+            role_code LIKE CONCAT(CONCAT('%', #{search}),'%')
+            )
+        </if>
+
+        <choose>
+            <when test="orderByField != null and orderByField !=''">
+                <choose>
+                    <when test="isAsc == true">
+                        order by ${orderByField} ASC
+                    </when>
+                    <otherwise>
+                        order by ${orderByField} DESC
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                order by role_id ASC
+            </otherwise>
+        </choose>
+
+    </select>
+
+
+
+
+</mapper>

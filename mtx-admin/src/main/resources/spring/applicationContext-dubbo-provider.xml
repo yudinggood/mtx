@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <!--<dubbo:application name="mtx-system-rpc-service"/>
+
+    <dubbo:registry address="zookeeper://zkserver:2181"/>
+
+    <dubbo:protocol name="dubbo" port="20881"/>
+
+    &lt;!&ndash;<dubbo:monitor protocol="registry"/>&ndash;&gt;
+
+    &lt;!&ndash; 系统 &ndash;&gt;
+    <bean id="systemSystemService" class="com.mtx.system.rpc.service.impl.SystemSystemServiceImpl"/>
+    <dubbo:service interface="com.mtx.system.rpc.api.SystemSystemService" ref="systemSystemService" timeout="10000"/>
+
+    &lt;!&ndash; 组织 &ndash;&gt;
+    <bean id="systemOrganizationService" class="com.mtx.system.rpc.service.impl.SystemOrganizationServiceImpl"/>
+    <dubbo:service interface="com.mtx.system.rpc.api.SystemOrganizationService" ref="systemOrganizationService" timeout="10000"/>
+
+    &lt;!&ndash; 用户组织 &ndash;&gt;
+    <bean id="systemUserOrganizationService" class="com.mtx.system.rpc.service.impl.SystemUserOrganizationServiceImpl"/>
+    <dubbo:service interface="com.mtx.system.rpc.api.SystemUserOrganizationService" ref="systemUserOrganizationService" timeout="10000"/>
+
+    &lt;!&ndash; 用户 &ndash;&gt;
+    <bean id="systemUserService" class="com.mtx.system.rpc.service.impl.SystemUserServiceImpl"/>
+    <dubbo:service interface="com.mtx.system.rpc.api.SystemUserService" ref="systemUserService" timeout="10000"/>
+
+    &lt;!&ndash; 角色 &ndash;&gt;
+    <bean id="systemRoleService" class="com.mtx.system.rpc.service.impl.SystemRoleServiceImpl"/>
+    <dubbo:service interface="com.mtx.system.rpc.api.SystemRoleService" ref="systemRoleService" timeout="10000"/>
+
+    &lt;!&ndash; 权限 &ndash;&gt;
+    <bean id="systemPermissionService" class="com.mtx.system.rpc.service.impl.SystemPermissionServiceImpl"/>
+    <dubbo:service interface="com.mtx.system.rpc.api.SystemPermissionService" ref="systemPermissionService" timeout="10000"/>
+
+    &lt;!&ndash; 角色权限 &ndash;&gt;
+    <bean id="systemRolePermissionService" class="com.mtx.system.rpc.service.impl.SystemRolePermissionServiceImpl"/>
+    <dubbo:service interface="com.mtx.system.rpc.api.SystemRolePermissionService" ref="systemRolePermissionService" timeout="10000"/>
+
+    &lt;!&ndash; 用户权限 &ndash;&gt;
+    <bean id="systemUserPermissionService" class="com.mtx.system.rpc.service.impl.SystemUserPermissionServiceImpl"/>
+    <dubbo:service interface="com.mtx.system.rpc.api.SystemUserPermissionService" ref="systemUserPermissionService" timeout="10000"/>
+
+    &lt;!&ndash; 用户角色 &ndash;&gt;
+    <bean id="systemUserRoleService" class="com.mtx.system.rpc.service.impl.SystemUserRoleServiceImpl"/>
+    <dubbo:service interface="com.mtx.system.rpc.api.SystemUserRoleService" ref="systemUserRoleService" timeout="10000"/>
+
+    &lt;!&ndash; 操作日志 &ndash;&gt;
+    <bean id="systemLogService" class="com.mtx.system.rpc.service.impl.SystemLogServiceImpl"/>
+    <dubbo:service interface="com.mtx.system.rpc.api.SystemLogService" ref="systemLogService" timeout="10000"/>
+
+    &lt;!&ndash; 字典服务 &ndash;&gt;
+    <bean id="systemDicService" class="com.mtx.system.rpc.service.impl.SystemDicServiceImpl"/>
+    <dubbo:service interface="com.mtx.system.rpc.api.SystemDicService" ref="systemDicService" timeout="10000"/>-->
+</beans>

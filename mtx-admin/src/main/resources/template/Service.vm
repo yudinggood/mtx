@@ -1,0 +1,13 @@
+package ${package_name}.rpc.api;
+
+import com.mtx.common.base.BaseService;
+import ${package_name}.dao.model.${my_model};
+import ${package_name}.dao.model.${my_model}Example;
+
+/**
+* ${my_model}Service接口
+* Created by yu on ${ctime}.
+*/
+public interface ${my_model}Service extends BaseService<${my_model}, ${my_model}Example> {
+
+}

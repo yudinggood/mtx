@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtx.system.dao.mapper.SystemLogMapper">
+  <resultMap id="BaseResultMap" type="com.mtx.system.dao.model.SystemLog">
+    <id column="log_id" jdbcType="INTEGER" property="logId" />
+    <result column="used_time" jdbcType="INTEGER" property="usedTime" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="domain" jdbcType="VARCHAR" property="domain" />
+    <result column="uri" jdbcType="VARCHAR" property="uri" />
+    <result column="method" jdbcType="VARCHAR" property="method" />
+    <result column="user_agent" jdbcType="VARCHAR" property="userAgent" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="permission" jdbcType="VARCHAR" property="permission" />
+    <result column="edit_user" jdbcType="INTEGER" property="editUser" />
+    <result column="edit_date" jdbcType="TIMESTAMP" property="editDate" />
+    <result column="deleted" jdbcType="TINYINT" property="deleted" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.mtx.system.dao.model.SystemLog">
+    <result column="parameter" jdbcType="LONGVARCHAR" property="parameter" />
+    <result column="result" jdbcType="LONGVARCHAR" property="result" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    log_id, used_time, description, domain, uri, method, user_agent, ip, permission, 
+    edit_user, edit_date, deleted
+  </sql>
+  <sql id="Blob_Column_List">
+    parameter, result
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.mtx.system.dao.model.SystemLogExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from system_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.mtx.system.dao.model.SystemLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from system_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from system_log
+    where log_id = #{logId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from system_log
+    where log_id = #{logId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mtx.system.dao.model.SystemLogExample">
+    delete from system_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mtx.system.dao.model.SystemLog">
+    insert into system_log (log_id, used_time, description, 
+      domain, uri, method, 
+      user_agent, ip, permission, 
+      edit_user, edit_date, deleted, 
+      parameter, result)
+    values (#{logId,jdbcType=INTEGER}, #{usedTime,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
+      #{domain,jdbcType=VARCHAR}, #{uri,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, 
+      #{userAgent,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{permission,jdbcType=VARCHAR}, 
+      #{editUser,jdbcType=INTEGER}, #{editDate,jdbcType=TIMESTAMP}, #{deleted,jdbcType=TINYINT}, 
+      #{parameter,jdbcType=LONGVARCHAR}, #{result,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mtx.system.dao.model.SystemLog">
+    insert into system_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="logId != null">
+        log_id,
+      </if>
+      <if test="usedTime != null">
+        used_time,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="domain != null">
+        domain,
+      </if>
+      <if test="uri != null">
+        uri,
+      </if>
+      <if test="method != null">
+        method,
+      </if>
+      <if test="userAgent != null">
+        user_agent,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="permission != null">
+        permission,
+      </if>
+      <if test="editUser != null">
+        edit_user,
+      </if>
+      <if test="editDate != null">
+        edit_date,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+      <if test="parameter != null">
+        parameter,
+      </if>
+      <if test="result != null">
+        result,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="logId != null">
+        #{logId,jdbcType=INTEGER},
+      </if>
+      <if test="usedTime != null">
+        #{usedTime,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="domain != null">
+        #{domain,jdbcType=VARCHAR},
+      </if>
+      <if test="uri != null">
+        #{uri,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="userAgent != null">
+        #{userAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null">
+        #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="editUser != null">
+        #{editUser,jdbcType=INTEGER},
+      </if>
+      <if test="editDate != null">
+        #{editDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=TINYINT},
+      </if>
+      <if test="parameter != null">
+        #{parameter,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="result != null">
+        #{result,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mtx.system.dao.model.SystemLogExample" resultType="java.lang.Long">
+    select count(*) from system_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update system_log
+    <set>
+      <if test="record.logId != null">
+        log_id = #{record.logId,jdbcType=INTEGER},
+      </if>
+      <if test="record.usedTime != null">
+        used_time = #{record.usedTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.domain != null">
+        domain = #{record.domain,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uri != null">
+        uri = #{record.uri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.method != null">
+        method = #{record.method,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userAgent != null">
+        user_agent = #{record.userAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ip != null">
+        ip = #{record.ip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permission != null">
+        permission = #{record.permission,jdbcType=VARCHAR},
+      </if>
+      <if test="record.editUser != null">
+        edit_user = #{record.editUser,jdbcType=INTEGER},
+      </if>
+      <if test="record.editDate != null">
+        edit_date = #{record.editDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deleted != null">
+        deleted = #{record.deleted,jdbcType=TINYINT},
+      </if>
+      <if test="record.parameter != null">
+        parameter = #{record.parameter,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.result != null">
+        result = #{record.result,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update system_log
+    set log_id = #{record.logId,jdbcType=INTEGER},
+      used_time = #{record.usedTime,jdbcType=INTEGER},
+      description = #{record.description,jdbcType=VARCHAR},
+      domain = #{record.domain,jdbcType=VARCHAR},
+      uri = #{record.uri,jdbcType=VARCHAR},
+      method = #{record.method,jdbcType=VARCHAR},
+      user_agent = #{record.userAgent,jdbcType=VARCHAR},
+      ip = #{record.ip,jdbcType=VARCHAR},
+      permission = #{record.permission,jdbcType=VARCHAR},
+      edit_user = #{record.editUser,jdbcType=INTEGER},
+      edit_date = #{record.editDate,jdbcType=TIMESTAMP},
+      deleted = #{record.deleted,jdbcType=TINYINT},
+      parameter = #{record.parameter,jdbcType=LONGVARCHAR},
+      result = #{record.result,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update system_log
+    set log_id = #{record.logId,jdbcType=INTEGER},
+      used_time = #{record.usedTime,jdbcType=INTEGER},
+      description = #{record.description,jdbcType=VARCHAR},
+      domain = #{record.domain,jdbcType=VARCHAR},
+      uri = #{record.uri,jdbcType=VARCHAR},
+      method = #{record.method,jdbcType=VARCHAR},
+      user_agent = #{record.userAgent,jdbcType=VARCHAR},
+      ip = #{record.ip,jdbcType=VARCHAR},
+      permission = #{record.permission,jdbcType=VARCHAR},
+      edit_user = #{record.editUser,jdbcType=INTEGER},
+      edit_date = #{record.editDate,jdbcType=TIMESTAMP},
+      deleted = #{record.deleted,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mtx.system.dao.model.SystemLog">
+    update system_log
+    <set>
+      <if test="usedTime != null">
+        used_time = #{usedTime,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="domain != null">
+        domain = #{domain,jdbcType=VARCHAR},
+      </if>
+      <if test="uri != null">
+        uri = #{uri,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        method = #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="userAgent != null">
+        user_agent = #{userAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null">
+        permission = #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="editUser != null">
+        edit_user = #{editUser,jdbcType=INTEGER},
+      </if>
+      <if test="editDate != null">
+        edit_date = #{editDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=TINYINT},
+      </if>
+      <if test="parameter != null">
+        parameter = #{parameter,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="result != null">
+        result = #{result,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where log_id = #{logId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mtx.system.dao.model.SystemLog">
+    update system_log
+    set used_time = #{usedTime,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      domain = #{domain,jdbcType=VARCHAR},
+      uri = #{uri,jdbcType=VARCHAR},
+      method = #{method,jdbcType=VARCHAR},
+      user_agent = #{userAgent,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      permission = #{permission,jdbcType=VARCHAR},
+      edit_user = #{editUser,jdbcType=INTEGER},
+      edit_date = #{editDate,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=TINYINT},
+      parameter = #{parameter,jdbcType=LONGVARCHAR},
+      result = #{result,jdbcType=LONGVARCHAR}
+    where log_id = #{logId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mtx.system.dao.model.SystemLog">
+    update system_log
+    set used_time = #{usedTime,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      domain = #{domain,jdbcType=VARCHAR},
+      uri = #{uri,jdbcType=VARCHAR},
+      method = #{method,jdbcType=VARCHAR},
+      user_agent = #{userAgent,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      permission = #{permission,jdbcType=VARCHAR},
+      edit_user = #{editUser,jdbcType=INTEGER},
+      edit_date = #{editDate,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=TINYINT}
+    where log_id = #{logId,jdbcType=INTEGER}
+  </update>
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+</mapper>

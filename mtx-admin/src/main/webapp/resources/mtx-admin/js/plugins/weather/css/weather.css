@@ -1,0 +1,12 @@
+.weather1 { width:100px; min-width:100px; max-width:100px; }
+#weather1 { width:780px; margin:150px auto; background:#72af3c; color:#FFF; padding:50px 0 100px 0; overflow:hidden; border-radius:5000px; }
+#weather1 i { background: no-repeat top left; display:inline-block; height:128px; line-height:128px; margin:0 auto 20px auto; font-size:70px; padding-left:150px; font-style:normal; text-align:center; font-weight:bold; }
+#weather1 i.icon-xiaoyu { background-image:url(../icon/xiaoyu.png); }
+#weather1 i.icon-zhongyu { background-image:url(../icon/zhongyu.png); }
+#weather1 i.icon-dayu { background-image:url(../icon/dayu.png); }
+#weather1 i.icon-qing { background-image:url(../icon/qing.png); }
+#weather1 i.icon-duoyun { background-image:url(../icon/duoyun.png); }
+#weather1 i.icon-yin { background-image:url(../icon/yin.png); }
+#weather1 p { background:rgba(0,0,0,.3); margin:0 200px; padding:20px; border-radius:1000px; font-size:16px; }
+#weather1 p span { margin:0 15px; }
+#weather2 { width:980px; margin:0 auto; margin-top:20px; background:#fafafa; border:1px solid #ddd; padding:30px 0; overflow:hidden;}

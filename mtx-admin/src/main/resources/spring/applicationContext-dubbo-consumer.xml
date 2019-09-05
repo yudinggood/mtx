@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd ">
+    <!--<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:common.properties" />
+    </bean>-->
+
+    <!--<dubbo:application name="mtx-system-server"/>
+
+    <dubbo:registry file="${dubbo.path}/mtx-system-server-dubbo.cache" address="zookeeper://zkserver:2181"/>
+
+    &lt;!&ndash; 订阅服务 &ndash;&gt;
+    <dubbo:consumer check="false"/>
+
+    &lt;!&ndash; 系统 &ndash;&gt;
+    <dubbo:reference id="systemSystemService" interface="com.mtx.system.rpc.api.SystemSystemService" mock="true"/>
+    &lt;!&ndash; 组织 &ndash;&gt;
+    <dubbo:reference id="systemOrganizationService" interface="com.mtx.system.rpc.api.SystemOrganizationService" mock="true"/>
+    &lt;!&ndash; 用户组织 &ndash;&gt;
+    <dubbo:reference id="systemUserOrganizationService" interface="com.mtx.system.rpc.api.SystemUserOrganizationService" mock="true"/>
+    &lt;!&ndash; 用户 &ndash;&gt;
+    <dubbo:reference id="systemUserService" interface="com.mtx.system.rpc.api.SystemUserService" mock="true"/>
+    &lt;!&ndash; 角色 &ndash;&gt;
+    <dubbo:reference id="systemRoleService" interface="com.mtx.system.rpc.api.SystemRoleService" mock="true"/>
+    &lt;!&ndash; 权限 &ndash;&gt;
+    <dubbo:reference id="systemPermissionService" interface="com.mtx.system.rpc.api.SystemPermissionService" mock="true"/>
+    &lt;!&ndash; 角色权限 &ndash;&gt;
+    <dubbo:reference id="systemRolePermissionService" interface="com.mtx.system.rpc.api.SystemRolePermissionService" mock="true"/>
+    &lt;!&ndash; 用户权限 &ndash;&gt;
+    <dubbo:reference id="systemUserPermissionService" interface="com.mtx.system.rpc.api.SystemUserPermissionService" mock="true"/>
+    &lt;!&ndash; 用户角色 &ndash;&gt;
+    <dubbo:reference id="systemUserRoleService" interface="com.mtx.system.rpc.api.SystemUserRoleService" mock="true"/>
+    &lt;!&ndash; 操作日志 &ndash;&gt;
+    <dubbo:reference id="systemLogService" interface="com.mtx.system.rpc.api.SystemLogService" mock="true"/>
+    &lt;!&ndash; 字典服务 &ndash;&gt;
+    <dubbo:reference id="systemDicService" interface="com.mtx.system.rpc.api.SystemDicService" mock="true"/>-->
+</beans>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="YU 构建系统" default="close_all_java">
+    <dirname property="base.dir" file="${ant.file}"/>
+    <property file="mtx-admin/src/main/resources/base.properties"/>
+
+    <!--<property name="tomcat.dir" location="E:/apache-tomcat-7.0.73 common/webapps/Back"/>-->
+    <!--<target name="clean" description="清理...">
+        <delete dir="${base.dir}/yu-back/target/yu-back"/>
+        <delete dir="${base.dir}/yu-back/target/classes"/>
+        &lt;!&ndash;<delete file="${tomcat.dir}/index.jsp"/>
+        <delete dir="${tomcat.dir}/META-INF"/>&ndash;&gt;
+        <delete dir="${tomcat.back.dir}"/>
+    </target>-->
+
+    <!--  需要配置一下tomcat环境变量才可用 -->
+    <!--<target name="start_tomcat" description="启动Tomcat服务...">
+        <exec taskname="start_tomcat" dir="${tomcat.dir}/bin"
+              executable="${tomcat.dir}/bin/startup.bat"/>
+    </target>-->
+
+    <target name="close_all_java" description="关闭所有java服务...">
+        <exec taskname="close_all_java" dir="${base.dir}/mtx-tool"
+              executable="${base.dir}/mtx-tool/CloseJava.bat"/>
+    </target>
+
+    <target name="start_zookeeper" description="开启dubbo服务">
+        <exec taskname="start_zookeeper" dir="${base.dir}/mtx-tool"
+              executable="${base.dir}/mtx-tool/StartDubbo.bat"/>
+    </target>
+
+    <target name="stop_update" description="停止Windows更新">
+        <exec taskname="stop_update" dir="${base.dir}/mtx-tool"
+              executable="${base.dir}/mtx-tool/StopUpdate.bat"/>
+    </target>
+
+    <target name="start_redis" description="开启redis服务">
+        <exec taskname="start_redis" dir="${base.dir}/mtx-tool"
+              executable="${base.dir}/mtx-tool/StartRedis.bat"/>
+    </target>
+
+    <target name="stop_redis" description="关闭redis服务">
+        <exec taskname="stop_redis" dir="${base.dir}/mtx-tool"
+              executable="${base.dir}/mtx-tool/StopRedis.bat"/>
+    </target>
+
+</project>

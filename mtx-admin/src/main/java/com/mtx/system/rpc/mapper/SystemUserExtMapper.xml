@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mtx.system.rpc.mapper.SystemUserExtMapper" >
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+    <resultMap id="BaseResultMap" type="com.mtx.system.dao.model.SystemUser">
+        <id column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="login_id" jdbcType="VARCHAR" property="loginId" />
+        <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="salt" jdbcType="VARCHAR" property="salt" />
+        <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="last_ip" jdbcType="VARCHAR" property="lastIp" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="sex" jdbcType="TINYINT" property="sex" />
+        <result column="user_state" jdbcType="TINYINT" property="userState" />
+        <result column="last_login" jdbcType="TIMESTAMP" property="lastLogin" />
+        <result column="edit_date" jdbcType="TIMESTAMP" property="editDate" />
+        <result column="edit_user" jdbcType="INTEGER" property="editUser" />
+        <result column="deleted" jdbcType="TINYINT" property="deleted" />
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="SystemUserVo" type="com.mtx.system.dao.vo.SystemUserVo">
+    </resultMap>
+
+    <!-- 角色 -->
+    <resultMap id="SystemRoleResultMap" type="com.mtx.system.dao.model.SystemRole">
+        <id column="role_id" jdbcType="INTEGER" property="roleId" />
+        <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+        <result column="role_code" jdbcType="VARCHAR" property="roleCode" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="edit_date" jdbcType="TIMESTAMP" property="editDate" />
+        <result column="edit_user" jdbcType="INTEGER" property="editUser" />
+    </resultMap>
+    <!-- 权限 -->
+    <resultMap id="SystemPermissionResultMap" type="com.mtx.system.dao.model.SystemPermission">
+        <id column="permission_id" jdbcType="INTEGER" property="permissionId" />
+        <result column="system_id" jdbcType="INTEGER" property="systemId" />
+        <result column="permission_pid" jdbcType="INTEGER" property="permissionPid" />
+        <result column="permission_order" jdbcType="INTEGER" property="permissionOrder" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="permission_value" jdbcType="VARCHAR" property="permissionValue" />
+        <result column="uri" jdbcType="VARCHAR" property="uri" />
+        <result column="icon" jdbcType="VARCHAR" property="icon" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="type" jdbcType="TINYINT" property="type" />
+        <result column="status" jdbcType="TINYINT" property="status" />
+        <result column="menu_level" jdbcType="TINYINT" property="menuLevel" />
+        <result column="edit_date" jdbcType="TIMESTAMP" property="editDate" />
+        <result column="edit_user" jdbcType="INTEGER" property="editUser" />
+    </resultMap>
+
+    <select id="list" resultMap="SystemUserVo">
+        SELECT distinct u.* FROM SYSTEM_USER u
+        LEFT JOIN SYSTEM_USER$organization uo ON uo.user_id = u.user_id
+        WHERE u.deleted=FALSE
+        and uo.organization_id in
+        <foreach item="item" index="index" collection="organizationList" open="(" separator="," close=")">
+            #{item,jdbcType=INTEGER}
+        </foreach>
+        <if test="search!= null and search != ''"><!-- 关键词检索 -->
+            and
+            (
+            u.login_id LIKE CONCAT(CONCAT('%', #{search}),'%')  or
+            u.nick_name LIKE CONCAT(CONCAT('%', #{search}),'%')
+            )
+        </if>
+
+        <choose>
+            <when test="orderByField != null and orderByField !=''">
+                <choose>
+                    <when test="isAsc == true">
+                        order by ${orderByField} ASC
+                    </when>
+                    <otherwise>
+                        order by ${orderByField} DESC
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                order by u.user_id DESC
+            </otherwise>
+        </choose>
+
+    </select>
+
+    <update id="deleteByPrimaryKeysFaker" parameterType="java.util.List">
+        UPDATE SYSTEM_USER SET deleted=1 WHERE
+        user_id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item,jdbcType=INTEGER}
+        </foreach>
+    </update>
+
+    <select id="selectSystemRoleBySystemUserId" parameterType="java.lang.Integer" resultMap="SystemRoleResultMap">
+        select
+        *
+        from system_role ur where ur.role_id in (
+        select uur.role_id from system_user$role uur where uur.user_id=#{systemUserId,jdbcType=INTEGER}
+        )
+    </select>
+
+    <select id="selectSystemPermissionBySystemUserId" parameterType="java.lang.Integer" resultMap="SystemPermissionResultMap">
+        select
+        *
+        from system_permission up where up.status=1 and up.type = 3 and up.permission_id in (
+        select permission_id from system_role$permission urp where urp.role_id in (
+        select uur.role_id role_id from system_user$role uur where uur.user_id=#{systemUserId,jdbcType=INTEGER}
+        )
+        union
+        select permission_id from system_user$permission uup1 where uup1.user_id=#{systemUserId,jdbcType=INTEGER} and uup1.type=2
+        )
+        and up.permission_id not in (
+        select permission_id from system_user$permission uup2 where uup2.user_id=#{systemUserId,jdbcType=INTEGER} and uup2.type=1
+        ) order by up.permission_id asc
+    </select>
+
+</mapper>

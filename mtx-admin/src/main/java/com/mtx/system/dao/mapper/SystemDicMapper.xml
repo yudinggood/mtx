@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtx.system.dao.mapper.SystemDicMapper">
+  <resultMap id="BaseResultMap" type="com.mtx.system.dao.model.SystemDic">
+    <id column="dic_id" jdbcType="INTEGER" property="dicId" />
+    <result column="dic_pid" jdbcType="INTEGER" property="dicPid" />
+    <result column="dic_code" jdbcType="VARCHAR" property="dicCode" />
+    <result column="dic_name" jdbcType="VARCHAR" property="dicName" />
+    <result column="edit_date" jdbcType="TIMESTAMP" property="editDate" />
+    <result column="edit_user" jdbcType="INTEGER" property="editUser" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    dic_id, dic_pid, dic_code, dic_name, edit_date, edit_user
+  </sql>
+  <select id="selectByExample" parameterType="com.mtx.system.dao.model.SystemDicExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from system_dic
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from system_dic
+    where dic_id = #{dicId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from system_dic
+    where dic_id = #{dicId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mtx.system.dao.model.SystemDicExample">
+    delete from system_dic
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mtx.system.dao.model.SystemDic">
+    <selectKey keyProperty="dicId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into system_dic (dic_pid, dic_code, dic_name, 
+      edit_date, edit_user)
+    values (#{dicPid,jdbcType=INTEGER}, #{dicCode,jdbcType=VARCHAR}, #{dicName,jdbcType=VARCHAR}, 
+      #{editDate,jdbcType=TIMESTAMP}, #{editUser,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mtx.system.dao.model.SystemDic">
+    <selectKey keyProperty="dicId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into system_dic
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dicPid != null">
+        dic_pid,
+      </if>
+      <if test="dicCode != null">
+        dic_code,
+      </if>
+      <if test="dicName != null">
+        dic_name,
+      </if>
+      <if test="editDate != null">
+        edit_date,
+      </if>
+      <if test="editUser != null">
+        edit_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dicPid != null">
+        #{dicPid,jdbcType=INTEGER},
+      </if>
+      <if test="dicCode != null">
+        #{dicCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dicName != null">
+        #{dicName,jdbcType=VARCHAR},
+      </if>
+      <if test="editDate != null">
+        #{editDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editUser != null">
+        #{editUser,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mtx.system.dao.model.SystemDicExample" resultType="java.lang.Long">
+    select count(*) from system_dic
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update system_dic
+    <set>
+      <if test="record.dicId != null">
+        dic_id = #{record.dicId,jdbcType=INTEGER},
+      </if>
+      <if test="record.dicPid != null">
+        dic_pid = #{record.dicPid,jdbcType=INTEGER},
+      </if>
+      <if test="record.dicCode != null">
+        dic_code = #{record.dicCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dicName != null">
+        dic_name = #{record.dicName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.editDate != null">
+        edit_date = #{record.editDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.editUser != null">
+        edit_user = #{record.editUser,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update system_dic
+    set dic_id = #{record.dicId,jdbcType=INTEGER},
+      dic_pid = #{record.dicPid,jdbcType=INTEGER},
+      dic_code = #{record.dicCode,jdbcType=VARCHAR},
+      dic_name = #{record.dicName,jdbcType=VARCHAR},
+      edit_date = #{record.editDate,jdbcType=TIMESTAMP},
+      edit_user = #{record.editUser,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mtx.system.dao.model.SystemDic">
+    update system_dic
+    <set>
+      <if test="dicPid != null">
+        dic_pid = #{dicPid,jdbcType=INTEGER},
+      </if>
+      <if test="dicCode != null">
+        dic_code = #{dicCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dicName != null">
+        dic_name = #{dicName,jdbcType=VARCHAR},
+      </if>
+      <if test="editDate != null">
+        edit_date = #{editDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editUser != null">
+        edit_user = #{editUser,jdbcType=INTEGER},
+      </if>
+    </set>
+    where dic_id = #{dicId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mtx.system.dao.model.SystemDic">
+    update system_dic
+    set dic_pid = #{dicPid,jdbcType=INTEGER},
+      dic_code = #{dicCode,jdbcType=VARCHAR},
+      dic_name = #{dicName,jdbcType=VARCHAR},
+      edit_date = #{editDate,jdbcType=TIMESTAMP},
+      edit_user = #{editUser,jdbcType=INTEGER}
+    where dic_id = #{dicId,jdbcType=INTEGER}
+  </update>
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+</mapper>

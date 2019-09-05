@@ -1,0 +1,83 @@
+@media (min-width: 1024px) and (max-width: 1279px) {
+    .modal-lg {
+        width: 950px;
+    }
+
+    .modal-dialog {
+        width: 650px;
+    }
+
+    .modal-sm {
+        width: 300px;
+    }
+}
+
+@media (min-width: 1280px) and (max-width: 1365px) {
+    .modal-lg {
+        width: 1090px;
+    }
+
+    .modal-dialog {
+        width: 790px;
+    }
+
+    .modal-sm {
+        width: 300px;
+    }
+}
+
+@media (min-width: 1366px) and (max-width: 1439px) {
+    .modal-lg {
+        width: 1200px;
+    }
+
+    .modal-dialog {
+        width: 900px;
+    }
+
+    .modal-sm {
+        width: 450px;
+    }
+}
+
+@media (min-width: 1440px) and (max-width: 1679px) {
+    .modal-lg {
+        width: 1300px;
+    }
+
+    .modal-dialog {
+        width: 1000px;
+    }
+
+    .modal-sm {
+        width: 300px;
+    }
+}
+
+@media (min-width: 1680px) and (max-width: 2879px) {
+    .modal-lg {
+        width: 1400px;
+    }
+
+    .modal-dialog {
+        width: 1100px;
+    }
+
+    .modal-sm {
+        width: 300px;
+    }
+}
+
+@media (min-width: 2880px) {
+    .modal-lg {
+        width: 1680px;
+    }
+
+    .modal-dialog {
+        width: 1380px;
+    }
+
+    .modal-sm {
+        width: 300px;
+    }
+}

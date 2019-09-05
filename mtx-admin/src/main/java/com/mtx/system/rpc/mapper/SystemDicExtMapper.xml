@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mtx.system.rpc.mapper.SystemDicExtMapper" >
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+    <resultMap id="BaseResultMap" type="com.mtx.system.dao.model.SystemDic">
+        <id column="dic_id" jdbcType="INTEGER" property="dicId" />
+        <result column="dic_pid" jdbcType="INTEGER" property="dicPid" />
+        <result column="orders" jdbcType="INTEGER" property="orders" />
+        <result column="dic_code" jdbcType="VARCHAR" property="dicCode" />
+        <result column="dic_name" jdbcType="VARCHAR" property="dicName" />
+        <result column="edit_date" jdbcType="TIMESTAMP" property="editDate" />
+        <result column="edit_user" jdbcType="INTEGER" property="editUser" />
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="SystemDicVo" type="com.mtx.system.dao.vo.SystemDicVo">
+    </resultMap>
+
+
+
+    <select id="selectForTreeList" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT * FROM system_dic WHERE dic_id = #{dicId,jdbcType=INTEGER}
+        UNION
+        SELECT * FROM system_dic WHERE dic_pid = #{dicId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectForTree" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT * FROM system_dic WHERE dic_pid = 0
+        <if test="_parameter!= null and _parameter != ''"><!-- 关键词检索 -->
+            and
+            (
+            dic_name LIKE CONCAT(CONCAT('%', #{keywords}),'%') or
+            dic_code LIKE CONCAT(CONCAT('%', #{keywords}),'%')
+            )
+        </if>
+        order by dic_name asc
+    </select>
+
+    <!-- 批量插入 -->
+    <insert id="batchInsert" parameterType="java.util.List" >
+        insert into system_dic (dic_pid,dic_code,dic_name,edit_date,edit_user) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.dicPid,jdbcType=INTEGER},
+            #{item.dicCode,jdbcType=VARCHAR},
+            #{item.dicName,jdbcType=VARCHAR},
+            #{item.editDate,jdbcType=TIMESTAMP},
+            #{item.editUser,jdbcType=INTEGER})
+        </foreach>
+    </insert>
+    <!-- 批量删除 -->
+    <delete id="batchDelete" parameterType="java.util.List">
+        delete from system_dic
+        where
+        dic_id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item.dicId,jdbcType=INTEGER}
+        </foreach>
+    </delete>
+
+    <select id="selectForDic" resultMap="SystemDicVo">
+        SELECT dic_code,dic_name FROM system_dic WHERE
+        dic_pid = (SELECT dic_id FROM system_dic WHERE dic_code = #{code,jdbcType=VARCHAR} AND dic_pid = 0)
+    </select>
+
+
+</mapper>

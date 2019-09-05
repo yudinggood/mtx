@@ -1,0 +1,49 @@
+/*\IE todo*/
+.scrollBar     {
+    scrollbar-face-color: #02c0ef; /*主色调*/
+    scrollbar-shadow-color: #DDD; /*描边颜色*/
+    scrollbar-arrow-color: #FFF; /*小三角颜色*/
+    scrollbar-track-color: #EEEEEE;
+
+    scrollbar-darkshadow-color: #DDD;
+    scrollbar-highlight-color: #FFFFFF;
+    scrollbar-3dlight-color: #DDD;
+}
+
+/*\Chrome*/
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+/*滚动条按钮*/
+::-webkit-scrollbar-button {
+}
+
+::-webkit-scrollbar-track-piece {
+    /*background-color:#F3F3F3;  !*滑道*!*/
+    -webkit-border-radius: 0px; /*滑道圆角宽度*/
+}
+
+::-webkit-scrollbar-thumb {
+    /*background-color:#F3F3F3; !*滑动条表面*!*/
+    border: solid 1px #C0C0C0; /*滑动条边框*/
+    border-radius: 0px; /*滑动条圆角宽度*/
+}
+
+/*横竖滚动条交角*/
+::-webkit-scrollbar-corner {
+    /*background-color: #F3F3F3;*/
+}
+
+/*横竖滚动条交角图案*/
+::-webkit-resizer { /*background-image: url(/public/img/resizer-inactive.png);*/
+    background-repeat: no-repeat;
+    background-position: bottom right;
+}
+
+/*鼠标滑过滑动条*/
+::-webkit-scrollbar-thumb:hover {
+    background-color: #00c0ef;
+}

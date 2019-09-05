@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mtx.system.rpc.mapper.SystemErrorExtMapper" >
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+    <resultMap id="BaseResultMap" type="com.mtx.system.dao.model.SystemError">
+        <id column="error_id" jdbcType="INTEGER" property="errorId" />
+        <result column="error_type" jdbcType="TINYINT" property="errorType" />
+        <result column="class_name" jdbcType="VARCHAR" property="className" />
+        <result column="method" jdbcType="VARCHAR" property="method" />
+        <result column="code" jdbcType="VARCHAR" property="code" />
+        <result column="edit_user" jdbcType="INTEGER" property="editUser" />
+        <result column="edit_date" jdbcType="TIMESTAMP" property="editDate" />
+        <result column="deleted" jdbcType="TINYINT" property="deleted" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM system_error where 1=1
+        <if test="systemErrorDto.search!= null and systemErrorDto.search != ''">
+            and
+            (
+            code LIKE CONCAT(CONCAT('%', #{systemErrorDto.search}),'%')
+            )
+        </if>
+        <if test="systemErrorDto.errorType!= null and systemErrorDto.errorType != 0">
+            and error_type = #{systemErrorDto.errorType}
+        </if>
+        <if test="systemErrorDto.editDate!= null and systemErrorDto.editDate != ''">
+            and STR_TO_DATE(edit_date,'%Y-%m-%d') <![CDATA[>=]]> #{systemErrorDto.startDate}
+            and STR_TO_DATE(edit_date,'%Y-%m-%d') <![CDATA[<=]]> #{systemErrorDto.endDate}
+        </if>
+        <choose>
+            <when test="orderByField != null and orderByField !=''">
+                <choose>
+                    <when test="isAsc == true">
+                        order by ${orderByField} ASC
+                    </when>
+                    <otherwise>
+                        order by ${orderByField} DESC
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                order by error_id desc
+            </otherwise>
+        </choose>
+
+    </select>
+
+
+
+
+</mapper>

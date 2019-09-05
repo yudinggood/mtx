@@ -1,0 +1,27 @@
+package ${package_name}.rpc.service.impl;
+
+import com.mtx.common.annotation.BaseService;
+import com.mtx.common.base.BaseServiceImpl;
+import ${package_name}.dao.mapper.${my_model}Mapper;
+import ${package_name}.dao.model.${my_model};
+import ${package_name}.dao.model.${my_model}Example;
+import com.mtx.system.rpc.api.${my_model}Service;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+* ${my_model}Service实现
+* Created by yu on ${ctime}.
+*/
+@Slf4j
+@Service
+@Transactional(rollbackFor = Exception.class)
+@BaseService
+public class ${my_model}ServiceImpl extends BaseServiceImpl<${my_model}Mapper, ${my_model}, ${my_model}Example> implements ${my_model}Service {
+
+    @Autowired
+    ${my_model}Mapper ${mapper}Mapper;
+
+}

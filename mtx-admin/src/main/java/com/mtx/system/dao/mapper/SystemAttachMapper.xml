@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtx.system.dao.mapper.SystemAttachMapper">
+  <resultMap id="BaseResultMap" type="com.mtx.system.dao.model.SystemAttach">
+    <id column="attach_id" jdbcType="INTEGER" property="attachId" />
+    <result column="biz_type" jdbcType="VARCHAR" property="bizType" />
+    <result column="biz_id" jdbcType="INTEGER" property="bizId" />
+    <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+    <result column="file_path" jdbcType="VARCHAR" property="filePath" />
+    <result column="suffix" jdbcType="VARCHAR" property="suffix" />
+    <result column="new_name" jdbcType="VARCHAR" property="newName" />
+    <result column="file_size" jdbcType="BIGINT" property="fileSize" />
+    <result column="edit_date" jdbcType="TIMESTAMP" property="editDate" />
+    <result column="edit_user" jdbcType="INTEGER" property="editUser" />
+    <result column="deleted" jdbcType="TINYINT" property="deleted" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    attach_id, biz_type, biz_id, file_name, file_path, suffix, new_name, file_size, edit_date, 
+    edit_user, deleted
+  </sql>
+  <select id="selectByExample" parameterType="com.mtx.system.dao.model.SystemAttachExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from system_attach
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from system_attach
+    where attach_id = #{attachId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from system_attach
+    where attach_id = #{attachId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mtx.system.dao.model.SystemAttachExample">
+    delete from system_attach
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mtx.system.dao.model.SystemAttach">
+    insert into system_attach (attach_id, biz_type, biz_id, 
+      file_name, file_path, suffix, 
+      new_name, file_size, edit_date, 
+      edit_user, deleted)
+    values (#{attachId,jdbcType=INTEGER}, #{bizType,jdbcType=VARCHAR}, #{bizId,jdbcType=INTEGER}, 
+      #{fileName,jdbcType=VARCHAR}, #{filePath,jdbcType=VARCHAR}, #{suffix,jdbcType=VARCHAR}, 
+      #{newName,jdbcType=VARCHAR}, #{fileSize,jdbcType=BIGINT}, #{editDate,jdbcType=TIMESTAMP}, 
+      #{editUser,jdbcType=INTEGER}, #{deleted,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mtx.system.dao.model.SystemAttach">
+    insert into system_attach
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="attachId != null">
+        attach_id,
+      </if>
+      <if test="bizType != null">
+        biz_type,
+      </if>
+      <if test="bizId != null">
+        biz_id,
+      </if>
+      <if test="fileName != null">
+        file_name,
+      </if>
+      <if test="filePath != null">
+        file_path,
+      </if>
+      <if test="suffix != null">
+        suffix,
+      </if>
+      <if test="newName != null">
+        new_name,
+      </if>
+      <if test="fileSize != null">
+        file_size,
+      </if>
+      <if test="editDate != null">
+        edit_date,
+      </if>
+      <if test="editUser != null">
+        edit_user,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="attachId != null">
+        #{attachId,jdbcType=INTEGER},
+      </if>
+      <if test="bizType != null">
+        #{bizType,jdbcType=VARCHAR},
+      </if>
+      <if test="bizId != null">
+        #{bizId,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="filePath != null">
+        #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="suffix != null">
+        #{suffix,jdbcType=VARCHAR},
+      </if>
+      <if test="newName != null">
+        #{newName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null">
+        #{fileSize,jdbcType=BIGINT},
+      </if>
+      <if test="editDate != null">
+        #{editDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editUser != null">
+        #{editUser,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mtx.system.dao.model.SystemAttachExample" resultType="java.lang.Long">
+    select count(*) from system_attach
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update system_attach
+    <set>
+      <if test="record.attachId != null">
+        attach_id = #{record.attachId,jdbcType=INTEGER},
+      </if>
+      <if test="record.bizType != null">
+        biz_type = #{record.bizType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bizId != null">
+        biz_id = #{record.bizId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fileName != null">
+        file_name = #{record.fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filePath != null">
+        file_path = #{record.filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.suffix != null">
+        suffix = #{record.suffix,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newName != null">
+        new_name = #{record.newName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileSize != null">
+        file_size = #{record.fileSize,jdbcType=BIGINT},
+      </if>
+      <if test="record.editDate != null">
+        edit_date = #{record.editDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.editUser != null">
+        edit_user = #{record.editUser,jdbcType=INTEGER},
+      </if>
+      <if test="record.deleted != null">
+        deleted = #{record.deleted,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update system_attach
+    set attach_id = #{record.attachId,jdbcType=INTEGER},
+      biz_type = #{record.bizType,jdbcType=VARCHAR},
+      biz_id = #{record.bizId,jdbcType=INTEGER},
+      file_name = #{record.fileName,jdbcType=VARCHAR},
+      file_path = #{record.filePath,jdbcType=VARCHAR},
+      suffix = #{record.suffix,jdbcType=VARCHAR},
+      new_name = #{record.newName,jdbcType=VARCHAR},
+      file_size = #{record.fileSize,jdbcType=BIGINT},
+      edit_date = #{record.editDate,jdbcType=TIMESTAMP},
+      edit_user = #{record.editUser,jdbcType=INTEGER},
+      deleted = #{record.deleted,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mtx.system.dao.model.SystemAttach">
+    update system_attach
+    <set>
+      <if test="bizType != null">
+        biz_type = #{bizType,jdbcType=VARCHAR},
+      </if>
+      <if test="bizId != null">
+        biz_id = #{bizId,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        file_name = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="filePath != null">
+        file_path = #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="suffix != null">
+        suffix = #{suffix,jdbcType=VARCHAR},
+      </if>
+      <if test="newName != null">
+        new_name = #{newName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null">
+        file_size = #{fileSize,jdbcType=BIGINT},
+      </if>
+      <if test="editDate != null">
+        edit_date = #{editDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editUser != null">
+        edit_user = #{editUser,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=TINYINT},
+      </if>
+    </set>
+    where attach_id = #{attachId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mtx.system.dao.model.SystemAttach">
+    update system_attach
+    set biz_type = #{bizType,jdbcType=VARCHAR},
+      biz_id = #{bizId,jdbcType=INTEGER},
+      file_name = #{fileName,jdbcType=VARCHAR},
+      file_path = #{filePath,jdbcType=VARCHAR},
+      suffix = #{suffix,jdbcType=VARCHAR},
+      new_name = #{newName,jdbcType=VARCHAR},
+      file_size = #{fileSize,jdbcType=BIGINT},
+      edit_date = #{editDate,jdbcType=TIMESTAMP},
+      edit_user = #{editUser,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=TINYINT}
+    where attach_id = #{attachId,jdbcType=INTEGER}
+  </update>
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+</mapper>

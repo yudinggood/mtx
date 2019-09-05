@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mtx.system.rpc.mapper.SystemAttachExtMapper" >
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+    <resultMap id="BaseResultMap" type="com.mtx.system.dao.model.SystemAttach">
+        <id column="attach_id" jdbcType="INTEGER" property="attachId" />
+        <result column="biz_type" jdbcType="VARCHAR" property="bizType" />
+        <result column="biz_id" jdbcType="INTEGER" property="bizId" />
+        <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+        <result column="file_path" jdbcType="VARCHAR" property="filePath" />
+        <result column="suffix" jdbcType="VARCHAR" property="suffix" />
+        <result column="new_name" jdbcType="VARCHAR" property="newName" />
+        <result column="file_size" jdbcType="BIGINT" property="fileSize" />
+        <result column="edit_date" jdbcType="TIMESTAMP" property="editDate" />
+        <result column="edit_user" jdbcType="INTEGER" property="editUser" />
+        <result column="deleted" jdbcType="TINYINT" property="deleted" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM system_attach where 1=1
+        <if test="systemAttachDto.search!= null and systemAttachDto.search != ''">
+            and
+            (
+            file_name LIKE CONCAT(CONCAT('%', #{systemAttachDto.search}),'%')
+            )
+        </if>
+        <if test="systemAttachDto.bizType!= null and systemAttachDto.bizType != ''">
+            and biz_type = #{systemAttachDto.bizType}
+        </if>
+        <if test="systemAttachDto.editDate!= null and systemAttachDto.editDate != ''">
+            and STR_TO_DATE(edit_date,'%Y-%m-%d') <![CDATA[>=]]> #{systemAttachDto.startDate}
+            and STR_TO_DATE(edit_date,'%Y-%m-%d') <![CDATA[<=]]> #{systemAttachDto.endDate}
+        </if>
+        <choose>
+            <when test="orderByField != null and orderByField !=''">
+                <choose>
+                    <when test="isAsc == true">
+                        order by ${orderByField} ASC
+                    </when>
+                    <otherwise>
+                        order by ${orderByField} DESC
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                order by attach_id desc
+            </otherwise>
+        </choose>
+
+    </select>
+
+
+
+
+</mapper>

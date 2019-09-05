@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache name="ehcache" updateCheck="false">
+    <!-- C:\Users\PC\AppData\Local\Temp -->
+    <diskStore path="java.io.tmpdir/mtx-admin/ehcache"/>
+    <defaultCache
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="1"
+            timeToLiveSeconds="10"
+            maxElementsOnDisk="10000000"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap"/>
+    </defaultCache>
+    <cache
+            name="mtx-admin-ehcache"
+            eternal="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="300"
+            maxEntriesLocalHeap="10000"
+            maxEntriesLocalDisk="10000000"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap"/>
+    </cache>
+
+
+    <!-- 全局变量：永不过期-->
+    <cache name="CONSTANT"
+           maxElementsInMemory="50000"
+           eternal="true"
+           clearOnFlush="false"
+           overflowToDisk="true"
+           diskSpoolBufferSizeMB="1024"
+           maxElementsOnDisk="100000"
+           diskPersistent="false"
+           diskExpiryThreadIntervalSeconds="120"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+    </cache>
+
+
+
+</ehcache>

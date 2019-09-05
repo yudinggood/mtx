@@ -1,0 +1,568 @@
+/**
+ * POPUP CONTAINER STYLES
+ */
+#popupMask {
+	position: absolute;
+	z-index: 200;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	/*opacity: .0;*/
+	/*filter: alpha(opacity=0);*/
+	/* this hack is so it works in IE
+	 * I find setting the color in the css gives me more flexibility 
+	 * than the PNG solution.
+	 */
+	/*background-color:transparent !important;*/
+	/*background-color: #333333;*/
+	/*background-image:none;*/
+	/*background-repeat: repeat;*/
+	/*display:none;*/
+}
+.popupMask {
+	position: absolute;
+	z-index: 200;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	/*opacity: .0;*/
+	/*filter: alpha(opacity=0);*/
+	/*/!* this hack is so it works in IE*/
+	 /** I find setting the color in the css gives me more flexibility*/
+	 /** than the PNG solution.*/
+	 /**!/*/
+	background-color:transparent !important;
+	background-color: #333333;
+	/*background-image:none;*/
+	/*background-repeat: repeat;*/
+	/*display:none;*/
+}
+.popup-Container{
+    background-color: #ff0000;
+}
+/* Rule 1 of css/1.css */
+DIV {
+    PADDING-RIGHT: 0px;
+    PADDING-LEFT: 0px;
+    PADDING-BOTTOM: 0px;
+    MARGIN: 0px;
+    PADDING-TOP: 0px
+} /* Rule 2 of css/1.css */
+.x-window {
+    ZOOM: 1
+} /* Rule 4 of css/1.css */
+.x-window-bwrap {
+    Z-INDEX: 1;
+    ZOOM: 1;
+    POSITION: relative
+} /* Rule 5 of css/1.css */
+.x-window-bwrap {
+    OVERFLOW: hidden
+} /* Rule 4 of css/1.css */
+.x-window-bl {
+    PADDING-LEFT: 13px;
+    BACKGROUND: url(../images/default/window/left-corners.png) no-repeat 0px bottom;
+    ZOOM: 1
+} /* Rule 7 of css/1.css */
+.x-window-br {
+    PADDING-RIGHT: 13px;
+    BACKGROUND: url(../images/default/window/right-corners.png) no-repeat right bottom;
+    ZOOM: 1
+} /* Rule 8 of css/1.css */
+.x-window-bc {
+    BACKGROUND: url(../images/default/window/top-bottom.png) repeat-x 0px bottom;
+    ZOOM: 1
+} /* Rule 9 of css/1.css */
+.x-window-bc .x-window-footer {
+    FONT-SIZE: 0px;
+    PADDING-BOTTOM: 12px;
+    LINE-HEIGHT: 0;
+    ZOOM: 1
+} /* Rule 31 of css/1.css */
+.x-window-ml {
+    PADDING-LEFT: 13px;
+    BACKGROUND: url(../images/default/window/left-right.png) repeat-y 0px 0px;
+    ZOOM: 1
+} /* Rule 32 of css/1.css */
+.x-window-mr {
+    PADDING-RIGHT: 13px;
+    BACKGROUND: url(../images/default/window/left-right.png) repeat-y right 0px;
+    ZOOM: 1
+} /* Rule 33 of css/1.css */
+.x-window-mc {
+    BORDER-RIGHT: #99bbe8 1px solid;
+    PADDING-RIGHT: 0px;
+    BORDER-TOP: #99bbe8 1px solid;
+    PADDING-LEFT: 0px;
+    BACKGROUND: #dfe8f6;
+    PADDING-BOTTOM: 0px;
+    MARGIN: 0px;
+    BORDER-LEFT: #99bbe8 1px solid;
+    PADDING-TOP: 0px;
+    BORDER-BOTTOM: #99bbe8 1px solid
+} /* Rule 34 of css/1.css */
+.x-window-plain .x-window-mc {
+    BORDER-RIGHT: #dfe8f6 1px solid;
+    BORDER-TOP: #a3bae9 1px solid;
+    BACKGROUND: #cad9ec;
+    BORDER-LEFT: #a3bae9 1px solid;
+    BORDER-BOTTOM: #dfe8f6 1px solid
+} /* Rule 36 of css/1.css */
+.x-window-dlg .x-window-mc {
+    BORDER-TOP-WIDTH: 0px;
+    BORDER-LEFT-WIDTH: 0px;
+    BORDER-BOTTOM-WIDTH: 0px;
+    BORDER-RIGHT-WIDTH: 0px
+} /* Rule 57 of css/1.css */
+.x-window-tl {
+    PADDING-LEFT: 13px;
+    Z-INDEX: 1;
+    BACKGROUND: url(../images/default/window/left-corners.png) no-repeat 0px 0px;
+    ZOOM: 1;
+    POSITION: relative
+} /* Rule 58 of css/1.css */
+.x-window-tr {
+    PADDING-RIGHT: 13px;
+    BACKGROUND: url(../images/default/window/right-corners.png) no-repeat right 0px
+} /* Rule 59 of css/1.css */
+.x-window-tc {
+    BACKGROUND: url(../images/default/window/top-bottom.png) repeat-x 0px 0px;
+    OVERFLOW: hidden;
+    ZOOM: 1
+} /* Rule 60 of css/1.css */
+.text-unselectable {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+} /* Rule 61 of css/1.css */
+.x-window-header {
+    OVERFLOW: hidden;
+    ZOOM: 1
+} /* Rule 62 of css/1.css */
+.x-window-tl .x-window-header {
+    PADDING-RIGHT: 0px;
+    text-align:left;
+    PADDING-LEFT: 5px;
+/*    padding-bottom:3px;*/
+    COLOR: #154280;
+    PADDING-TOP: 5px
+} /* Rule 63 of css/1.css */
+.x-window-draggable {
+    CURSOR: default
+} /* Rule 64 of css/1.css */
+.x-unselectable * {
+    -moz-user-select: none;
+    -khtml-user-select: none
+} /* Rule 65 of css/1.css */
+.x-window-header-text ,
+.x-window-header-text>span {
+    CURSOR: pointer;
+    font-size: 14px;
+    margin:0;
+    text-align: left;
+    line-height: 30px;
+} /* Rule 66 of css/1.css */
+.x-window-draggable .x-window-header-text {
+    CURSOR: default
+} /* Rule 67 of css/1.css */
+.x-window-dlg .x-window-header-text {
+    /*font-weight:bold;*/
+} /* Rule 68 of css/1.css */
+.x-tool {
+    /*BACKGROUND: url(../images/default/window/tool-sprites.gif) no-repeat;*/
+    FLOAT: right;
+    OVERFLOW: hidden;
+    WIDTH: 110px;
+    height: 30px;
+    CURSOR: pointer;
+    /*ZOOM: 0.8;*/
+    ZOOM: 1;
+    font-weight: lighter;
+    /*display: inline;*/
+    /*padding: 0;*/
+    /*font-size: 85%;*/
+    /*font-weight: bold;*/
+    /*line-height: 1;*/
+    /*color: #fff;*/
+    /*text-align: center;*/
+    /*white-space: nowrap;*/
+    /*vertical-align: baseline;*/
+} /* Rule 69 of css/1.css */
+/*.x-window-header .x-tool{*/
+    /*position: relative;*/
+    /*left: 1px;*/
+/*}*/
+.panel-background{
+    position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; overflow: hidden;z-index: -1;
+    background-color: lightblue;filter:alpha(opacity:30); opacity:0.4;
+}
+.panel-heading-tin {
+    padding: 0 10px;
+    padding-right: 0;
+    padding-bottom: 0;
+    line-height: 24px;
+}
+.quick-tool-btn {
+    color: #444444;
+    display: inline-block;
+    float: right;
+    height: 30px;
+    margin: 0;
+    padding-top: 2px;
+    text-align: center;
+    text-decoration: none;
+    width: 50px;
+    /*position: relative;*/
+
+}
+
+.quick-tool-btn span {
+    display: block;
+
+}
+.quick-tool-btn span:hover,
+.quick-tool-btn span:focus {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.quick-tool-btn:hover {
+    text-decoration: none;
+    color: #a61627;
+    /*background-color: #4d7589;*/
+}
+.quick-tool-btn a{
+    height: 100%;
+    display: block;
+}
+.quick-tool-btn .fa{
+    line-height: 1em;
+    font-size: 2em;
+    font-weight: lighter;
+}
+.quick-tool-btn> a{
+    color: #e0e0e0;
+}
+.quick-tool-btn> a>.fa:hover,
+.quick-tool-btn >a>.fa:focus {
+    /*color: #e0e0e0;*/
+    color: #a61627;
+}
+.quick-tool-btn> a:hover,
+.quick-tool-btn >a:focus {
+    /*color: #e0e0e0;*/
+    color: #a61627;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.label:empty {
+    display: none;
+}
+.btn-info {
+    /*color: #fff;*/
+    /*background-color: #5bc0de;*/
+    /*border-color: #46b8da;*/
+    color: #e0e0e0;
+    -moz-border-radius-bottomleft:.35em; -webkit-border-bottom-left-radius: .35em; border-bottom-left-radius: .35em;
+}
+.btn-info:hover,
+.btn-info:focus,
+.btn-info.focus,
+.btn-info:active,
+.btn-info.active,
+.open > .dropdown-toggle.btn-info {
+    color: #fff;
+    background-color: #31b0d5;
+    border-color: #269abc;
+}
+.btn-info:active,
+.btn-info.active,
+.open > .dropdown-toggle.btn-info {
+    background-image: none;
+}
+.btn-info.disabled,
+.btn-info[disabled],
+fieldset[disabled] .btn-info,
+.btn-info.disabled:hover,
+.btn-info[disabled]:hover,
+fieldset[disabled] .btn-info:hover,
+.btn-info.disabled:focus,
+.btn-info[disabled]:focus,
+fieldset[disabled] .btn-info:focus,
+.btn-info.disabled.focus,
+.btn-info[disabled].focus,
+fieldset[disabled] .btn-info.focus,
+.btn-info.disabled:active,
+.btn-info[disabled]:active,
+fieldset[disabled] .btn-info:active,
+.btn-info.disabled.active,
+.btn-info[disabled].active,
+fieldset[disabled] .btn-info.active {
+    background-color: #5bc0de;
+    border-color: #46b8da;
+}
+.btn-info .badge {
+    color: #5bc0de;
+    background-color: #fff;
+}
+.btn-danger {
+    color: #e0e0e0;
+    -moz-border-radius-topright: .25em; -webkit-border-top-right-radius: .25em; border-top-right-radius: .25em;
+    /*-moz-border-radius-bottomleft: .25em;*/
+}
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger.focus,
+.btn-danger:active,
+.btn-danger.active,
+.open > .dropdown-toggle.btn-danger {
+    color: #fff;
+    background-color: #c9302c;
+    border-color: #ac2925;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+    -webkit-box-shadow: 0 0 0 1px #c94d49;
+    box-shadow: 0 0 0 1px #d43f3a inset;
+}
+.btn-danger:active,
+.btn-danger.active,
+.open > .dropdown-toggle.btn-danger {
+    background-image: none;
+}
+.btn-danger.disabled,
+.btn-danger[disabled],
+fieldset[disabled] .btn-danger,
+.btn-danger.disabled:hover,
+.btn-danger[disabled]:hover,
+fieldset[disabled] .btn-danger:hover,
+.btn-danger.disabled:focus,
+.btn-danger[disabled]:focus,
+fieldset[disabled] .btn-danger:focus,
+.btn-danger.disabled.focus,
+.btn-danger[disabled].focus,
+fieldset[disabled] .btn-danger.focus,
+.btn-danger.disabled:active,
+.btn-danger[disabled]:active,
+fieldset[disabled] .btn-danger:active,
+.btn-danger.disabled.active,
+.btn-danger[disabled].active,
+fieldset[disabled] .btn-danger.active {
+    background-color: #d9534f;
+    border-color: #d43f3a;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+    -webkit-box-shadow: 0 0 0 1px #c94d49;
+    box-shadow: 0 0 0 1px #d43f3a inset;
+}
+
+.x-pop-win-list-bt{
+    width: 37px;
+    height: 33px;
+    background: url(../images/leftmenu/box-tool-bt.png)  no-repeat;
+    background-position: left bottom;
+    cursor: pointer;
+
+}
+.x-pop-win-list-bt-num{
+    width: 14px;
+    height: 30px;
+    background: url(../images/leftmenu/box-tool-bt-num.png) 0 0 no-repeat;
+    background-position: center center;
+    float: left;
+    cursor: pointer;
+    font-size:10px ;
+    color: #fff;
+    font-weight:bold ;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 30px;
+    text-indent: 1px;
+    font-family: "微软雅黑";
+    font-weight: bold;
+}
+.x-pop-win-list-win {
+     width: 320px;
+  }
+.x-pop-win-list-win-con {
+    font-size: 12px;
+    cursor: pointer;
+    /*margin: 0px;*/
+    padding: 5px 10px 5px 10px;
+    /*BORDER-RIGHT: #a3bae9 1px solid;*/
+    /*BORDER-TOP: #a3bae9 1px solid;*/
+    /*BACKGROUND: #dbeafd;*/
+    background:  url(../images/leftmenu/box-tool-list-bg.png) 0 0 repeat;
+    /*BORDER-LEFT: #a3bae9 1px solid;*/
+    /*BORDER-BOTTOM: #dfe8f6 1px solid*/
+}
+.x-pop-win-list-win-top-left {
+    height: 5px;
+    font-size:1px ;
+    background-image: url(../images/leftmenu/box-tool-list-coner-top-left.png);
+    background-position: left;
+    background-repeat: no-repeat;
+    /*background-color: #FF0000;*/
+}
+.x-pop-win-list-win-top-right {
+    clear: both;
+    font-size:1px ;
+    height: 5px;
+    background-image: url(../images/leftmenu/box-tool-list-coner-top-right.png);
+    background-position: right;
+    background-repeat: no-repeat;
+}
+.x-pop-win-list-win-top-line {
+    /*clear: both;*/
+    height: 5px;
+    font-size:1px ;
+    margin: 0 3px;
+    background-image: url(../images/leftmenu/box-tool-list-line-top.png);
+    background-position: top;
+    background-repeat: repeat-x;
+    line-height: 1px;
+}
+
+.x-pop-win-list-win-bottom-left {
+    height: 5px;
+    font-size:1px ;
+    background-image: url(../images/leftmenu/box-tool-list-coner-bottom-left.png);
+    background-position: left;
+    background-repeat: no-repeat;
+    /*background-color: #FF0000;*/
+}
+.x-pop-win-list-win-bottom-right {
+    clear: both;
+    font-size:1px ;
+    height: 5px;
+    background-image: url(../images/leftmenu/box-tool-list-coner-bottom-right.png);
+    background-position: right;
+    background-repeat: no-repeat;
+}
+.x-pop-win-list-win-bottom-line {
+    /*clear: both;*/
+    height: 5px;
+    font-size:1px ;
+    margin: 0 3px;
+    background-image: url(../images/leftmenu/box-tool-list-line-bottom.png);
+    background-position: top;
+    background-repeat: repeat-x;
+    line-height: 1px;
+}
+.x-pop-win-list-win-con-left {
+    /*height: 5px;*/
+    font-size:1px ;
+    background-image: url(../images/leftmenu/box-tool-list-line-left.png);
+    background-position: left;
+    background-repeat: repeat-y;
+    /*background-color: #FF0000;*/
+}
+.x-pop-win-list-win-con-right {
+    clear: both;
+    font-size:1px ;
+    /*height: 5px;*/
+    background-image: url(../images/leftmenu/box-tool-list-line-right.png);
+    background-position: right;
+    background-repeat: repeat-y;
+}
+.x-pop-win-list-win-con {
+    /*clear: both;*/
+    /*height: 5px;*/
+    font-size:1px ;
+    margin: 0 3px;
+    background-image: url(../images/leftmenu/box-tool-list-bg.png);
+    background-position: top;
+    background-repeat: repeat;
+    line-height: 1px;
+}
+
+
+.x-pop-win-list-item {
+    background: url(../images/leftmenu/box-tool-list-bg.png) 0 0 repeat;
+    font-size: 13px;
+    height: 33px;
+    cursor: pointer;
+}
+.x-pop-win-list-item-on {
+    background: url(../images/leftmenu/box-tool-list-item-title-over.png) 0 0 repeat-x;
+    font-size: 13px;
+    height: 33px;
+    cursor: pointer;
+}
+.x-pop-win-list-item-checked {
+    background: url(../images/leftmenu/box-tool-list-item-win-n.png) 0 0 repeat-x;
+    font-size: 13px;
+    height: 33px;
+    cursor: pointer;
+}
+.x-pop-win-list-item-left {
+    /*background: url(../images/leftmenu/box-tool-list-left.png) 0 0 no-repeat;*/
+    height: 33px;
+    float: left;
+    width: 3px;
+}
+.x-pop-win-list-item-right {
+
+    float: right;
+    height: 33px;
+    width: 3px;
+}
+.x-pop-win-list-item-win {
+    width: 96%;
+    height: 33px;
+    float: left;
+}
+.x-pop-win-list-item-win-title {
+    width: 90%;
+    text-align: left;
+    text-indent: 26px;
+    line-height: 33px;
+    vertical-align: middle;
+    color: #fff;
+    background: url(../images/header/chgpwd.png) 0 0 no-repeat;
+    background-position: left center;
+    font-family: "微软雅黑", "宋体", "sans-serif";
+    height: 33px;
+    float: left;
+}
+.x-pop-win-list-item-close {
+    width: 20px;
+    text-align: left;
+    height: 33px;
+    float: right;
+}
+.x-pop-win-list-item-close-none{
+    width: 20px;
+    text-align: left;
+    height: 33px;
+    float: right;
+}
+.x-pop-win-list-item-close-on {
+    width: 20px;
+    text-align: left;
+    height: 33px;
+    float: right;
+    background-image: url(../images/leftmenu/box-tool-list-item-close.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.x-pop-win-list-item-on .x-pop-win-list-item-left{
+    background: url(../images/leftmenu/box-tool-list-item-left-over.png) 0 0 no-repeat;
+}
+.x-pop-win-list-item-on .x-pop-win-list-item-right{
+    background: url(../images/leftmenu/box-tool-list-item-right-over.png) 0 0 no-repeat;
+}
+.x-pop-win-list-item-checked .x-pop-win-list-item-left{
+    background: url(../images/leftmenu/box-tool-list-left-n.png) 0 0 no-repeat;
+}
+.x-pop-win-list-item-checked .x-pop-win-list-item-right{
+    background: url(../images/leftmenu/box-tool-list-right-n.png) 0 0 no-repeat;
+}
+/*.x-pop-win-list-item-on .x-pop-win-list-item-left{*/
+    /*background: url(../images/leftmenu/box-tool-list-left-n.png) 0 0 no-repeat;*/
+/*}*/

@@ -1,0 +1,14 @@
+package ${package_name}.rpc.api;
+
+import com.mtx.common.base.BaseServiceMock;
+import ${package_name}.dao.mapper.${my_model}Mapper;
+import ${package_name}.dao.model.${my_model};
+import ${package_name}.dao.model.${my_model}Example;
+
+/**
+* 降级实现${my_model}Service接口
+* Created by yu on ${ctime}.
+*/
+public class ${my_model}ServiceMock extends BaseServiceMock<${my_model}Mapper, ${my_model}, ${my_model}Example> implements ${my_model}Service {
+
+}
