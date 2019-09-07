@@ -27,7 +27,6 @@ public class SystemDicFactory extends BaseFactory {
         BeanUtils.copyProperties(systemDicDto,systemDic);
         systemDic.setDicPid(0);
         systemDic.setEditDate(new Date());
-        systemDic.setEditUser(1);
         return systemDic;
     }
 }

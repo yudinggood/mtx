@@ -6,9 +6,7 @@ import com.baidu.unbiz.fluentvalidator.ResultCollectors;
 import com.mtx.common.base.BaseController;
 import com.mtx.common.constant.SystemConstant;
 import com.mtx.common.spring.SpringContextUtil;
-import com.mtx.common.util.base.KaptchaUtil;
-import com.mtx.common.util.base.PropertiesFileUtil;
-import com.mtx.common.util.base.RedisUtil;
+import com.mtx.common.util.base.*;
 import com.mtx.common.util.validator.LengthValidator;
 import com.mtx.common.util.validator.NotNullValidator;
 import com.mtx.common.util.wrapper.WrapMapper;
@@ -23,8 +21,11 @@ import com.mtx.system.dao.dto.SystemUserDto;
 import com.mtx.system.dao.model.SystemSystem;
 import com.mtx.system.dao.model.SystemSystemExample;
 import com.mtx.system.dao.model.SystemUser;
+import com.mtx.system.dao.vo.PageInfo;
+import com.mtx.system.dao.vo.SystemUserVo;
 import com.mtx.system.rpc.api.SystemApiService;
 import com.mtx.system.rpc.api.SystemSystemService;
+import com.mtx.system.rpc.api.SystemUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,7 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,6 +50,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.Collection;
 import java.util.UUID;
 
 @Slf4j
@@ -67,6 +70,8 @@ public class LoginController extends BaseController {
     UpmsSessionDao upmsSessionDao;
     @Autowired
     private SystemSystemService systemSystemService;
+    @Autowired
+    private SystemUserService systemUserService;
 
     @ApiOperation(value = "免密登录前置请求")
     @RequestMapping(value = "/pre", method = RequestMethod.GET)
@@ -116,6 +121,8 @@ public class LoginController extends BaseController {
             mv.setViewName("/system/login/login");
         }
 
+        PageInfo pageInfo = new PageInfo();
+        mv.addObject("pageInfo",pageInfo);
         return mv;
     }
 
@@ -202,7 +209,10 @@ public class LoginController extends BaseController {
             RedisUtil.set(UPMS_SERVER_SESSION_ID + "_" + sessionId, code, (int) subject.getSession().getTimeout() / 1000);
             // code校验值
             RedisUtil.set(UPMS_SERVER_CODE + "_" + code, code, (int) subject.getSession().getTimeout() / 1000);
+
         }
+
+
 
         // 回跳登录前地址
         String backurl = systemUserDto.getBackUrl();
@@ -231,4 +241,27 @@ public class LoginController extends BaseController {
         return mv;
     }
 
+    @ApiOperation(value = "QQ授权")
+    @RequestMapping(value = "/qqAuthorization", method = RequestMethod.GET)
+    public ModelAndView qqAuthorization(HttpServletRequest request){
+        ModelAndView mv =this.getModelAndView();
+        PageInfo pageInfo=new PageInfo();
+        String result = RequestUtil.getHtml("https://graph.qq.com/oauth2.0/token?grant_type=authorization_code&client_id=" + pageInfo.getQqAppId()+
+                "&client_secret="+pageInfo.getQqClientSecret()+"&redirect_uri="+URLEncoder.encode(pageInfo.getQqAuthPath())+"&code=code");
+        String access_token= RegularUtil.getRegularByString("access_token=(.*)&expires_in=(.*)",result).get(1);
+        String result2=RequestUtil.getHtml("https://graph.qq.com/oauth2.0/me?access_token="+access_token);
+        String openid=RegularUtil.getRegularByString("(.*)openid\":\"(.*)\"}(.*)",result2).get(2);
+        SystemUser systemUser = systemUserService.selectByQqOpenId(openid);
+        if(systemUser==null) {//需要绑定 账号
+
+        }else {//直接登录
+
+        }
+        return mv;
+    }
 }
+
+
+
+
+

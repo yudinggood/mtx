@@ -1,18 +1,24 @@
 package com.mtx.common.util.base;
 
 import com.mtx.common.util.wrapper.WafRequestWrapper;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.HttpStatus;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 /**
  * 请求相关
  */
+@Slf4j
 public class RequestUtil {
     /**
      * 获取请求basePath   http://localhost:80/Back/   request.getContextPath()
@@ -112,6 +118,29 @@ public class RequestUtil {
         return backUrl.toString();
     }
 
+    //专业获取HTML文本的
+    public static String getHtml(String url) {
+        HttpClient httpClient = new HttpClient();
+        GetMethod getMethod = new GetMethod(url);
+        String html ="";
+        try {
+            int statusCode = httpClient.executeMethod(getMethod);
+            if (statusCode != HttpStatus.SC_OK) {
+                log.error("Method failed: "
+                        + getMethod.getStatusLine());
+            }
+            // 读取内容
+            byte[] responseBody = getMethod.getResponseBody();
+            // 处理内容
+            html = new String(responseBody);
+        } catch (Exception e) {
+            html="";
+            log.error("页面无法访问");
+        }finally{
+            getMethod.releaseConnection();
+        }
 
+        return html;
+    }
 
 }

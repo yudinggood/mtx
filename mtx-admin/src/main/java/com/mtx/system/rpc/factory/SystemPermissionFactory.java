@@ -29,7 +29,6 @@ public class SystemPermissionFactory extends BaseFactory{
     public SystemPermission convertDtoToDo(SystemPermissionDto systemPermissionDto, Class<SystemPermission> systemPermissionClass) {
         SystemPermission systemPermission = convertModel(systemPermissionDto,systemPermissionClass);
         systemPermission.setEditDate(new Date());
-        systemPermission.setEditUser(1);
         if(systemPermission.getType().equals(TypeConversionUtil.objectToByte(2))){//过期代码
             systemPermission.setMenuLevel(TypeConversionUtil.objectToByte(0));
         }

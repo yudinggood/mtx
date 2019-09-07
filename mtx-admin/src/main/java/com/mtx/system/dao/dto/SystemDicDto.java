@@ -19,5 +19,6 @@ public class SystemDicDto implements Serializable {
     //id
     private Integer dicId;
 
+    private Integer editUser;
 
 }

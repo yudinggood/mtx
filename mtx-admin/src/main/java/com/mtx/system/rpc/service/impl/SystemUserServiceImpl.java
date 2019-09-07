@@ -191,4 +191,10 @@ public class SystemUserServiceImpl extends BaseServiceImpl<SystemUserMapper, Sys
         List<Object> list = TypeConversionUtil.stringsToList(ids);
         return systemUserExtMapper.deleteByPrimaryKeysFaker(list);
     }
+
+    @Override
+    public SystemUser selectByQqOpenId(String openid) {
+        return null;
+    }
 }
+

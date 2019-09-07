@@ -137,6 +137,10 @@ public class SystemUserDto implements Serializable {
     }
     //姓名
     private String realName;
+    //qq的openId
+    private String qqOpenId;
+
+
     //用户组织
     private String[] organizationId;
     //用户角色

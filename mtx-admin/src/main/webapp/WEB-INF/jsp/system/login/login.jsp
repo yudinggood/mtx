@@ -68,7 +68,7 @@
                             <a  href="#">《隐私权条款》</a>
                         </div>
                         <div class="aui-thirds">
-                            <a href="#">
+                            <a href="#"  onclick="qqlogin()">
                                 <i class="aui-qq-img"></i>
                                 <i>QQ登录</i>
                             </a>
@@ -109,7 +109,7 @@
                                 <i class="aui-qq-img"></i>
                                 <i>QQ登录</i>
                             </a>
-                            <a href="#">
+                            <a href="#" onclick="">
                                 <i class="aui-wx-img"></i>
                                 <i>微信登录</i>
                             </a>
@@ -227,6 +227,27 @@
         $("#codeImg").attr("src", "${basePath}/code?t="+ genTimestamp());
     }
 
+    function qqlogin(width, height){
+        var qqAppId = '${pageInfo.qqAppId}'; // 上面申请得到的appid
+        var qqAuthPath = '${pageInfo.qqAuthPath}'; // 前面设置的回调地址
+        var state = 'test';
+        var url='https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id='+qqAppId+'&redirect_uri='+qqAuthPath+'&state='+state;
+
+        width = width || 600;
+        height = height || 400;
+        var left = ($(window).width() - width+100) / 2;
+        var top = ($(window).height() - height) / 2;
+        window.open(url, "_blank", "toolbar=yes, location=yes, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=no, copyhistory=yes, left="+left+", top="+top+", width="+width+", height="+height);
+    }
+
+    <c:if test="${param.forceLogout == 1}">
+    alert('您已被强制下线！');
+    top.location.href = '${basePath}/login';
+    </c:if>
+    //解决iframe下系统超时无法跳出iframe框架的问题
+    if (window != top){
+        top.location.href = location.href;
+    }
 </script>
 </body>
 </html>

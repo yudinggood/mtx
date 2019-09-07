@@ -69,10 +69,10 @@
                             <li class="footer"><a href="#">View all</a></li>
                         </ul>
                     </li>
-                    <li style="border-left: solid 1px rgb(54,127,169);" class="dropdown user user-menu">
+                    <li style="border-left: solid 1px rgb(54,127,169);" class="dropdown user user-menu" id="user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img id="headimg1" src="${basePath}/resources/mtx-admin/image/avatar5.png" class="user-image" alt="User Image">
-                            <span class="hidden-xs">超级用户</span>
+                            <span class="hidden-xs">${systemUser.nickName}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
@@ -80,7 +80,7 @@
                                 <img id="headimg2" src="${basePath}/resources/mtx-admin/image/avatar5.png" class="img-circle" alt="User Image">
 
                                 <p>
-                                    你好！  超级用户
+                                    你好！${systemUser.nickName}
                                 </p>
                             </li>
 
@@ -104,29 +104,18 @@
             </div>
         </nav>
     </header>
-    <div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog" style="width:550px;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 style="float:left;margin-right:10px;" id="testResult_title" class="modal-title"><b>i助理</b>-v${systemVersion}</h4>
-                </div>
-                <div class="modal-body">
-                    <div style="text-align: center">
-                        <img src="${basePath}/resources/mtx-admin/image/logomini_2.png">
-                    </div>
-                    <div id="cpinfo" style="text-align:center">
-                        <p>Copyright (C) 2018-2020 浙江满天星网络技术有限公司</p>
-                        <p><a href='https://www.mtx.com' style="text-decoration:underline;"
-                              target="_blank">https://www.mtx.com</a>
-                        </p>
-                        <p>13625538625</p>
-                        <div style="clear: both;">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">确 定
-                            </button>
-                        </div>
-                    </div>
-                </div>
+
+    <div class="modal-body" style = "display : none;">
+        <div style="padding-top:10px;">
+            <div style="text-align: center;">
+                <img src="${basePath}/resources/mtx-admin/image/logomini_2.png">
+            </div>
+            <div id="cpinfo" style="text-align:center">
+                <p>Copyright (C) 2018-2020 浙江满天星网络技术有限公司</p>
+                <p><a href='${basePath}/system/index' style="text-decoration:underline;"
+                      target="_blank">http://www.mtx.com</a>
+                </p>
+                <p>13625538625</p>
             </div>
         </div>
     </div>
@@ -162,6 +151,7 @@
 
 
 </div>
+
     <script language="javascript">
         EHM.ImportSmartMenu();
         var PermissionEdit = {
@@ -193,10 +183,20 @@
             $("#sysmenu").removeClass("open");
         }
         function showAbout() {
+            top.layer.open({
+                type: 1,
+                title: 'i助理--v${systemVersion}',
+                shadeClose: true,
+                shade: 0.4,
+                maxmin: true,
+                area: ['30%', '30%'],
+                offset: '25%',
+                content: $(".modal-body").html()
+            });
 
-            $('#about').modal({
+            /*$('#about').modal({
                 keyboard: true
-            }).modal('show');
+            }).modal('show');*/
         }
         function fullScreen(id) {
             if ($.support.fullscreen) {

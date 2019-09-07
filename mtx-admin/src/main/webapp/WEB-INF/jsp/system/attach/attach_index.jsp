@@ -55,7 +55,6 @@
     }
     $(function () {
         initTable();
-
     });
     function onloadFun(){
         AttachIndex.$table.bootstrapTable('resetView', {

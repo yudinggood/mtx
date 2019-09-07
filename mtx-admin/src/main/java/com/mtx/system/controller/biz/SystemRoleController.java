@@ -77,6 +77,7 @@ public class SystemRoleController extends BaseController {
             return WrapMapper.wrap(Wrapper.ILLEGAL_ARGUMENT_CODE_,errorListToString(result.getErrors()));
         }
 
+        systemRoleDto.setEditUser(super.getSystemUser().getUserId());
         int count = systemRoleService.insertDto(systemRoleDto);
         return WrapMapper.wrap(count);
     }
@@ -95,6 +96,7 @@ public class SystemRoleController extends BaseController {
             return WrapMapper.wrap(Wrapper.ILLEGAL_ARGUMENT_CODE_,errorListToString(result.getErrors()));
         }
 
+        systemRoleDto.setEditUser(super.getSystemUser().getUserId());
         int count = systemRoleService.updateDto(systemRoleDto);
         return WrapMapper.wrap(count);
     }

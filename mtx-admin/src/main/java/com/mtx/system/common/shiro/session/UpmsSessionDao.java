@@ -1,11 +1,17 @@
 package com.mtx.system.common.shiro.session;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.mtx.common.constant.SystemConstant;
 import com.mtx.common.util.base.RedisUtil;
 import com.mtx.common.util.base.SerializableUtil;
+import com.mtx.common.util.base.TypeConversionUtil;
+import com.mtx.system.dao.model.SystemUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.DefaultSessionManager;
 import org.apache.shiro.session.mgt.ValidatingSession;
 import org.apache.shiro.session.mgt.eis.CachingSessionDAO;
 import redis.clients.jedis.Jedis;
@@ -44,7 +50,7 @@ public class UpmsSessionDao extends CachingSessionDAO {
         UpmsSession cacheUpmsSession = (UpmsSession) doReadSession(session.getId());
         if (null != cacheUpmsSession) {
             upmsSession.setStatus(cacheUpmsSession.getStatus());
-            upmsSession.setAttribute("FORCE_LOGOUT", cacheUpmsSession.getAttribute("FORCE_LOGOUT"));
+            upmsSession.setAttribute(SystemConstant.FORCE_LOGOUT, cacheUpmsSession.getAttribute(SystemConstant.FORCE_LOGOUT));
         }
         RedisUtil.set(UPMS_SHIRO_SESSION_ID + "_" + session.getId(), SerializableUtil.serialize(session), (int) session.getTimeout() / 1000);
         // 更新UPMS_SERVER_SESSION_ID、UPMS_SERVER_CODE过期时间 TODO
@@ -105,50 +111,44 @@ public class UpmsSessionDao extends CachingSessionDAO {
 
     /**
      * 获取会话列表
-     * @param offset
-     * @param limit
      * @return
      */
-    public Map getActiveSessions(int offset, int limit) {
-        Map sessions = new HashMap();
+
+    public List<Session> list(Page<Session> page) {
+        List<Session> list =new ArrayList<>();
         Jedis jedis = RedisUtil.getJedis();
-        // 获取在线会话总数
         long total = jedis.llen(UPMS_SERVER_SESSION_IDS);
-        // 获取当前页会话详情
-        List<String> ids = jedis.lrange(UPMS_SERVER_SESSION_IDS, offset, (offset + limit - 1));
-        List<Session> rows = new ArrayList<>();
+        // 获取当前页会话详情 0-19
+        List<String> ids = jedis.lrange(UPMS_SERVER_SESSION_IDS, page.getOffset(), (page.getOffset() + page.getLimit() - 1));
+        //List<String> ids = jedis.lrange(UPMS_SERVER_SESSION_IDS, (page.getCurrent()-1)*page.getSize()+1, page.getCurrent()*page.getSize() );
         for (String id : ids) {
-            String session = RedisUtil.get(UPMS_SHIRO_SESSION_ID + "_" + id);
+            String sessionId = RedisUtil.get(UPMS_SHIRO_SESSION_ID + "_" + id);
             // 过滤redis过期session
-            if (null == session) {
+            if (null == sessionId) {
                 RedisUtil.lrem(UPMS_SERVER_SESSION_IDS, 1, id);
                 total = total - 1;
                 continue;
             }
-            rows.add(SerializableUtil.deserialize(session));
+            list.add(SerializableUtil.deserialize(sessionId));
         }
+        page.setTotal(TypeConversionUtil.objectToInt(total));
         jedis.close();
-        sessions.put("total", total);
-        sessions.put("rows", rows);
-        return sessions;
+        return list;
     }
 
     /**
      * 强制退出
-     * @param ids
+     * @param sessionId
      * @return
      */
-    public int forceout(String ids) {
-        String[] sessionIds = ids.split(",");
-        for (String sessionId : sessionIds) {
-            // 会话增加强制退出属性标识，当此会话访问系统时，判断有该标识，则退出登录
-            String session = RedisUtil.get(UPMS_SHIRO_SESSION_ID + "_" + sessionId);
-            UpmsSession upmsSession = (UpmsSession) SerializableUtil.deserialize(session);
-            upmsSession.setStatus(UpmsSession.OnlineStatus.force_logout);
-            upmsSession.setAttribute("FORCE_LOGOUT", "FORCE_LOGOUT");
-            RedisUtil.set(UPMS_SHIRO_SESSION_ID + "_" + sessionId, SerializableUtil.serialize(upmsSession), (int) upmsSession.getTimeout() / 1000);
-        }
-        return sessionIds.length;
+    public int forceout(String sessionId) {
+        // 会话增加强制退出属性标识，当此会话访问系统时，判断有该标识，则退出登录
+        String session = RedisUtil.get(UPMS_SHIRO_SESSION_ID + "_" + sessionId);
+        UpmsSession upmsSession = (UpmsSession) SerializableUtil.deserialize(session);
+        upmsSession.setStatus(UpmsSession.OnlineStatus.force_logout);
+        upmsSession.setAttribute(SystemConstant.FORCE_LOGOUT,SystemConstant.FORCE_LOGOUT);
+        RedisUtil.set(UPMS_SHIRO_SESSION_ID + "_" + sessionId, SerializableUtil.serialize(upmsSession), (int) upmsSession.getTimeout() / 1000);
+        return 1;
     }
 
     /**
@@ -164,5 +164,24 @@ public class UpmsSessionDao extends CachingSessionDAO {
         }
         session.setStatus(onlineStatus);
         RedisUtil.set(UPMS_SHIRO_SESSION_ID + "_" + session.getId(), SerializableUtil.serialize(session), (int) session.getTimeout() / 1000);
+    }
+
+    //同时只允许一个账号登录
+    public void otherFouceOut(Integer userId) {
+        Jedis jedis = RedisUtil.getJedis();
+        List<String> ids = jedis.lrange(UPMS_SERVER_SESSION_IDS, 0,9);
+        for (String sessionId : ids){
+            String session = RedisUtil.get(UPMS_SHIRO_SESSION_ID + "_" + sessionId);
+            UpmsSession upmsSession = (UpmsSession) SerializableUtil.deserialize(session);
+            SystemUser tempUser = (SystemUser) upmsSession.getAttribute(SystemConstant.SESSION_SYSTEM_USER);
+            if(tempUser != null&&userId.equals(tempUser.getUserId())) {
+                upmsSession.setStatus(UpmsSession.OnlineStatus.force_logout);
+                upmsSession.setAttribute(SystemConstant.FORCE_LOGOUT, SystemConstant.FORCE_LOGOUT);
+                RedisUtil.set(UPMS_SHIRO_SESSION_ID + "_" + sessionId, SerializableUtil.serialize(upmsSession), (int) upmsSession.getTimeout() / 1000);
+                break;
+            }
+
+
+        }
     }
 }

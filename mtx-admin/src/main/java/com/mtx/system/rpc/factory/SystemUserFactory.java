@@ -58,7 +58,6 @@ public class SystemUserFactory extends BaseFactory{
     public SystemUser convertDtoToDo(SystemUserDto systemUserDto, Class<SystemUser> systemUserClass) {
         SystemUser systemUser = convertModel(systemUserDto,systemUserClass);
         systemUser.setEditDate(new Date());
-        systemUser.setEditUser(1);
         systemUser.setSalt(ToolUtil.getUuid());
         systemUser.setPassword(StringUtil.toSecretString(systemUser.getSalt()));
         systemUser.setExtendMap(TypeConversionUtil.objectToJsonToBytes(systemUserDto.getExtProps()));
@@ -72,7 +71,6 @@ public class SystemUserFactory extends BaseFactory{
     public SystemUser convertDtoToDoEdit(SystemUserDto systemUserDto, Class<SystemUser> systemUserClass) {
         SystemUser systemUser = convertModel(systemUserDto,systemUserClass);
         systemUser.setEditDate(new Date());
-        systemUser.setEditUser(1);
         systemUser.setExtendMap(TypeConversionUtil.objectToJsonToBytes(systemUserDto.getExtProps()));
 
         return systemUser;

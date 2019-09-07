@@ -78,6 +78,7 @@ public class SystemConfigController extends BaseController {
             return WrapMapper.wrap(Wrapper.ILLEGAL_ARGUMENT_CODE_,errorListToString(result.getErrors()));
         }
 
+        systemConfigDto.setEditUser(super.getSystemUser().getUserId());
         int count = systemConfigService.insertDto(systemConfigDto);
         return WrapMapper.wrap(count);
     }
@@ -96,6 +97,7 @@ public class SystemConfigController extends BaseController {
             return WrapMapper.wrap(Wrapper.ILLEGAL_ARGUMENT_CODE_,errorListToString(result.getErrors()));
         }
 
+        systemConfigDto.setEditUser(super.getSystemUser().getUserId());
         int count = systemConfigService.updateDto(systemConfigDto);
         return WrapMapper.wrap(count);
     }

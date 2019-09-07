@@ -73,6 +73,7 @@ public class SystemAttachController extends BaseController {
             return WrapMapper.wrap(Wrapper.ILLEGAL_ARGUMENT_CODE_,Wrapper.ILLEGAL_ARGUMENT_MESSAGE);
         }
 
+        systemAttachDto.setEditUser(super.getSystemUser().getUserId());
         int count = systemAttachService.insertDto(systemAttachDto);
         return WrapMapper.wrap(count);
     }

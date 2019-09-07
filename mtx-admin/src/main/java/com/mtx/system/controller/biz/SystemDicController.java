@@ -95,6 +95,7 @@ public class SystemDicController extends BaseController {
             return WrapMapper.wrap(Wrapper.ILLEGAL_ARGUMENT_CODE_,errorListToString(result.getErrors()));
         }
 
+        systemDicDto.setEditUser(super.getSystemUser().getUserId());
         int count = systemDicService.insertDto(systemDicDto);
         return WrapMapper.wrap(count);
     }
@@ -114,6 +115,7 @@ public class SystemDicController extends BaseController {
             return WrapMapper.wrap(Wrapper.ILLEGAL_ARGUMENT_CODE_,errorListToString(result.getErrors()));
         }
 
+        systemDicDto.setEditUser(super.getSystemUser().getUserId());
         int count = systemDicService.updateDto(systemDicDto);
         return WrapMapper.wrap(count);
     }

@@ -82,6 +82,7 @@ public class SystemOrgController extends BaseController {
             return WrapMapper.wrap(Wrapper.ILLEGAL_ARGUMENT_CODE_,errorListToString(result.getErrors()));
         }
 
+        systemOrgDto.setEditUser(super.getSystemUser().getUserId());
         int count = systemOrganizationService.insertDto(systemOrgDto);
         return WrapMapper.wrap(count);
     }
@@ -100,6 +101,7 @@ public class SystemOrgController extends BaseController {
             return WrapMapper.wrap(Wrapper.ILLEGAL_ARGUMENT_CODE_,errorListToString(result.getErrors()));
         }
 
+        systemOrgDto.setEditUser(super.getSystemUser().getUserId());
         int count = systemOrganizationService.updateDto(systemOrgDto);
         return WrapMapper.wrap(count);
     }

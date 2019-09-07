@@ -3,6 +3,7 @@ package com.mtx.system.common.bean;
 import com.mtx.common.constant.SystemConstant;
 import com.mtx.common.util.base.PropertiesFileUtil;
 import com.mtx.common.util.secret.MD5Util;
+import com.mtx.system.common.shiro.session.UpmsSessionDao;
 import com.mtx.system.dao.model.SystemPermission;
 import com.mtx.system.dao.model.SystemRole;
 import com.mtx.system.dao.model.SystemUser;
@@ -13,13 +14,17 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
+import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,7 +39,8 @@ public class UpmsRealm extends AuthorizingRealm {
 
     @Autowired
     private SystemApiService systemApiService;
-
+    @Autowired
+    UpmsSessionDao upmsSessionDao;
     /**
      * 授权：验证权限时调用
      * @param principalCollection
@@ -81,6 +87,9 @@ public class UpmsRealm extends AuthorizingRealm {
         //String password = new String((char[]) authenticationToken.getCredentials());
         // 查询用户信息
         SystemUser systemUser = systemApiService.selectSystemUserByUsername(username);
+        //同时只允许一个账号登录    获取在线的session
+        upmsSessionDao.otherFouceOut(systemUser.getUserId());
+
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
                 username, //用户名
                 systemUser.getPassword(), //密码

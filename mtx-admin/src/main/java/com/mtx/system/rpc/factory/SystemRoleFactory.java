@@ -24,7 +24,6 @@ public class SystemRoleFactory extends BaseFactory{
     public SystemRole convertDtoToDo(SystemRoleDto systemRoleDto, Class<SystemRole> systemRoleClass) {
         SystemRole systemRole = convertModel(systemRoleDto,systemRoleClass);
         systemRole.setEditDate(new Date());
-        systemRole.setEditUser(1);
         return systemRole;
     }
 }

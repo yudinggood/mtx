@@ -79,6 +79,19 @@ function getCheckedNe(){
 function getHeight(muti) {
     return $(window).height() *muti;
 }
+//首页用户信息关闭,关闭父页面信息
+document.onclick=function(){
+    if($("#user-menu").length > 0){//判断元素是否存在
+        return;
+    }
+    if($("#user-menu", window.top.document).hasClass("open")){
+        $("#user-menu", window.top.document).removeClass("open");
+    }
+
+};
+
+
+
 
 
 

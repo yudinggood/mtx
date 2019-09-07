@@ -1,8 +1,11 @@
 package com.mtx.system.common.bean;
 
+import com.mtx.common.constant.SystemConstant;
+import com.mtx.common.util.base.RequestUtil;
 import com.mtx.common.util.exception.ErrorManager;
 import com.mtx.common.util.wrapper.WrapMapper;
 import com.mtx.system.common.exception.ErrorCodeEnum;
+import com.mtx.system.dao.model.SystemUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.session.InvalidSessionException;
@@ -26,7 +29,8 @@ public class GlobalExceptionHandler {
     public Object exceptionHandler(HttpServletRequest request, HttpServletResponse response, Exception exception) {
         log.error("统一异常处理：", exception);
         //先存入DB
-        ErrorManager.me().executeLog(ErrorTaskFactory.me().exceptionLog(1,exception));
+        SystemUser systemUser=(SystemUser) RequestUtil.getRequest().getSession().getAttribute(SystemConstant.SESSION_SYSTEM_USER);
+        ErrorManager.me().executeLog(ErrorTaskFactory.me().exceptionLog(systemUser.getUserId(),exception));
         ModelAndView mv =this.getModelAndView();
         mv.addObject("ex",exception);
         if (null != request.getHeader("X-Requested-With") && "XMLHttpRequest".equalsIgnoreCase(request.getHeader("X-Requested-With"))) {

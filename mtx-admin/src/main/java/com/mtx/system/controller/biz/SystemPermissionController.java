@@ -8,6 +8,7 @@ import com.mtx.common.util.validator.LengthValidator;
 import com.mtx.common.util.wrapper.WrapMapper;
 import com.mtx.common.util.wrapper.Wrapper;
 import com.mtx.system.dao.dto.SystemPermissionDto;
+import com.mtx.system.dao.model.SystemUser;
 import com.mtx.system.dao.vo.SystemPermissionVo;
 import com.mtx.system.rpc.api.SystemPermissionService;
 import com.mtx.system.rpc.api.SystemSystemService;
@@ -86,6 +87,7 @@ public class SystemPermissionController extends BaseController{
             return WrapMapper.wrap(Wrapper.ILLEGAL_ARGUMENT_CODE_,errorListToString(result.getErrors()));
         }
 
+        systemPermissionDto.setEditUser(super.getSystemUser().getUserId());
         int count = systemPermissionService.insertDto(systemPermissionDto);
         return WrapMapper.wrap(count);
     }
@@ -114,6 +116,7 @@ public class SystemPermissionController extends BaseController{
             return WrapMapper.wrap(Wrapper.ILLEGAL_ARGUMENT_CODE_,errorListToString(result.getErrors()));
         }
 
+        systemPermissionDto.setEditUser(super.getSystemUser().getUserId());
         int count = systemPermissionService.updateDto(systemPermissionDto);
         return WrapMapper.wrap(count);
     }

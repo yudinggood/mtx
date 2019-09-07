@@ -24,7 +24,6 @@ public class SystemConfigFactory extends BaseFactory {
     public SystemConfig convertDtoToDo(SystemConfigDto systemConfigDto, Class<SystemConfig> systemConfigClass) {
         SystemConfig systemConfig = convertModel(systemConfigDto,systemConfigClass);
         systemConfig.setEditDate(new Date());
-        systemConfig.setEditUser(1);
         return systemConfig;
     }
 }

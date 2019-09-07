@@ -30,7 +30,6 @@ public class SystemOrgFactory extends BaseFactory{
     public SystemOrganization convertDtoToDo(SystemOrgDto systemOrgDto, Class<SystemOrganization> systemOrganizationClass) {
         SystemOrganization systemOrganization = convertModel(systemOrgDto,systemOrganizationClass);
         systemOrganization.setEditDate(new Date());
-        systemOrganization.setEditUser(1);
         return systemOrganization;
     }
 }

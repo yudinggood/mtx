@@ -33,4 +33,16 @@ public class SystemConstant {
 
     public static final String SERVER = "server";
     public static final String CLIENT = "client";
+
+    public static final String FORCE_LOGOUT = "FORCE_LOGOUT";//强制退出标记
+    public static final String SESSION_SYSTEM_USER = "systemUser";//session中的systemUser属性
+
+    //关于QQ三方登录的若干
+    public static final String QQAPPID ="101464318";   //id
+    public static final String QQCLIENT_SECRET ="780765751a2fb050dbb0b5e38c6eb1b4";   //secret
+    public static final String QQAUTHPATH ="/qqAuthorization";   //回调地址
+
+
+
+
 }

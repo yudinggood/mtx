@@ -44,4 +44,9 @@ public class SystemUserServiceMock extends BaseServiceMock<SystemUserMapper, Sys
     public int deleteByPrimaryKeysFaker(String ids) {
         return 0;
     }
+
+    @Override
+    public SystemUser selectByQqOpenId(String openid) {
+        return null;
+    }
 }

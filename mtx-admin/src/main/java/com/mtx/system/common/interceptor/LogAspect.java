@@ -1,12 +1,14 @@
 package com.mtx.system.common.interceptor;
 
 import com.alibaba.fastjson.JSON;
+import com.mtx.common.constant.SystemConstant;
 import com.mtx.common.util.base.DateUtil;
 import com.mtx.common.util.base.RequestUtil;
 import com.mtx.common.util.base.TypeConversionUtil;
 import com.mtx.system.common.bean.GlobalProperties;
 import com.mtx.system.common.enums.PropertiesEnum;
 import com.mtx.system.dao.model.SystemLog;
+import com.mtx.system.dao.model.SystemUser;
 import com.mtx.system.rpc.api.SystemLogService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -103,7 +105,8 @@ public class LogAspect {
         systemLog.setUri(request.getRequestURI());
         //systemLog.setUrl(ObjectUtils.toString(request.getRequestURL()));
         systemLog.setUserAgent(request.getHeader("User-Agent"));
-        //systemLog.setEditUser(ObjectUtils.toString(request.getUserPrincipal()));
+        SystemUser systemUser=(SystemUser)RequestUtil.getRequest().getSession().getAttribute(SystemConstant.SESSION_SYSTEM_USER);
+        systemLog.setEditUser(systemUser.getUserId());
         systemLogService.insertSelective(systemLog);
         return result;
     }
