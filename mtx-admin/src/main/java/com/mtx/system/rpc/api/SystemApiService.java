@@ -78,4 +78,6 @@ public interface SystemApiService   {
      * @return
      */
     int insertSystemLogSelective(SystemLog record);
+
+    SystemUser selectSystemUserByUsernameUnauth(String principal);
 }

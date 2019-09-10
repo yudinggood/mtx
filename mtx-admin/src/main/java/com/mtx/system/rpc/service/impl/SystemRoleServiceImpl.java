@@ -147,4 +147,16 @@ public class SystemRoleServiceImpl extends BaseServiceImpl<SystemRoleMapper, Sys
 
         return selectVoList;
     }
+
+    @Override
+    public Integer selectByCode(String commonRole) {
+        SystemRoleExample systemRoleExample=new SystemRoleExample();
+        SystemRoleExample.Criteria criteria = systemRoleExample.createCriteria();
+        criteria.andRoleCodeEqualTo(commonRole);
+        List<SystemRole> list =systemRoleMapper.selectByExample(systemRoleExample);
+        if (ToolUtil.isNotEmpty(list)) {
+            return list.get(0).getRoleId();
+        }
+        return null;
+    }
 }

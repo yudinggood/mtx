@@ -11,6 +11,7 @@
     <result column="last_ip" jdbcType="VARCHAR" property="lastIp" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="sex" jdbcType="TINYINT" property="sex" />
+    <result column="qq_open_id" jdbcType="VARCHAR" property="qqOpenId" />
     <result column="user_state" jdbcType="TINYINT" property="userState" />
     <result column="last_login" jdbcType="TIMESTAMP" property="lastLogin" />
     <result column="edit_date" jdbcType="TIMESTAMP" property="editDate" />
@@ -79,8 +80,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    user_id, nick_name, password, salt, avatar, phone, last_ip, email, sex, user_state, 
-    last_login, edit_date, edit_user, deleted
+    user_id, nick_name, password, salt, avatar, phone, last_ip, email, sex, qq_open_id, 
+    user_state, last_login, edit_date, edit_user, deleted
   </sql>
   <sql id="Blob_Column_List">
     extend_map
@@ -139,14 +140,16 @@
     </selectKey>
     insert into system_user (nick_name, password, salt, 
       avatar, phone, last_ip, 
-      email, sex, user_state, 
-      last_login, edit_date, edit_user, 
-      deleted, extend_map)
+      email, sex, qq_open_id, 
+      user_state, last_login, edit_date, 
+      edit_user, deleted, extend_map
+      )
     values (#{nickName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
       #{avatar,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{lastIp,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, #{userState,jdbcType=TINYINT}, 
-      #{lastLogin,jdbcType=TIMESTAMP}, #{editDate,jdbcType=TIMESTAMP}, #{editUser,jdbcType=INTEGER}, 
-      #{deleted,jdbcType=TINYINT}, #{extendMap,jdbcType=LONGVARBINARY})
+      #{email,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, #{qqOpenId,jdbcType=VARCHAR}, 
+      #{userState,jdbcType=TINYINT}, #{lastLogin,jdbcType=TIMESTAMP}, #{editDate,jdbcType=TIMESTAMP}, 
+      #{editUser,jdbcType=INTEGER}, #{deleted,jdbcType=TINYINT}, #{extendMap,jdbcType=LONGVARBINARY}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.mtx.system.dao.model.SystemUser">
     <selectKey keyProperty="userId" order="AFTER" resultType="java.lang.Integer">
@@ -177,6 +180,9 @@
       </if>
       <if test="sex != null">
         sex,
+      </if>
+      <if test="qqOpenId != null">
+        qq_open_id,
       </if>
       <if test="userState != null">
         user_state,
@@ -221,6 +227,9 @@
       </if>
       <if test="sex != null">
         #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="qqOpenId != null">
+        #{qqOpenId,jdbcType=VARCHAR},
       </if>
       <if test="userState != null">
         #{userState,jdbcType=TINYINT},
@@ -278,6 +287,9 @@
       <if test="record.sex != null">
         sex = #{record.sex,jdbcType=TINYINT},
       </if>
+      <if test="record.qqOpenId != null">
+        qq_open_id = #{record.qqOpenId,jdbcType=VARCHAR},
+      </if>
       <if test="record.userState != null">
         user_state = #{record.userState,jdbcType=TINYINT},
       </if>
@@ -312,6 +324,7 @@
       last_ip = #{record.lastIp,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=TINYINT},
+      qq_open_id = #{record.qqOpenId,jdbcType=VARCHAR},
       user_state = #{record.userState,jdbcType=TINYINT},
       last_login = #{record.lastLogin,jdbcType=TIMESTAMP},
       edit_date = #{record.editDate,jdbcType=TIMESTAMP},
@@ -333,6 +346,7 @@
       last_ip = #{record.lastIp,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=TINYINT},
+      qq_open_id = #{record.qqOpenId,jdbcType=VARCHAR},
       user_state = #{record.userState,jdbcType=TINYINT},
       last_login = #{record.lastLogin,jdbcType=TIMESTAMP},
       edit_date = #{record.editDate,jdbcType=TIMESTAMP},
@@ -369,6 +383,9 @@
       <if test="sex != null">
         sex = #{sex,jdbcType=TINYINT},
       </if>
+      <if test="qqOpenId != null">
+        qq_open_id = #{qqOpenId,jdbcType=VARCHAR},
+      </if>
       <if test="userState != null">
         user_state = #{userState,jdbcType=TINYINT},
       </if>
@@ -400,6 +417,7 @@
       last_ip = #{lastIp,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=TINYINT},
+      qq_open_id = #{qqOpenId,jdbcType=VARCHAR},
       user_state = #{userState,jdbcType=TINYINT},
       last_login = #{lastLogin,jdbcType=TIMESTAMP},
       edit_date = #{editDate,jdbcType=TIMESTAMP},
@@ -418,6 +436,7 @@
       last_ip = #{lastIp,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=TINYINT},
+      qq_open_id = #{qqOpenId,jdbcType=VARCHAR},
       user_state = #{userState,jdbcType=TINYINT},
       last_login = #{lastLogin,jdbcType=TIMESTAMP},
       edit_date = #{editDate,jdbcType=TIMESTAMP},

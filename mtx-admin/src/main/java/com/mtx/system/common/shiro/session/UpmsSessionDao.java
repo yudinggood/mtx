@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.mtx.common.constant.SystemConstant;
 import com.mtx.common.util.base.RedisUtil;
 import com.mtx.common.util.base.SerializableUtil;
+import com.mtx.common.util.base.ToolUtil;
 import com.mtx.common.util.base.TypeConversionUtil;
 import com.mtx.system.dao.model.SystemUser;
 import lombok.extern.slf4j.Slf4j;
@@ -61,11 +62,13 @@ public class UpmsSessionDao extends CachingSessionDAO {
     protected void doDelete(Session session) {
         String sessionId = session.getId().toString();
         String upmsType = ObjectUtils.toString(session.getAttribute(UPMS_TYPE));
-        if (SystemConstant.CLIENT.equals(upmsType)) {
+        String oauthLogin = RedisUtil.get(SystemConstant.UPMS_WITHOUT_PASSWORD + "_" + sessionId);
+        if (SystemConstant.CLIENT.equals(upmsType)||ToolUtil.isNotEmpty(oauthLogin)) {
             // 删除局部会话和同一code注册的局部会话
             String code = RedisUtil.get(UPMS_CLIENT_SESSION_ID + "_" + sessionId);
             Jedis jedis = RedisUtil.getJedis();
             jedis.del(UPMS_CLIENT_SESSION_ID + "_" + sessionId);
+            jedis.del(SystemConstant.UPMS_WITHOUT_PASSWORD + "_" + sessionId);
             jedis.srem(UPMS_CLIENT_SESSION_IDS + "_" + code, sessionId);
             jedis.close();
         }
@@ -172,16 +175,20 @@ public class UpmsSessionDao extends CachingSessionDAO {
         List<String> ids = jedis.lrange(UPMS_SERVER_SESSION_IDS, 0,9);
         for (String sessionId : ids){
             String session = RedisUtil.get(UPMS_SHIRO_SESSION_ID + "_" + sessionId);
-            UpmsSession upmsSession = (UpmsSession) SerializableUtil.deserialize(session);
-            SystemUser tempUser = (SystemUser) upmsSession.getAttribute(SystemConstant.SESSION_SYSTEM_USER);
-            if(tempUser != null&&userId.equals(tempUser.getUserId())) {
-                upmsSession.setStatus(UpmsSession.OnlineStatus.force_logout);
-                upmsSession.setAttribute(SystemConstant.FORCE_LOGOUT, SystemConstant.FORCE_LOGOUT);
-                RedisUtil.set(UPMS_SHIRO_SESSION_ID + "_" + sessionId, SerializableUtil.serialize(upmsSession), (int) upmsSession.getTimeout() / 1000);
-                break;
+            if(ToolUtil.isNotEmpty(session)){
+                UpmsSession upmsSession = (UpmsSession) SerializableUtil.deserialize(session);
+                SystemUser tempUser = (SystemUser) upmsSession.getAttribute(SystemConstant.SESSION_SYSTEM_USER);
+                if(tempUser != null&&userId.equals(tempUser.getUserId())) {
+                    upmsSession.setStatus(UpmsSession.OnlineStatus.force_logout);
+                    upmsSession.setAttribute(SystemConstant.FORCE_LOGOUT, SystemConstant.FORCE_LOGOUT);
+                    RedisUtil.set(UPMS_SHIRO_SESSION_ID + "_" + sessionId, SerializableUtil.serialize(upmsSession), (int) upmsSession.getTimeout() / 1000);
+                    break;
+                }
             }
 
 
         }
     }
+
+
 }

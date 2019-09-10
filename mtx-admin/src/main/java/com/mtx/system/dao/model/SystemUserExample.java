@@ -718,6 +718,76 @@ public class SystemUserExample implements Serializable {
             return (Criteria) this;
         }
 
+        public Criteria andQqOpenIdIsNull() {
+            addCriterion("qq_open_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andQqOpenIdIsNotNull() {
+            addCriterion("qq_open_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andQqOpenIdEqualTo(String value) {
+            addCriterion("qq_open_id =", value, "qqOpenId");
+            return (Criteria) this;
+        }
+
+        public Criteria andQqOpenIdNotEqualTo(String value) {
+            addCriterion("qq_open_id <>", value, "qqOpenId");
+            return (Criteria) this;
+        }
+
+        public Criteria andQqOpenIdGreaterThan(String value) {
+            addCriterion("qq_open_id >", value, "qqOpenId");
+            return (Criteria) this;
+        }
+
+        public Criteria andQqOpenIdGreaterThanOrEqualTo(String value) {
+            addCriterion("qq_open_id >=", value, "qqOpenId");
+            return (Criteria) this;
+        }
+
+        public Criteria andQqOpenIdLessThan(String value) {
+            addCriterion("qq_open_id <", value, "qqOpenId");
+            return (Criteria) this;
+        }
+
+        public Criteria andQqOpenIdLessThanOrEqualTo(String value) {
+            addCriterion("qq_open_id <=", value, "qqOpenId");
+            return (Criteria) this;
+        }
+
+        public Criteria andQqOpenIdLike(String value) {
+            addCriterion("qq_open_id like", value, "qqOpenId");
+            return (Criteria) this;
+        }
+
+        public Criteria andQqOpenIdNotLike(String value) {
+            addCriterion("qq_open_id not like", value, "qqOpenId");
+            return (Criteria) this;
+        }
+
+        public Criteria andQqOpenIdIn(List<String> values) {
+            addCriterion("qq_open_id in", values, "qqOpenId");
+            return (Criteria) this;
+        }
+
+        public Criteria andQqOpenIdNotIn(List<String> values) {
+            addCriterion("qq_open_id not in", values, "qqOpenId");
+            return (Criteria) this;
+        }
+
+        public Criteria andQqOpenIdBetween(String value1, String value2) {
+            addCriterion("qq_open_id between", value1, value2, "qqOpenId");
+            return (Criteria) this;
+        }
+
+        public Criteria andQqOpenIdNotBetween(String value1, String value2) {
+            addCriterion("qq_open_id not between", value1, value2, "qqOpenId");
+            return (Criteria) this;
+        }
+
         public Criteria andUserStateIsNull() {
             addCriterion("user_state is null");
             return (Criteria) this;

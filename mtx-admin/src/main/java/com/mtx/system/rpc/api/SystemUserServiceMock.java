@@ -49,4 +49,9 @@ public class SystemUserServiceMock extends BaseServiceMock<SystemUserMapper, Sys
     public SystemUser selectByQqOpenId(String openid) {
         return null;
     }
+
+    @Override
+    public void updateOpenId(SystemUser systemUser) {
+
+    }
 }

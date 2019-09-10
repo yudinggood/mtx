@@ -5,6 +5,7 @@ import com.mtx.common.constant.SystemConstant;
 import com.mtx.common.util.base.PropertiesFileUtil;
 import com.mtx.common.util.base.RedisUtil;
 import com.mtx.common.util.base.RequestUtil;
+import com.mtx.common.util.base.ToolUtil;
 import com.mtx.system.common.shiro.session.UpmsSessionDao;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -57,7 +58,8 @@ public class UpmsAuthenticationFilter extends AuthenticationFilter {
         // 判断请求类型
         String upmsType = PropertiesFileUtil.getInstance().get("upms.type");
         session.setAttribute(UpmsSessionDao.UPMS_TYPE, upmsType);
-        if (SystemConstant.CLIENT.equals(upmsType)) {
+        String oauthLogin = RedisUtil.get(SystemConstant.UPMS_WITHOUT_PASSWORD + "_" + session.getId().toString());
+        if (SystemConstant.CLIENT.equals(upmsType)||ToolUtil.isNotEmpty(oauthLogin)) {
             return validateClient(request, response);
         }
         if (SystemConstant.SERVER.equals(upmsType)) {
@@ -69,9 +71,12 @@ public class UpmsAuthenticationFilter extends AuthenticationFilter {
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
         StringBuffer ssoServerUrl = new StringBuffer(PropertiesFileUtil.getInstance().get("upms.sso.server.url"));
+        Subject subject = getSubject(request, response);
+        Session session = subject.getSession();
+        String oauthLogin = RedisUtil.get(SystemConstant.UPMS_WITHOUT_PASSWORD + "_" + session.getId().toString());
         // server需要登录
         String upmsType = PropertiesFileUtil.getInstance().get("upms.type");
-        if (SystemConstant.SERVER.equals(upmsType)) {
+        if (SystemConstant.SERVER.equals(upmsType)&&ToolUtil.isEmpty(oauthLogin)) {
             WebUtils.toHttp(response).sendRedirect(ssoServerUrl.append("/login").toString());
             return false;
         }
@@ -148,7 +153,7 @@ public class UpmsAuthenticationFilter extends AuthenticationFilter {
                         try {
                             // client无密认证
                             String username = request.getParameter("upms_username");
-                            subject.login(new UsernamePasswordToken(username, ""));
+                            subject.login(new EasyTypeToken(username));
                             HttpServletResponse httpServletResponse = WebUtils.toHttp(response);
                             httpServletResponse.sendRedirect(backUrl.toString());
                             return true;

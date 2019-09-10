@@ -94,16 +94,64 @@
             var d = this;
             if (b.code) {
 
+                //发送短信验证码
                 $("#verifyYz").click(function() {
-	                if($('#phone').val().length){
-		                $('.msg').hide()
-		                $("#time_box").text("60s后可重发");
-		                d._sendVerify()
-	                } else {
-	                	$('.msg').show()
-	                }
+                    if(verifyCheck._clickSms()){//前端校验
+
+                        $.ajax({
+                            type: 'post',
+                            url: '/sendSms',
+                            data:  {
+                                loginId: $('#username2').val(),
+                                code:$('#code2').val(),
+                            },
+                            beforeSend: function() {//防止重复提交数据 与loading 表单校验
+
+                                Login.index = layer.load(1, {
+                                    //shade: [0.4,'#000'] //0.1透明度的白色背景
+                                });
+                            },
+                            success: function(result) {
+                                changeCode2();
+                                if (result.code == 200) {
+                                    $('.msg').hide()
+                                    $("#time_box").text("60s后可重发");
+                                    d._sendVerify()
+                                    layer.msg('验证码已发送', {
+                                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                    });
+                                }else {
+                                    if (20000001 == result.code) {
+                                        $('#codeLabel2').append('<span><i class="icon-tips"></i>'+result.message+'</span>');
+                                    }
+                                    if (20000010 == result.code) {
+                                        $('#userLabel2').append('<span><i class="icon-tips"></i>'+result.message+'</span>');
+                                    }
+                                    if (20000011 == result.code) {
+                                        $('#userLabel2').append('<span><i class="icon-tips"></i>'+result.message+'</span>');
+                                    }
+                                }
+                            },
+                            complete:function (data) {
+                                layer.close(Login.index);
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                var i =layer.confirm(textStatus, {
+                                    shade: 0,
+                                    btn: ['确认'] //按钮
+                                }, function(){
+                                    layer.close(i);
+                                });
+                            }
+                        });
+
+
+                    }else {
+                        $('.msg').show()
+                    }
 
                 })
+
             }
             $('body').on({
                 /*blur: function(a) {
@@ -172,7 +220,7 @@
                 clearTimeout(h);
                 timerC = 60;
                 var b = /^1([^01269])\d{9}$/;
-                if (!b.test($("#phone").val())) {
+                if (!b.test($("#username2").val())) {
                     $("#time_box").text("发送验证码")
                 } else {
                     $("#verifyYz").show();
@@ -211,15 +259,49 @@
     j._click = function(c) {
         c = c || opt.formId;
         var d = $("#" + c).find('.required:visible'),
-        self = this,
-        result = true,
-        t = new require(),
-        r = [];
+            self = this,
+            result = true,
+            t = new require(),
+            r = [];
         $.each(d,
-        function(a, b) {
-            result = t.formValidator($(b));
-            if (result) r.push(result)
-        });
+            function(a, b) {
+                result = t.formValidator($(b));
+                if (result) r.push(result)
+            });
+        if (d.length !== r.length) result = false;
+        return result
+    };
+    j._clickSms = function(c) {
+        c = c || opt.formId;
+        var d = $("#" + c).find('.required:visible'),
+            self = this,
+            result = true,
+            t = new require(),
+            r = [];
+
+        d=d.slice(0,2);
+
+        $.each(d,
+            function(a, b) {
+                result = t.formValidator($(b));
+                if (result) r.push(result)
+            });
+        if (d.length !== r.length) result = false;
+        return result
+    };
+    j._clickSms2 = function(c) {
+        c = c || opt.formId;
+        var d = $("#" + c).find('.required:visible'),
+            self = this,
+            result = true,
+            t = new require(),
+            r = [];
+        d=d.slice(2,4);
+        $.each(d,
+            function(a, b) {
+                result = t.formValidator($(b));
+                if (result) r.push(result)
+            });
         if (d.length !== r.length) result = false;
         return result
     };

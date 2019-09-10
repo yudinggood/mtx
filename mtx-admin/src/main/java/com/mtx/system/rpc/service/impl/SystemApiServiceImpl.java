@@ -2,6 +2,7 @@ package com.mtx.system.rpc.service.impl;
 
 import com.mtx.common.annotation.BaseService;
 import com.mtx.common.util.base.RegularUtil;
+import com.mtx.common.util.base.ToolUtil;
 import com.mtx.system.dao.mapper.SystemUserMapper;
 import com.mtx.system.dao.model.*;
 import com.mtx.system.rpc.api.SystemApiService;
@@ -80,14 +81,16 @@ public class SystemApiServiceImpl implements SystemApiService{
     @Override
     public SystemUser selectSystemUserByUsername(String username) {
         SystemUserExample systemUserExample = new SystemUserExample();
+        SystemUserExample.Criteria criteria = systemUserExample.createCriteria();
         if(RegularUtil.getRegularResult(RegularUtil.PHONE,username)){
-            systemUserExample.createCriteria().andPhoneEqualTo(username);
+            criteria.andPhoneEqualTo(username);
         }
         if(RegularUtil.getRegularResult(RegularUtil.EMAIL,username)){
-            systemUserExample.createCriteria().andEmailEqualTo(username);
+            criteria.andEmailEqualTo(username);
         }
+        criteria.andUserStateNotEqualTo((byte) 3);
         List<SystemUser> systemUsers = systemUserMapper.selectByExample(systemUserExample);
-        if (null != systemUsers && systemUsers.size() > 0) {
+        if (ToolUtil.isNotEmpty(systemUsers)) {
             return systemUsers.get(0);
         }
         return null;
@@ -97,5 +100,22 @@ public class SystemApiServiceImpl implements SystemApiService{
     @Override
     public int insertSystemLogSelective(SystemLog record) {
         return 0;
+    }
+
+    @Override
+    public SystemUser selectSystemUserByUsernameUnauth(String username) {
+        SystemUserExample systemUserExample = new SystemUserExample();
+        SystemUserExample.Criteria criteria = systemUserExample.createCriteria();
+        if(RegularUtil.getRegularResult(RegularUtil.PHONE,username)){
+            criteria.andPhoneEqualTo(username);
+        }
+        if(RegularUtil.getRegularResult(RegularUtil.EMAIL,username)){
+            criteria.andEmailEqualTo(username);
+        }
+        List<SystemUser> systemUsers = systemUserMapper.selectByExample(systemUserExample);
+        if (ToolUtil.isNotEmpty(systemUsers)) {
+            return systemUsers.get(0);
+        }
+        return null;
     }
 }

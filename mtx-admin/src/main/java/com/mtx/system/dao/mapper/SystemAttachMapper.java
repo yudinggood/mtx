@@ -3,10 +3,7 @@ package com.mtx.system.dao.mapper;
 import com.mtx.system.dao.model.SystemAttach;
 import com.mtx.system.dao.model.SystemAttachExample;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 public interface SystemAttachMapper {
     long countByExample(SystemAttachExample example);

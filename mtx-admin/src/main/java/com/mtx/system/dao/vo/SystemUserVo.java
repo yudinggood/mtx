@@ -122,6 +122,12 @@ public class SystemUserVo implements Serializable {
      * @mbg.generated
      */
     private byte[] extendMap;
+    /**
+     * qq授权id
+     *
+     * @mbg.generated
+     */
+    private String qqOpenId;
 
     //修改或添加页面
     private String page;

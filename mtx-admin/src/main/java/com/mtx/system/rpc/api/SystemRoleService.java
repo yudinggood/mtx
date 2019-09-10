@@ -35,4 +35,6 @@ public interface SystemRoleService extends BaseService<SystemRole, SystemRoleExa
     List<SelectVo> selectForSelect();
 
     List<SelectVo> selectForSelect(int userId);
+
+    Integer selectByCode(String commonRole);
 }

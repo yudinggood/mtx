@@ -1,5 +1,8 @@
 package com.mtx.common.constant;
 
+import com.mtx.system.common.bean.GlobalProperties;
+import com.mtx.system.common.enums.PropertiesEnum;
+
 public class SystemConstant {
     public interface Number {//内部接口总是静态的
         int THOUSAND_INT = 1000;
@@ -36,13 +39,22 @@ public class SystemConstant {
 
     public static final String FORCE_LOGOUT = "FORCE_LOGOUT";//强制退出标记
     public static final String SESSION_SYSTEM_USER = "systemUser";//session中的systemUser属性
+    public static final String COMMON_ROLE = "common";//表示普通用户
+    public static final String COMMON_ROLE_ZH = "普通用户";//表示普通用户 中文
 
     //关于QQ三方登录的若干
-    public static final String QQAPPID ="101464318";   //id
-    public static final String QQCLIENT_SECRET ="780765751a2fb050dbb0b5e38c6eb1b4";   //secret
+    public static final String QQAPPID = GlobalProperties.me().getValueByCode(PropertiesEnum.QQAPPID);   //id
+    public static final String QQCLIENT_SECRET =GlobalProperties.me().getValueByCode(PropertiesEnum.QQCLIENT_SECRET);   //secret
     public static final String QQAUTHPATH ="/qqAuthorization";   //回调地址
+    public static final String UPMS_WITHOUT_PASSWORD = "upms_without_password";
 
-
+    //阿里云短信
+    public static final String ACCESS_KEY_ID = GlobalProperties.me().getValueByCode(PropertiesEnum.ACCESS_KEY_ID);
+    public static final String ACCESS_KEY_SECRET = GlobalProperties.me().getValueByCode(PropertiesEnum.ACCESS_KEY_SECRET);
+    public static final String MSG_PRODUCT = "Dysmsapi";
+    public static final String MSG_DOMAIN = "dysmsapi.aliyuncs.com";
+    public static final String MSG_SIGN_NAME = "i助理";
+    public static final String MSG_CAPTCHA_TEL_CODE = "SMS_173760206";//
 
 
 }

@@ -29,4 +29,6 @@ public interface SystemUserService extends BaseService<SystemUser, SystemUserExa
     int deleteByPrimaryKeysFaker(String ids);
 
     SystemUser selectByQqOpenId(String openid);
+
+    void updateOpenId(SystemUser systemUser);
 }

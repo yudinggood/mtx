@@ -30,7 +30,9 @@ public class GlobalExceptionHandler {
         log.error("统一异常处理：", exception);
         //先存入DB
         SystemUser systemUser=(SystemUser) RequestUtil.getRequest().getSession().getAttribute(SystemConstant.SESSION_SYSTEM_USER);
-        ErrorManager.me().executeLog(ErrorTaskFactory.me().exceptionLog(systemUser.getUserId(),exception));
+        if(systemUser!=null){
+            ErrorManager.me().executeLog(ErrorTaskFactory.me().exceptionLog(systemUser.getUserId(),exception));
+        }
         ModelAndView mv =this.getModelAndView();
         mv.addObject("ex",exception);
         if (null != request.getHeader("X-Requested-With") && "XMLHttpRequest".equalsIgnoreCase(request.getHeader("X-Requested-With"))) {

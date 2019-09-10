@@ -125,6 +125,12 @@ public class SystemUserDto implements Serializable {
      * @mbg.generated
      */
     private byte[] extendMap;
+    /**
+     * qq授权id
+     *
+     * @mbg.generated
+     */
+    private String qqOpenId;
 
 
     private Map extProps = new HashMap();
@@ -137,8 +143,7 @@ public class SystemUserDto implements Serializable {
     }
     //姓名
     private String realName;
-    //qq的openId
-    private String qqOpenId;
+
 
 
     //用户组织
@@ -151,5 +156,6 @@ public class SystemUserDto implements Serializable {
     private String rememberMe;
     private String backUrl;//登录前的地址
     private String code;//验证码
+    private String verifyNo;//动态码
 
 }

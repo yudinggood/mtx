@@ -3,6 +3,8 @@ package com.mtx.system.common.bean;
 import com.mtx.common.constant.SystemConstant;
 import com.mtx.common.util.base.PropertiesFileUtil;
 import com.mtx.common.util.secret.MD5Util;
+import com.mtx.system.common.exception.BusinessException;
+import com.mtx.system.common.exception.ErrorCodeEnum;
 import com.mtx.system.common.shiro.session.UpmsSessionDao;
 import com.mtx.system.dao.model.SystemPermission;
 import com.mtx.system.dao.model.SystemRole;
@@ -96,11 +98,6 @@ public class UpmsRealm extends AuthorizingRealm {
                 ByteSource.Util.bytes(systemUser.getSalt()),//salt
                 getName()  //realm name
         );
-        // client无密认证
-        String systemType = PropertiesFileUtil.getInstance().get("upms.type");
-        if (SystemConstant.CLIENT.equals(systemType)) {
-            return authenticationInfo;
-        }
 
         if (null == systemUser) {
             throw new UnknownAccountException();

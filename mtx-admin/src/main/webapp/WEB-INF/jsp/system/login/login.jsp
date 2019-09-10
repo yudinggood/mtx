@@ -33,7 +33,7 @@
                             <span class="aui-tag-size">扫码登录</span>
                         </a>
                     </div>
-                    <!--账户密码登录   ||level:2||<i class='icon-tips'></i>密码太简单，有被盗风险，建议字母+数字的组合-->
+                    <!--账户密码登录   -->
                     <div class="register-con" id="rc">
                         <div class="aui-register-form-item">
                             <input  type="text" name="username" maxlength="30" id="username" placeholder="手机号/邮箱" class="txt03 f-r3 required" tabindex="3" data-valid="isNonEmpty||isPhoneOrEmail" data-error="<i class='icon-tips'></i>您还没有输入账号||<i class='icon-tips'></i>只能手机号或邮箱" id="adminNo">
@@ -87,38 +87,34 @@
                     <!--手机动态码登录-->
                     <div class="login-con" id="lc">
                         <div class="aui-register-form-item">
-                            <input type="text" name="phone" placeholder="手机号码" class="txt01 f-r3 required" keycodes="tel" tabindex="1" data-valid="isNonEmpty||isPhone" data-error="<i class='icon-tips'></i>请输入手机号||<i class='icon-tips'></i>手机号码格式不正确" maxlength="11" id="phone">
-                            <label class="focus valid"><div class="msg" style="display:none"><i class='icon-tips'></i>您还未输入手机号</div></label>
+                            <input type="text" value="13625538625" name="phone" id="username2" placeholder="手机号码" class="txt01 f-r3 required" keycodes="tel" tabindex="1" data-valid="isNonEmpty||isPhone" data-error="<i class='icon-tips'></i>请输入手机号||<i class='icon-tips'></i>手机号码格式不正确" maxlength="11" >
+                            <label class="focus valid" id="userLabel2"><div class="msg" style="display:none"><i class='icon-tips'></i>您还未输入手机号</div></label>
                             <span class="aui-get-code btn btn-gray f-r3 f-ml5 f-size13" id="time_box" disabled style="display:none;"></span>
                             <span class="aui-get-code btn btn-gray f-r3 f-ml5 f-size13" id="verifyYz" >获取动态码</span>
                         </div>
                         <div class="aui-register-form-item">
-                            <input type="text" placeholder="动态码" maxlength="6" id="verifyNo" class="txt02 f-r3 f-fl required" tabindex="2" data-valid="isNonEmpty||isInt" data-error="<i class='icon-tips'></i>请填写正确的手机动态码||<i class='icon-tips'></i>请填写6位手机动态码">
-                            <label class="focus valid"></label>
+                            <input type="text" name="code" maxlength="4" style="width: 50%;" placeholder="验证码" class="txt03 f-r3 required" tabindex="5" data-valid="isNonEmpty" data-error="<i class='icon-tips'></i>您还没有输入验证码" id="code2">
+                            <i><img style="height:28px;float:right;width: 20%;margin-top: 6px;" id="codeImg2" alt="点击更换" title="点击更换" src="" /></i>
+                            <label class="focus valid" id="codeLabel2"></label>
                         </div>
                         <div class="aui-register-form-item">
-                            <input id="aui-btn-reg1" class="aui-btn-reg" placeholder=""  readonly="readonly" value="登录" >
+                            <input  type="password" name="password" placeholder="密码" id="password2" maxlength="20" class="txt04 f-r3 required" tabindex="4" style="ime-mode:disabled;" onpaste="return  false" autocomplete="off" data-valid="isNonEmpty||between:6-20||level:2" data-error="<i class='icon-tips'></i>密码太短，最少6位||<i class='icon-tips'></i>密码长度6-20位
+                            ||<i class='icon-tips'></i>密码太简单，有被盗风险，建议字母+数字的组合">
+                            <label class="focus valid" id="pwdLabel2"></label>
+                        </div>
+                        <div class="aui-register-form-item">
+                            <input type="text" value="" placeholder="动态码" maxlength="6" id="verifyNo" class="txt02 f-r3 f-fl required" tabindex="2" data-valid="isNonEmpty||isInt" data-error="<i class='icon-tips'></i>请填写正确的手机动态码||<i class='icon-tips'></i>请填写6位手机动态码">
+                            <label class="focus valid" id="pwdLabel3"></label>
+                        </div>
+                        <div class="aui-register-form-item">
+                            <input id="aui-btn-reg1" class="aui-btn-reg" placeholder=""  readonly="readonly" value="注册" >
                         </div>
                         <div class="aui-protocol">
-                            登录即同意
+                            注册即同意
                             <a  href="#">《i助理使用协议》</a>&
                             <a  href="#">《隐私权条款》</a>
                         </div>
-                        <div class="aui-thirds">
-                            <a href="#">
-                                <i class="aui-qq-img"></i>
-                                <i>QQ登录</i>
-                            </a>
-                            <a href="#" onclick="">
-                                <i class="aui-wx-img"></i>
-                                <i>微信登录</i>
-                            </a>
-                            <a href="#">
-                                <i class="aui-wb-img"></i>
-                                <i>微博登录</i>
-                            </a>
-                            <div class="clear"></div>
-                        </div>
+
                     </div>
 
 
@@ -143,12 +139,7 @@
             </div>
             <div class="clearfix"></div>
         </div>
-        <%--<div class="aui-register-bottom">
-            <a>©mtx.com</a>
-            <a href="#">联系客服</a>
-            <a href="#">帮助中心</a>
-            <div class="clear"></div>
-        </div>--%>
+
     </div>
 </div>
 
@@ -160,11 +151,56 @@
     $(function () {
         changeCode();
         $("#codeImg").bind("click", changeCode);
+        changeCode2();
+        $("#codeImg2").bind("click", changeCode2);
 
         $('input').iCheck({
             checkboxClass : 'icheckbox_square-blue',
             radioClass : 'iradio_square-blue',
             increaseArea : '20%'
+        });
+        $("#aui-btn-reg1").click(function() {
+            if (!verifyCheck._clickSms2()) return;
+
+            $.ajax({
+                type: 'post',
+                url: '${basePath}/register',
+                data:  {
+                    loginId: $('#username').val(),
+                    phone: $('#username').val(),
+                    password: $('#password').val(),
+                    backurl: BACK_URL,
+                    verifyNo:$('#verifyNo').val(),
+                },
+                beforeSend: function() {//防止重复提交数据 与loading 表单校验
+                    Login.index = layer.load(1, {
+                        //shade: [0.4,'#000'] //0.1透明度的白色背景
+                    });
+                },
+                success: function(result) {
+                    if (result.code == 200) {
+                        location.href =result.message;
+                    }else {
+                        if (20000010 == result.code) {
+                            $('#userLabel2').append('<span><i class="icon-tips"></i>'+result.message+'</span>');
+                        }
+                        if (20000012 == result.code) {
+                            $('#pwdLabel3').append('<span><i class="icon-tips"></i>'+result.message+'</span>');
+                        }
+                    }
+                },
+                complete:function (data) {
+                    layer.close(Login.index);
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    var i =layer.confirm(textStatus, {
+                        shade: 0,
+                        btn: ['确认'] //按钮
+                    }, function(){
+                        layer.close(i);
+                    });
+                }
+            });
         });
         $("#aui-btn-reg").click(function() {
             if (!verifyCheck._click()) return;
@@ -201,6 +237,9 @@
                         if (20000006 == result.code) {
                             $('#userLabel').append('<span><i class="icon-tips"></i>'+result.message+'</span>');
                         }
+                        if (20000009 == result.code) {
+                            $('#userLabel').append('<span><i class="icon-tips"></i>'+result.message+'</span>');
+                        }
                     }
                 },
                 complete:function (data) {
@@ -216,15 +255,14 @@
                 }
             });
         });
-        $("#aui-btn-reg1").click(function() {
-            if (!verifyCheck._click()) return;
-            alert('恭喜你！登录成功')
 
-        });
 
     });
     function changeCode() {
         $("#codeImg").attr("src", "${basePath}/code?t="+ genTimestamp());
+    }
+    function changeCode2() {
+        $("#codeImg2").attr("src", "${basePath}/code?t="+ genTimestamp());
     }
 
     function qqlogin(width, height){
@@ -234,7 +272,7 @@
         var url='https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id='+qqAppId+'&redirect_uri='+qqAuthPath+'&state='+state;
 
         width = width || 600;
-        height = height || 400;
+        height = height || 500;
         var left = ($(window).width() - width+100) / 2;
         var top = ($(window).height() - height) / 2;
         window.open(url, "_blank", "toolbar=yes, location=yes, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=no, copyhistory=yes, left="+left+", top="+top+", width="+width+", height="+height);

@@ -39,6 +39,11 @@ public enum ErrorCodeEnum {
     INVALID_UPMS_CODE(20000005, "无效upmsCode"),
     EXCESSIVE_ATTEMPTS(20000006, "登录失败次数超过5次,请10分钟后再试"),
     INVALID_USERNAME_PASSWORD(20000007, "帐号或密码错误"),
+    INVALID_QQ_AUTHO(20000008, "QQ授权失败"),
+    ACCOUNT_NOT_ACTIVE(20000009, "账号未激活"),
+    ACCOUNT_IS_EXIST(20000010, "账号已存在"),
+    SMS_ERROR(20000011, ",请联系管理员"),
+    SMS_INFO_ERROR(20000012, "动态码信息错误,请重新发送"),
 
     ;
 

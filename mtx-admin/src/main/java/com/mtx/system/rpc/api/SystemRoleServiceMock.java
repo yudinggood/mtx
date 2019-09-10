@@ -57,4 +57,9 @@ public class SystemRoleServiceMock extends BaseServiceMock<SystemRoleMapper, Sys
     public List<SelectVo> selectForSelect(int userId) {
         return null;
     }
+
+    @Override
+    public Integer selectByCode(String commonRole) {
+        return 0;
+    }
 }

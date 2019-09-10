@@ -69,6 +69,13 @@ public class SystemUser implements Serializable {
     private Byte sex;
 
     /**
+     * qq授权id
+     *
+     * @mbg.generated
+     */
+    private String qqOpenId;
+
+    /**
      * 状态1正常2封禁
      *
      * @mbg.generated
@@ -184,6 +191,14 @@ public class SystemUser implements Serializable {
         this.sex = sex;
     }
 
+    public String getQqOpenId() {
+        return qqOpenId;
+    }
+
+    public void setQqOpenId(String qqOpenId) {
+        this.qqOpenId = qqOpenId;
+    }
+
     public Byte getUserState() {
         return userState;
     }
@@ -247,6 +262,7 @@ public class SystemUser implements Serializable {
         sb.append(", lastIp=").append(lastIp);
         sb.append(", email=").append(email);
         sb.append(", sex=").append(sex);
+        sb.append(", qqOpenId=").append(qqOpenId);
         sb.append(", userState=").append(userState);
         sb.append(", lastLogin=").append(lastLogin);
         sb.append(", editDate=").append(editDate);
@@ -278,6 +294,7 @@ public class SystemUser implements Serializable {
             && (this.getLastIp() == null ? other.getLastIp() == null : this.getLastIp().equals(other.getLastIp()))
             && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
             && (this.getSex() == null ? other.getSex() == null : this.getSex().equals(other.getSex()))
+            && (this.getQqOpenId() == null ? other.getQqOpenId() == null : this.getQqOpenId().equals(other.getQqOpenId()))
             && (this.getUserState() == null ? other.getUserState() == null : this.getUserState().equals(other.getUserState()))
             && (this.getLastLogin() == null ? other.getLastLogin() == null : this.getLastLogin().equals(other.getLastLogin()))
             && (this.getEditDate() == null ? other.getEditDate() == null : this.getEditDate().equals(other.getEditDate()))
@@ -299,6 +316,7 @@ public class SystemUser implements Serializable {
         result = prime * result + ((getLastIp() == null) ? 0 : getLastIp().hashCode());
         result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
         result = prime * result + ((getSex() == null) ? 0 : getSex().hashCode());
+        result = prime * result + ((getQqOpenId() == null) ? 0 : getQqOpenId().hashCode());
         result = prime * result + ((getUserState() == null) ? 0 : getUserState().hashCode());
         result = prime * result + ((getLastLogin() == null) ? 0 : getLastLogin().hashCode());
         result = prime * result + ((getEditDate() == null) ? 0 : getEditDate().hashCode());

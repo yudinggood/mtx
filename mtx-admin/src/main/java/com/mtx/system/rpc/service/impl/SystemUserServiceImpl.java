@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -68,17 +69,22 @@ public class SystemUserServiceImpl extends BaseServiceImpl<SystemUserMapper, Sys
         SystemUserExample systemUserExample=new SystemUserExample();
         SystemUserExample.Criteria criteria = systemUserExample.createCriteria();
         criteria.andPhoneEqualTo(systemUserDto.getPhone());
+        criteria.andUserStateNotEqualTo((byte) 3);
         List<SystemUser> list =systemUserMapper.selectByExample(systemUserExample);
         if(!ToolUtil.isEmpty(list)){
             throw new BusinessException(ErrorCodeEnum.USER10030001);
         }
-        systemUserExample=new SystemUserExample();
-        criteria = systemUserExample.createCriteria();
-        criteria.andEmailEqualTo(systemUserDto.getEmail());
-        list =systemUserMapper.selectByExample(systemUserExample);
-        if(!ToolUtil.isEmpty(list)){
-            throw new BusinessException(ErrorCodeEnum.USER10030002);
+        if(ToolUtil.isNotEmpty(systemUserDto.getEmail())){
+            systemUserExample=new SystemUserExample();
+            criteria = systemUserExample.createCriteria();
+            criteria.andEmailEqualTo(systemUserDto.getEmail());
+            criteria.andUserStateNotEqualTo((byte) 3);
+            list =systemUserMapper.selectByExample(systemUserExample);
+            if(!ToolUtil.isEmpty(list)){
+                throw new BusinessException(ErrorCodeEnum.USER10030002);
+            }
         }
+
 
         SystemUser systemUser = systemUserFactory.convertDtoToDo(systemUserDto,SystemUser.class);
         Integer count = systemUserMapper.insertSelective(systemUser);
@@ -194,7 +200,24 @@ public class SystemUserServiceImpl extends BaseServiceImpl<SystemUserMapper, Sys
 
     @Override
     public SystemUser selectByQqOpenId(String openid) {
+        SystemUserExample systemUserExample=new SystemUserExample();
+        SystemUserExample.Criteria criteria = systemUserExample.createCriteria();
+        criteria.andQqOpenIdEqualTo(openid);
+        List<SystemUser> list = systemUserMapper.selectByExample(systemUserExample);
+        if(ToolUtil.isNotEmpty(list)){
+            return list.get(0);
+        }
         return null;
     }
+
+    @Override
+    public void updateOpenId(SystemUser systemUser) {
+        SystemUser user = new SystemUser();
+        user.setQqOpenId(systemUser.getQqOpenId());
+        user.setUserId(systemUser.getUserId());
+        systemUserMapper.updateByPrimaryKeySelective(user);
+    }
+
+
 }
 

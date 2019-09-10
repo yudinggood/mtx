@@ -5,6 +5,8 @@ import com.baidu.unbiz.fluentvalidator.FluentValidator;
 import com.baidu.unbiz.fluentvalidator.ResultCollectors;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.mtx.common.base.BaseController;
+import com.mtx.common.util.base.StringUtil;
+import com.mtx.common.util.base.ToolUtil;
 import com.mtx.common.util.model.SelectVo;
 import com.mtx.common.util.page.PageFactory;
 import com.mtx.common.util.page.PageInfoBT;
@@ -123,6 +125,8 @@ public class SystemUserController extends BaseController {
         }
 
         systemUserDto.setEditUser(super.getSystemUser().getUserId());
+        systemUserDto.setSalt(ToolUtil.getUuid());
+        systemUserDto.setPassword(StringUtil.toSecretString(systemUserDto.getSalt()));
         int count = systemUserService.insertDto(systemUserDto);
         return WrapMapper.wrap(count);
     }

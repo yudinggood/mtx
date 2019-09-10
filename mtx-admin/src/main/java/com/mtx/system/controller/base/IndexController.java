@@ -3,6 +3,7 @@ package com.mtx.system.controller.base;
 import com.mtx.common.base.BaseController;
 import com.mtx.common.constant.SystemConstant;
 import com.mtx.common.util.base.RedisUtil;
+import com.mtx.common.util.base.TypeConversionUtil;
 import com.mtx.common.util.tag.Menu;
 import com.mtx.system.common.bean.GlobalProperties;
 import com.mtx.system.common.enums.PropertiesEnum;
@@ -11,6 +12,7 @@ import com.mtx.system.dao.model.SystemRole;
 import com.mtx.system.dao.model.SystemUser;
 import com.mtx.system.rpc.api.SystemApiService;
 import com.mtx.system.rpc.api.SystemPermissionService;
+import com.mtx.system.rpc.api.SystemUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +45,8 @@ public class IndexController extends BaseController {
     private SystemApiService systemApiService;
     @Autowired
     UpmsSessionDao upmsSessionDao;
+    @Autowired
+    private SystemUserService systemUserService;
 
     @ApiOperation(value = "后台首页")
     @RequestMapping(value = "/index", method = RequestMethod.GET)

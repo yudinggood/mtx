@@ -58,8 +58,6 @@ public class SystemUserFactory extends BaseFactory{
     public SystemUser convertDtoToDo(SystemUserDto systemUserDto, Class<SystemUser> systemUserClass) {
         SystemUser systemUser = convertModel(systemUserDto,systemUserClass);
         systemUser.setEditDate(new Date());
-        systemUser.setSalt(ToolUtil.getUuid());
-        systemUser.setPassword(StringUtil.toSecretString(systemUser.getSalt()));
         systemUser.setExtendMap(TypeConversionUtil.objectToJsonToBytes(systemUserDto.getExtProps()));
         systemUser.setDeleted((byte)0);
 

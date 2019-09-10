@@ -58,4 +58,9 @@ public class SystemApiServiceMock  implements SystemApiService{
     public int insertSystemLogSelective(SystemLog record) {
         return 0;
     }
+
+    @Override
+    public SystemUser selectSystemUserByUsernameUnauth(String principal) {
+        return null;
+    }
 }

@@ -10,7 +10,10 @@ public enum PropertiesEnum {
     COMMON_INIT_PASSWORD("初始密码"),
     LOG_ASPECT("请求日志开关"),
     SYSTEM_VERSION("项目版本"),
-
+    QQAPPID("QQ授权ID"),
+    QQCLIENT_SECRET("QQ授权密钥"),
+    ACCESS_KEY_ID("阿里云授权ID"),
+    ACCESS_KEY_SECRET("阿里云授权密钥"),
 
     ;
 

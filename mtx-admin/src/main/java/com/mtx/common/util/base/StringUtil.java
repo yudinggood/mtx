@@ -1,15 +1,14 @@
 package com.mtx.common.util.base;
 
+import com.mtx.common.constant.SystemConstant;
 import com.mtx.system.common.bean.GlobalProperties;
 import com.mtx.system.common.enums.PropertiesEnum;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.UnsupportedEncodingException;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -229,5 +228,30 @@ public class StringUtil {
     public static String toSecretString(String salt) {
         SimpleHash simpleHash=new SimpleHash("MD5", GlobalProperties.me().getValueByCodeProperties(PropertiesEnum.COMMON_INIT_PASSWORD), ByteSource.Util.bytes(salt), 2);
         return simpleHash.toString();
+    }
+    public static String toSecretUncommonString(String password,String salt) {
+        SimpleHash simpleHash=new SimpleHash("MD5", password, ByteSource.Util.bytes(salt), 2);
+        return simpleHash.toString();
+    }
+
+    //自动生成名字（英文）
+    public static String getStringRandom() {
+        String val = "";
+        Random random = new Random();
+
+        //参数length，表示生成几位随机数
+        for(int i = 0; i < 5; i++) {
+
+            String charOrNum = random.nextInt(2) % 2 == 0 ? "char" : "num";
+            //输出字母还是数字
+            if( "char".equalsIgnoreCase(charOrNum) ) {
+                //输出是大写字母还是小写字母
+                int temp = random.nextInt(2) % 2 == 0 ? 65 : 97;
+                val += (char)(random.nextInt(26) + temp);
+            } else if( "num".equalsIgnoreCase(charOrNum) ) {
+                val += String.valueOf(random.nextInt(10));
+            }
+        }
+        return SystemConstant.COMMON_ROLE_ZH+val;
     }
 }

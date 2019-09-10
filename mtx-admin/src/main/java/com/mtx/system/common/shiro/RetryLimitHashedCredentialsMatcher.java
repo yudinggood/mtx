@@ -34,6 +34,11 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
         if (SystemConstant.CLIENT.equals(systemType)) {
             return true;
         }
+        EasyTypeToken tk = (EasyTypeToken) token;
+        if(!tk.isNormal()){
+            return true;
+        }
+
 
         String username = (String)token.getPrincipal();
         //retry count + 1
