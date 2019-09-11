@@ -60,17 +60,17 @@ public class AESUtil {
             //11.将字符串返回
             return aesEncode;
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         } catch (InvalidKeyException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         } catch (BadPaddingException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
         //如果有错就返加nulll
         return null;
@@ -111,17 +111,17 @@ public class AESUtil {
             String aesDecode = new String(byteDecode, "utf-8");
             return aesDecode;
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         } catch (InvalidKeyException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         } catch (IllegalBlockSizeException e) {
             throw new RuntimeException("配置文件中的密码需要使用AES加密，请使用com.mtx.common.util.secret.AESUtil工具类修改这些值！");
         } catch (BadPaddingException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
         //如果有错就返加nulll
         return null;

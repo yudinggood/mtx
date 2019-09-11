@@ -22,7 +22,9 @@
     <div region="center" >
         <div class="easyui-panel" style="padding:0px;border:0px" fit="true" border="false" id="roleListpanel">
             <div class="margin">
+
                 <div class="" id="toolbar">
+                <shiro:hasPermission name="system:user:edit">
                     <button type="button"
                             title="添加用户"
                             class="btn btn-success btn-xs"
@@ -37,13 +39,7 @@
                         <span class="fa fa-trash"></span>
                         <span style="padding-top:2px">&nbsp;&nbsp;删&nbsp;除&nbsp;用&nbsp;户&nbsp;&nbsp;</span>
                     </button>
-                    <%--<button type="button"
-                            title="用户权限"
-                            class="btn btn-info btn-xs"
-                            onClick="permissions()">
-                        <span class="fa fa-key"></span>
-                        <span style="padding-top:2px">&nbsp;&nbsp;用&nbsp;户&nbsp;权&nbsp;限&nbsp;&nbsp;</span>
-                    </button>--%>
+                </shiro:hasPermission>
                 </div>
                 <table id="table"></table>
             </div>

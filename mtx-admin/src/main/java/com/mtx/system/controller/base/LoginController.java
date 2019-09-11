@@ -112,10 +112,10 @@ public class LoginController extends BaseController {
         String serverSessionId = session.getId().toString();
         // 判断是否已登录，如果已登录，则回跳
         String code = RedisUtil.get(UPMS_SERVER_SESSION_ID + "_" + serverSessionId);
+        String backurl = request.getParameter("backurl");
         // code校验值
         if (StringUtils.isNotBlank(code)) {
             // 回跳
-            String backurl = request.getParameter("backurl");
             String username = (String) subject.getPrincipal();
             if (StringUtils.isBlank(backurl)) {
                 backurl = "/";
@@ -129,11 +129,13 @@ public class LoginController extends BaseController {
             log.debug("认证中心帐号通过，带code回跳：{}", backurl);
             mv.setViewName("redirect:"+backurl);
         }else {
+            //页面授权要用的
+            PageInfo pageInfo = new PageInfo();
+            pageInfo.setGitBookDomain(GlobalProperties.me().getValueByCode(PropertiesEnum.GIT_BOOK));
+            mv.addObject("pageInfo",pageInfo);
             mv.setViewName("/system/login/login");
         }
-        //页面授权要用的
-        PageInfo pageInfo = new PageInfo();
-        mv.addObject("pageInfo",pageInfo);
+
         return mv;
     }
 
@@ -151,7 +153,7 @@ public class LoginController extends BaseController {
             ServletOutputStream out = response.getOutputStream();
             output.writeTo(out);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
     }
 
@@ -425,6 +427,8 @@ public class LoginController extends BaseController {
 
         return WrapMapper.wrap(ErrorCodeEnum.SMS_INFO_ERROR);
     }
+
+
 }
 
 

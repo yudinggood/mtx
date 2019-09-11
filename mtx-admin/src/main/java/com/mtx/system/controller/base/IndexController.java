@@ -32,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 import redis.clients.jedis.Jedis;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -57,7 +58,12 @@ public class IndexController extends BaseController {
             Subject subject = SecurityUtils.getSubject();
             systemUser = systemApiService.selectSystemUserByUsername((String) subject.getPrincipal());
             super.getSession().setAttribute(SystemConstant.SESSION_SYSTEM_USER, systemUser);
+
+            //更新用户的登录信息
+            systemUser.setLastIp(subject.getSession().getHost());
+            systemUserService.updateByUser(systemUser);
         }
+
 
         ModelAndView mv =this.getModelAndView();
         //mv.addObject("menuMap",systemPermissionService.selectForMenu());

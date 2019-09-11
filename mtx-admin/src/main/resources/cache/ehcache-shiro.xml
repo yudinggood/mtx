@@ -21,5 +21,21 @@
            overflowToDisk="false"
            statistics="true">
     </cache>
+    <!-- 授权缓存 -->
+    <cache name="authenticationCache"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
+    <!-- 认证缓存 -->
+    <cache name="authorizationCache"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
 
 </ehcache>

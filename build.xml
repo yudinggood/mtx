@@ -43,4 +43,9 @@
               executable="${base.dir}/mtx-tool/StopRedis.bat"/>
     </target>
 
+    <target name="start_gitbook" description="开启Gitbook服务">
+        <exec taskname="start_redis" dir="${base.dir}/mtx-tool"
+              executable="${base.dir}/mtx-tool/StartGitbook.cmd"/>
+    </target>
+
 </project>

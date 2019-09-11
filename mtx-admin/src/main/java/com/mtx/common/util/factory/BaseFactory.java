@@ -2,6 +2,7 @@ package com.mtx.common.util.factory;
 
 import com.google.common.collect.Lists;
 import com.mtx.common.util.base.ToolUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.beans.BeanUtils;
@@ -14,6 +15,7 @@ import java.util.*;
 /**
  * 转换工厂
  */
+@Slf4j
 public abstract class BaseFactory {
     protected Mapper dozer = new DozerBeanMapper();
     //任意数组类型转换
@@ -57,9 +59,9 @@ public abstract class BaseFactory {
         try {
             a = clazz.newInstance();
         } catch (InstantiationException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
         return a;
     }
@@ -76,9 +78,9 @@ public abstract class BaseFactory {
                 try {
                     return m[i].invoke(ob);
                 } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                    log.error(e.getMessage(),e);
                 } catch (InvocationTargetException e) {
-                    e.printStackTrace();
+                    log.error(e.getMessage(),e);
                 }
             }
         }

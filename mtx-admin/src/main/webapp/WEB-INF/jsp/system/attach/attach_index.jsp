@@ -96,9 +96,11 @@
                     return pageSize * (pageNumber - 1) + index + 1;
                 }},
                 {field: 'bizTypeName', title: '业务名称'},
-                {field: 'fileName', title: '文件名称'},
-                {field: 'newName', title: '新名称'},
-                {field: 'filePath', title: '存放路径'},
+                {field: 'fileName', title: '原文件名'},
+                {field: 'newName', title: '存储文件名'},
+                {field: 'filePath', title: '上传日期',formatter: function(value, row, index) {
+                    return '<img  src='+${basePath}/upload/+value+' width="50" height="50" class="img-rounded" >';
+                }},
                 {field: 'fileSizeName', title: '文件大小'},
                 {field: 'editDate', title: '上传日期',formatter: function(value, row, index) {
                     return new Date(value).format("yyyy-MM-dd HH:mm:ss");

@@ -43,17 +43,11 @@ public class UploadComponent {
             destFile = FileUtil.generateFile(getAttachmentDir()+"/"+filePath);
             file.transferTo(destFile);// 复制文件
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
 
-
-        SystemAttachDto systemAttachDto = new SystemAttachDto();
-        systemAttachDto.setEditDate(new Date());
-        systemAttachDto.setFileName(fileName);
-        systemAttachDto.setFilePath(filePath);
-        systemAttachDto.setFileSize(fileSize);
-        systemAttachDto.setSuffix(suffixName);
-        systemAttachDto.setNewName(newName);
+        SystemAttachDto systemAttachDto = SystemAttachDto.builder().editDate(new Date()).fileName(fileName)
+                .filePath(filePath).fileSize(fileSize).suffix(file.getContentType()).newName(newName).build();
         return systemAttachDto;
     }
 

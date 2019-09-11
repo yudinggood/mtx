@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -218,6 +219,13 @@ public class SystemUserServiceImpl extends BaseServiceImpl<SystemUserMapper, Sys
         systemUserMapper.updateByPrimaryKeySelective(user);
     }
 
-
+    @Override
+    public void updateByUser(SystemUser systemUser) {
+        SystemUser user =new SystemUser();
+        user.setUserId(systemUser.getUserId());
+        user.setLastLogin(new Date());
+        user.setLastIp(systemUser.getLastIp());
+        systemUserMapper.updateByPrimaryKeySelective(user);
+    }
 }
 

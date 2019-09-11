@@ -14,6 +14,9 @@ public enum PropertiesEnum {
     QQCLIENT_SECRET("QQ授权密钥"),
     ACCESS_KEY_ID("阿里云授权ID"),
     ACCESS_KEY_SECRET("阿里云授权密钥"),
+    GIT_BOOK("文档域名"),
+
+
 
     ;
 

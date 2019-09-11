@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.mtx.common.spring.SpringContextUtil;
 import com.mtx.common.util.db.DataSourceEnum;
 import com.mtx.common.util.db.DynamicDataSource;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,6 +17,7 @@ import java.util.List;
 /**
  * 实现BaseService抽象类
  */
+@Slf4j
 public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseService<Record, Example> {
 	public Mapper mapper;
 	//protected org.dozer.Mapper dozer = new DozerBeanMapper();
@@ -28,11 +30,11 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			Object result = countByExample.invoke(mapper, example);
 			return Integer.parseInt(String.valueOf(result));
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
 		return 0;
@@ -46,11 +48,11 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			Object result = deleteByExample.invoke(mapper, example);
 			return Integer.parseInt(String.valueOf(result));
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
 		return 0;
@@ -64,11 +66,11 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			Object result = deleteByPrimaryKey.invoke(mapper, id);
 			return Integer.parseInt(String.valueOf(result));
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
 		return 0;
@@ -82,11 +84,11 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			Object result = insert.invoke(mapper, record);
 			return Integer.parseInt(String.valueOf(result));
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
 		return 0;
@@ -100,11 +102,11 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			Object result = insertSelective.invoke(mapper, record);
 			return Integer.parseInt(String.valueOf(result));
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
 		return 0;
@@ -118,11 +120,11 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			Object result = selectByExampleWithBLOBs.invoke(mapper, example);
 			return (List<Record>) result;
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
 		return null;
@@ -136,11 +138,11 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			Object result = selectByExample.invoke(mapper, example);
 			return (List<Record>) result;
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
 		return null;
@@ -155,11 +157,11 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			Object result = selectByExampleWithBLOBs.invoke(mapper, example);
 			return (List<Record>) result;
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
 		return null;
@@ -174,11 +176,11 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			Object result = selectByExample.invoke(mapper, example);
 			return (List<Record>) result;
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
 		return null;
@@ -193,11 +195,11 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			Object result = selectByExampleWithBLOBs.invoke(mapper, example);
 			return (List<Record>) result;
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
 		return null;
@@ -212,11 +214,11 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			Object result = selectByExample.invoke(mapper, example);
 			return (List<Record>) result;
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
 		return null;
@@ -232,11 +234,11 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 				return result.get(0);
 			}
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
 		return null;
@@ -252,11 +254,11 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 				return result.get(0);
 			}
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
 		return null;
@@ -270,11 +272,11 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			Object result = selectByPrimaryKey.invoke(mapper, id);
 			return (Record) result;
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
 		return null;
@@ -288,11 +290,11 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			Object result = updateByExampleSelective.invoke(mapper, record, example);
 			return Integer.parseInt(String.valueOf(result));
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
 		return 0;
@@ -306,11 +308,11 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			Object result = updateByExampleWithBLOBs.invoke(mapper, record, example);
 			return Integer.parseInt(String.valueOf(result));
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
 		return 0;
@@ -324,11 +326,11 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			Object result = updateByExample.invoke(mapper, record, example);
 			return Integer.parseInt(String.valueOf(result));
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
 		return 0;
@@ -342,11 +344,11 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			Object result = updateByPrimaryKeySelective.invoke(mapper, record);
 			return Integer.parseInt(String.valueOf(result));
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
 		return 0;
@@ -360,11 +362,11 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			Object result = updateByPrimaryKeyWithBLOBs.invoke(mapper, record);
 			return Integer.parseInt(String.valueOf(result));
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
 		return 0;
@@ -378,11 +380,11 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			Object result = updateByPrimaryKey.invoke(mapper, record);
 			return Integer.parseInt(String.valueOf(result));
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
 		return 0;
@@ -408,11 +410,11 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			}
 			return count;
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
 		return 0;

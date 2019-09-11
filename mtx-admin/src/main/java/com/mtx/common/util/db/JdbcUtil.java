@@ -29,7 +29,7 @@ public class JdbcUtil {
 			conn = DriverManager.getConnection(url, username, password);
 			log.info("数据库连接成功");
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 	}
 
@@ -90,7 +90,7 @@ public class JdbcUtil {
                 conn.close();
             }
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		log.info("释放数据库连接");
 	}

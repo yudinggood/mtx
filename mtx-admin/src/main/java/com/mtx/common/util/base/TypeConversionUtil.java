@@ -1,5 +1,7 @@
 package com.mtx.common.util.base;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.Map;
 /**
  * 所有的数据类型转换类
  */
+@Slf4j
 public class TypeConversionUtil {
 
     /**
@@ -117,7 +120,7 @@ public class TypeConversionUtil {
             return TypeConversionUtil.stringToBytes(json);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
             return null;
         }
 
@@ -132,7 +135,7 @@ public class TypeConversionUtil {
             Map extProps = JsonUtil.parseJson(json,Map.class);
             return extProps;
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
             return null;
         }
 

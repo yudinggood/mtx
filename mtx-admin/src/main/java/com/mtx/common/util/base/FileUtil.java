@@ -1,5 +1,6 @@
 package com.mtx.common.util.base;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -10,6 +11,7 @@ import java.util.Date;
 /**
  * 文件处理类
  */
+@Slf4j
 public class FileUtil {
     /**
      * 根据文件绝对路径获取目录
@@ -51,7 +53,7 @@ public class FileUtil {
         try {
             dir.delete();
         }catch (Exception e){
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
 
     }
@@ -65,7 +67,7 @@ public class FileUtil {
             try {
                 memo= FileUtils.readFileToString(memoFile);
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error(e.getMessage(),e);
             }
         }
         return memo;

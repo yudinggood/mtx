@@ -1,5 +1,7 @@
 package com.mtx.common.util.base;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
@@ -12,6 +14,7 @@ import java.util.Random;
 /**
  * 生成验证码类
  */
+@Slf4j
 public class KaptchaUtil {
 
     public static String drawImg(ByteArrayOutputStream output){
@@ -40,7 +43,7 @@ public class KaptchaUtil {
         try {
             ImageIO.write(bi, "jpg", output);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
         return code;
     }

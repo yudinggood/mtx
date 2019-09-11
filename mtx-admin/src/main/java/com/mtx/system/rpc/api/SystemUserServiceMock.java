@@ -54,4 +54,9 @@ public class SystemUserServiceMock extends BaseServiceMock<SystemUserMapper, Sys
     public void updateOpenId(SystemUser systemUser) {
 
     }
+
+    @Override
+    public void updateByUser(SystemUser newUser) {
+
+    }
 }

@@ -52,7 +52,7 @@ public class SystemDicServiceImpl extends BaseServiceImpl<SystemDicMapper, Syste
         try {
             json = JsonUtil.toJson(voList);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
         return json;
     }
@@ -67,7 +67,7 @@ public class SystemDicServiceImpl extends BaseServiceImpl<SystemDicMapper, Syste
         try {
             json = JsonUtil.toJson(list);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
         return json;
     }

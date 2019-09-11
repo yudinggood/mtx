@@ -2,6 +2,7 @@ package com.mtx.system.dao.dto;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.Map;
 
 @Data
 @ApiModel
+@Accessors(chain = true)
 public class SystemUserDto implements Serializable {
     private static final long serialVersionUID = 1L;
 

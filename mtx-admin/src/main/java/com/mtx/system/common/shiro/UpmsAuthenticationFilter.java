@@ -43,10 +43,7 @@ import java.util.List;
  */
 @Slf4j
 public class UpmsAuthenticationFilter extends AuthenticationFilter {
-    // 局部会话key
-    private final static String UPMS_CLIENT_SESSION_ID = "upms-client-session-id";
-    // 单点同一个code所有局部会话key
-    private final static String UPMS_CLIENT_SESSION_IDS = "upms-client-session-ids";
+
 
     @Autowired
     UpmsSessionDao upmsSessionDao;
@@ -56,8 +53,8 @@ public class UpmsAuthenticationFilter extends AuthenticationFilter {
         Subject subject = getSubject(request, response);
         Session session = subject.getSession();
         // 判断请求类型
-        String upmsType = PropertiesFileUtil.getInstance().get("upms.type");
-        session.setAttribute(UpmsSessionDao.UPMS_TYPE, upmsType);
+        String upmsType = PropertiesFileUtil.getInstance().get(SystemConstant.UPMS_TYPE);
+        session.setAttribute(SystemConstant.UPMS_TYPE, upmsType);
         String oauthLogin = RedisUtil.get(SystemConstant.UPMS_WITHOUT_PASSWORD + "_" + session.getId().toString());
         if (SystemConstant.CLIENT.equals(upmsType)||ToolUtil.isNotEmpty(oauthLogin)) {
             return validateClient(request, response);
@@ -75,7 +72,7 @@ public class UpmsAuthenticationFilter extends AuthenticationFilter {
         Session session = subject.getSession();
         String oauthLogin = RedisUtil.get(SystemConstant.UPMS_WITHOUT_PASSWORD + "_" + session.getId().toString());
         // server需要登录
-        String upmsType = PropertiesFileUtil.getInstance().get("upms.type");
+        String upmsType = PropertiesFileUtil.getInstance().get(SystemConstant.UPMS_TYPE);
         if (SystemConstant.SERVER.equals(upmsType)&&ToolUtil.isEmpty(oauthLogin)) {
             WebUtils.toHttp(response).sendRedirect(ssoServerUrl.append("/login").toString());
             return false;
@@ -103,12 +100,12 @@ public class UpmsAuthenticationFilter extends AuthenticationFilter {
         String sessionId = session.getId().toString();
         int timeOut = (int) session.getTimeout() / 1000;
         // 判断局部会话是否登录
-        String cacheClientSession = RedisUtil.get(UPMS_CLIENT_SESSION_ID + "_" + session.getId());
+        String cacheClientSession = RedisUtil.get(SystemConstant.UPMS_CLIENT_SESSION_ID + "_" + session.getId());
         if (StringUtils.isNotBlank(cacheClientSession)) {
             // 更新code有效期
-            RedisUtil.set(UPMS_CLIENT_SESSION_ID + "_" + sessionId, cacheClientSession, timeOut);
+            RedisUtil.set(SystemConstant.UPMS_CLIENT_SESSION_ID + "_" + sessionId, cacheClientSession, timeOut);
             Jedis jedis = RedisUtil.getJedis();
-            jedis.expire(UPMS_CLIENT_SESSION_IDS + "_" + cacheClientSession, timeOut);
+            jedis.expire(SystemConstant.UPMS_CLIENT_SESSION_IDS + "_" + cacheClientSession, timeOut);
             jedis.close();
             // 移除url中的code参数
             if (null != request.getParameter("code")) {
@@ -143,10 +140,10 @@ public class UpmsAuthenticationFilter extends AuthenticationFilter {
                     JSONObject result = JSONObject.parseObject(EntityUtils.toString(httpEntity));
                     if (200 == result.getIntValue("code") && result.getString("message").equals(code)) {
                         // code校验正确，创建局部会话
-                        RedisUtil.set(UPMS_CLIENT_SESSION_ID + "_" + sessionId, code, timeOut);
+                        RedisUtil.set(SystemConstant.UPMS_CLIENT_SESSION_ID + "_" + sessionId, code, timeOut);
                         // 保存code对应的局部会话sessionId，方便退出操作
-                        RedisUtil.sadd(UPMS_CLIENT_SESSION_IDS + "_" + code, sessionId, timeOut);
-                        log.debug("当前code={}，对应的注册系统个数：{}个", code, RedisUtil.getJedis().scard(UPMS_CLIENT_SESSION_IDS + "_" + code));
+                        RedisUtil.sadd(SystemConstant.UPMS_CLIENT_SESSION_IDS + "_" + code, sessionId, timeOut);
+                        log.debug("当前code={}，对应的注册系统个数：{}个", code, RedisUtil.getJedis().scard(SystemConstant.UPMS_CLIENT_SESSION_IDS + "_" + code));
                         // 移除url中的token参数
                         String backUrl = RequestUtil.getParameterWithOutCode(WebUtils.toHttp(request));
                         // 返回请求资源

@@ -113,7 +113,7 @@ public class MybatisGeneratorUtil {
             FileUtil.deleteDir(new File(targetProject + "/src/main/java/" + packageName.replaceAll("\\.", "/") + "/dao/mapper"));
             FileUtil.deleteDir(new File(targetProjectSqlMap + "/src/main/java/" + packageName.replaceAll("\\.", "/") + "/dao/mapper"));
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
         log.info("========== 结束生成generatorConfig.xml文件 ==========");
 

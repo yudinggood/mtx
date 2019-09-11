@@ -1,6 +1,7 @@
 package com.mtx.system.dao.dto;
 
 import io.swagger.annotations.ApiModel;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,6 +10,7 @@ import java.util.Date;
 
 @Data
 @ApiModel
+@Builder
 public class SystemAttachDto implements Serializable {
     private static final long serialVersionUID = 1L;
 

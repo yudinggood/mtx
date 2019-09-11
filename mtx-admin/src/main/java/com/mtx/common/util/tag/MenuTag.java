@@ -39,7 +39,7 @@ public class MenuTag extends TagSupport {
             out.print(endString.toString());
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+
         }finally{
             try {
                 out.clearBuffer();

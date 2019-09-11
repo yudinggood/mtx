@@ -30,7 +30,7 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
     @Override
     public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
         //如果是免密登录直接返回true
-        String systemType = PropertiesFileUtil.getInstance().get("upms.type");
+        String systemType = PropertiesFileUtil.getInstance().get(SystemConstant.UPMS_TYPE);
         if (SystemConstant.CLIENT.equals(systemType)) {
             return true;
         }

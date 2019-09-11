@@ -50,6 +50,7 @@ public class UpmsRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        //改成只走第一次，之后都调用缓存
         String username = (String) principalCollection.getPrimaryPrincipal();
         SystemUser systemUser = systemApiService.selectSystemUserByUsername(username);
 

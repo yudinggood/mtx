@@ -33,12 +33,9 @@ public class UpmsSessionDao extends CachingSessionDAO {
     private final static String UPMS_SERVER_SESSION_IDS = "upms-server-session-ids";
     // code key
     private final static String UPMS_SERVER_CODE = "upms-server-code";
-    // 局部会话key
-    private final static String UPMS_CLIENT_SESSION_ID = "upms-client-session-id";
-    // 单点同一个code所有局部会话key
-    private final static String UPMS_CLIENT_SESSION_IDS = "upms-client-session-ids";
 
-    public static final String UPMS_TYPE = "upms.type";
+
+
 
     @Override
     protected void doUpdate(Session session) {
@@ -61,15 +58,15 @@ public class UpmsSessionDao extends CachingSessionDAO {
     @Override
     protected void doDelete(Session session) {
         String sessionId = session.getId().toString();
-        String upmsType = ObjectUtils.toString(session.getAttribute(UPMS_TYPE));
+        String upmsType = ObjectUtils.toString(session.getAttribute(SystemConstant.UPMS_TYPE));
         String oauthLogin = RedisUtil.get(SystemConstant.UPMS_WITHOUT_PASSWORD + "_" + sessionId);
         if (SystemConstant.CLIENT.equals(upmsType)||ToolUtil.isNotEmpty(oauthLogin)) {
             // 删除局部会话和同一code注册的局部会话
-            String code = RedisUtil.get(UPMS_CLIENT_SESSION_ID + "_" + sessionId);
+            String code = RedisUtil.get(SystemConstant.UPMS_CLIENT_SESSION_ID + "_" + sessionId);
             Jedis jedis = RedisUtil.getJedis();
-            jedis.del(UPMS_CLIENT_SESSION_ID + "_" + sessionId);
+            jedis.del(SystemConstant.UPMS_CLIENT_SESSION_ID + "_" + sessionId);
             jedis.del(SystemConstant.UPMS_WITHOUT_PASSWORD + "_" + sessionId);
-            jedis.srem(UPMS_CLIENT_SESSION_IDS + "_" + code, sessionId);
+            jedis.srem(SystemConstant.UPMS_CLIENT_SESSION_IDS + "_" + code, sessionId);
             jedis.close();
         }
         if (SystemConstant.SERVER.equals(upmsType)) {
@@ -81,12 +78,12 @@ public class UpmsSessionDao extends CachingSessionDAO {
             RedisUtil.remove(UPMS_SERVER_CODE + "_" + code);
             // 清除所有局部会话
             Jedis jedis = RedisUtil.getJedis();
-            Set<String> clientSessionIds = jedis.smembers(UPMS_CLIENT_SESSION_IDS + "_" + code);
+            Set<String> clientSessionIds = jedis.smembers(SystemConstant.UPMS_CLIENT_SESSION_IDS + "_" + code);
             for (String clientSessionId : clientSessionIds) {
-                jedis.del(UPMS_CLIENT_SESSION_ID + "_" + clientSessionId);
-                jedis.srem(UPMS_CLIENT_SESSION_IDS + "_" + code, clientSessionId);
+                jedis.del(SystemConstant.UPMS_CLIENT_SESSION_ID + "_" + clientSessionId);
+                jedis.srem(SystemConstant.UPMS_CLIENT_SESSION_IDS + "_" + code, clientSessionId);
             }
-            log.debug("当前code={}，对应的注册系统个数：{}个", code, jedis.scard(UPMS_CLIENT_SESSION_IDS + "_" + code));
+            log.debug("当前code={}，对应的注册系统个数：{}个", code, jedis.scard(SystemConstant.UPMS_CLIENT_SESSION_IDS + "_" + code));
             jedis.close();
             // 维护会话id列表，提供会话分页管理
             RedisUtil.lrem(UPMS_SERVER_SESSION_IDS, 1, sessionId);

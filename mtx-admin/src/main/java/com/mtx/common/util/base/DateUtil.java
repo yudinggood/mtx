@@ -1,5 +1,6 @@
 package com.mtx.common.util.base;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 import java.text.SimpleDateFormat;
@@ -9,6 +10,7 @@ import java.util.Date;
 /**
  * 日期处理类
  */
+@Slf4j
 public class DateUtil {
     /**
      * mysql的 blob转string
@@ -46,7 +48,7 @@ public class DateUtil {
         try {
             date = format.parse(str);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
         return date;
     }

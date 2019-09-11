@@ -67,7 +67,7 @@
             classpath*:spring/*.xml
         </param-value>
     </context-param>
-    <!-- 在上下文context-param中设置profile.default的默认值  可选值：production(生产环境) test(测试环境) development(开发环境)-->
+    <!-- 在上下文context-param中设置profile.default的默认值  可选值：production(生产环境)  development(开发环境)-->
     <context-param>
         <param-name>spring.profiles.default</param-name>
         <param-value>development</param-value>

@@ -79,7 +79,7 @@ public class SystemPermissionServiceImpl extends BaseServiceImpl<SystemPermissio
         try {
             json = JsonUtil.toJson(voList);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
         return json;
     }
@@ -135,7 +135,7 @@ public class SystemPermissionServiceImpl extends BaseServiceImpl<SystemPermissio
         try {
             json = JsonUtil.toJson(voList);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
         return json;
     }

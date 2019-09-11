@@ -10,6 +10,7 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import com.mtx.common.constant.SystemConstant;
+import lombok.extern.slf4j.Slf4j;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,6 +19,7 @@ import java.util.Random;
 /**
  * 短信相关
  */
+@Slf4j
 public class SendSmsUtil {
 
     /**
@@ -49,7 +51,7 @@ public class SendSmsUtil {
         try {
             DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", SystemConstant.MSG_PRODUCT, SystemConstant.MSG_DOMAIN);
         } catch (ClientException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
         IAcsClient acsClient = new DefaultAcsClient(profile);
 
@@ -75,7 +77,7 @@ public class SendSmsUtil {
         try {
             sendSmsResponse = acsClient.getAcsResponse(request);
         } catch (ClientException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
 
         return sendSmsResponse;
@@ -92,7 +94,7 @@ public class SendSmsUtil {
         try {
             DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", SystemConstant.MSG_PRODUCT, SystemConstant.MSG_DOMAIN);
         } catch (ClientException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
         IAcsClient acsClient = new DefaultAcsClient(profile);
 
@@ -113,7 +115,7 @@ public class SendSmsUtil {
         try {
             querySendDetailsResponse = acsClient.getAcsResponse(request);
         } catch (ClientException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
 
         return querySendDetailsResponse;

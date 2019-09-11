@@ -54,7 +54,7 @@ public class SystemOrganizationServiceImpl extends BaseServiceImpl<SystemOrganiz
         try {
             json = JsonUtil.toJson(voList);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
         return json;
     }

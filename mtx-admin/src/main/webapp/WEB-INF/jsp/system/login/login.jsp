@@ -64,8 +64,8 @@
 
                         <div class="aui-protocol">
                             登录即同意
-                            <a  href="#">《i助理使用协议》</a>&
-                            <a  href="#">《隐私权条款》</a>
+                            <a target="view_window" href="${pageInfo.gitBookDomain}/test.html">《i助理使用协议》</a>&
+                            <a target="view_window" href="${pageInfo.gitBookDomain}/chapter1.html">《隐私权条款》</a>
                         </div>
                         <div class="aui-thirds">
                             <a href="#"  onclick="qqlogin()">
@@ -87,7 +87,7 @@
                     <!--手机动态码登录-->
                     <div class="login-con" id="lc">
                         <div class="aui-register-form-item">
-                            <input type="text" value="13625538625" name="phone" id="username2" placeholder="手机号码" class="txt01 f-r3 required" keycodes="tel" tabindex="1" data-valid="isNonEmpty||isPhone" data-error="<i class='icon-tips'></i>请输入手机号||<i class='icon-tips'></i>手机号码格式不正确" maxlength="11" >
+                            <input type="text" value="" name="phone" id="username2" placeholder="手机号码" class="txt01 f-r3 required" keycodes="tel" tabindex="1" data-valid="isNonEmpty||isPhone" data-error="<i class='icon-tips'></i>请输入手机号||<i class='icon-tips'></i>手机号码格式不正确" maxlength="11" >
                             <label class="focus valid" id="userLabel2"><div class="msg" style="display:none"><i class='icon-tips'></i>您还未输入手机号</div></label>
                             <span class="aui-get-code btn btn-gray f-r3 f-ml5 f-size13" id="time_box" disabled style="display:none;"></span>
                             <span class="aui-get-code btn btn-gray f-r3 f-ml5 f-size13" id="verifyYz" >获取动态码</span>
@@ -111,8 +111,8 @@
                         </div>
                         <div class="aui-protocol">
                             注册即同意
-                            <a  href="#">《i助理使用协议》</a>&
-                            <a  href="#">《隐私权条款》</a>
+                            <a target="view_window" href="${pageInfo.gitBookDomain}/test.html">《i助理使用协议》</a>&
+                            <a target="view_window" href="${pageInfo.gitBookDomain}/chapter1.html">《隐私权条款》</a>
                         </div>
 
                     </div>

@@ -31,4 +31,6 @@ public interface SystemUserService extends BaseService<SystemUser, SystemUserExa
     SystemUser selectByQqOpenId(String openid);
 
     void updateOpenId(SystemUser systemUser);
+
+    void updateByUser(SystemUser newUser);
 }

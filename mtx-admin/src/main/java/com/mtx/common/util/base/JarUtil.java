@@ -65,7 +65,7 @@ public class JarUtil {
                 try {
                     jf.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.error(e.getMessage(),e);
                 }
             }
         }

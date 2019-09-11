@@ -17,7 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableWebMvc
 @EnableSwagger2
 @Configuration
-@Profile(SystemConstant.SYS_MODE_TEST)//只有测试环境才启用这个bean
+@Profile(SystemConstant.SYS_MODE_PUB)//只有测试环境才启用这个bean
 public class SwaggerConfig {//swagger的配置类
 
 	@Bean

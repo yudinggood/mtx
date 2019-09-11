@@ -41,7 +41,6 @@ public class ApplicationContextListener implements ApplicationListener<ContextRe
                     init.invoke(service);
                 } catch (Exception e) {
                     log.error("初始化BaseInterface的init方法异常", e);
-                    e.printStackTrace();
                 }
             }
 

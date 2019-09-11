@@ -124,9 +124,8 @@ public class SystemUserController extends BaseController {
             return WrapMapper.wrap(Wrapper.ILLEGAL_ARGUMENT_CODE_,errorListToString(result.getErrors()));
         }
 
-        systemUserDto.setEditUser(super.getSystemUser().getUserId());
-        systemUserDto.setSalt(ToolUtil.getUuid());
-        systemUserDto.setPassword(StringUtil.toSecretString(systemUserDto.getSalt()));
+        systemUserDto.setEditUser(super.getSystemUser().getUserId()).setSalt(ToolUtil.getUuid())
+                .setPassword(StringUtil.toSecretString(systemUserDto.getSalt()));
         int count = systemUserService.insertDto(systemUserDto);
         return WrapMapper.wrap(count);
     }
