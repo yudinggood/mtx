@@ -1,5 +1,6 @@
 package com.mtx.common.util.base;
 
+import com.google.common.base.Splitter;
 import com.mtx.common.constant.SystemConstant;
 import com.mtx.system.common.bean.GlobalProperties;
 import com.mtx.system.common.enums.PropertiesEnum;
@@ -35,7 +36,7 @@ public class StringUtil {
         if (Character.isLowerCase(s.charAt(0))) {
             return s;
         } else {
-            return (new StringBuilder()).append(Character.toLowerCase(s.charAt(0))).append(s.substring(1)).toString();
+            return String.valueOf((new StringBuilder()).append(Character.toLowerCase(s.charAt(0))).append(s.substring(1)));
         }
     }
 
@@ -51,7 +52,7 @@ public class StringUtil {
         if (Character.isUpperCase(s.charAt(0))) {
             return s;
         } else {
-            return (new StringBuffer()).append(Character.toUpperCase(s.charAt(0))).append(s.substring(1)).toString();
+            return String.valueOf((new StringBuffer()).append(Character.toUpperCase(s.charAt(0))).append(s.substring(1)));
         }
     }
 
@@ -72,7 +73,7 @@ public class StringUtil {
         }
         matcher.appendTail(sb);
 
-        str = sb.toString();
+        str = String.valueOf(sb);
         str = str.substring(0, 1).toUpperCase() + str.substring(1);
 
         return str;
@@ -90,7 +91,7 @@ public class StringUtil {
             matcher.appendReplacement(sb, "_" + matcher.group(0).toLowerCase());
         }
         matcher.appendTail(sb);
-        return sb.toString();
+        return String.valueOf(sb);
     }
 
     /**
@@ -227,11 +228,11 @@ public class StringUtil {
      */
     public static String toSecretString(String salt) {
         SimpleHash simpleHash=new SimpleHash("MD5", GlobalProperties.me().getValueByCodeProperties(PropertiesEnum.COMMON_INIT_PASSWORD), ByteSource.Util.bytes(salt), 2);
-        return simpleHash.toString();
+        return String.valueOf(simpleHash);
     }
     public static String toSecretUncommonString(String password,String salt) {
         SimpleHash simpleHash=new SimpleHash("MD5", password, ByteSource.Util.bytes(salt), 2);
-        return simpleHash.toString();
+        return String.valueOf(simpleHash);
     }
 
     //自动生成名字（英文）
@@ -253,5 +254,12 @@ public class StringUtil {
             }
         }
         return SystemConstant.COMMON_ROLE_ZH+val;
+    }
+
+    //java获取url指定参数值
+    public static String getParam(String url, String name) {
+        String params = url.substring(url.indexOf("?") + 1, url.length());
+        Map<String, String> split = Splitter.on("&").withKeyValueSeparator("=").split(params);
+        return split.get(name);
     }
 }

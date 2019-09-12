@@ -7,6 +7,10 @@ import com.mtx.common.util.base.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 @Slf4j
 public class LogTest {
     @Test
@@ -35,7 +39,19 @@ public class LogTest {
     }
 
     @Test
+    public void index4() {
+        log.info(StringUtil.getParam("access_token=40A5BBC651DCB172D2C0EE31E31BC8D7&expires_in=7776000&refresh_token=8186D0AEB425AD829DA52375E9F4B7DE","access_token"));
+    }
+
+
+    @Test
     public void index() {
 
     }
 }
+
+
+
+
+
+

@@ -87,6 +87,6 @@ public class SystemUserFactory extends BaseFactory{
         for (SelectVo selectVo:listSelect){
             sb.append(selectVo.getName()+" ");
         }
-        return sb.toString();
+        return String.valueOf(sb);
     }
 }

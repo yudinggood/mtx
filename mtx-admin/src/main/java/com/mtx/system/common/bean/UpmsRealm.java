@@ -87,11 +87,9 @@ public class UpmsRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         String username = (String) authenticationToken.getPrincipal();
-        //String password = new String((char[]) authenticationToken.getCredentials());
-        // 查询用户信息
+
         SystemUser systemUser = systemApiService.selectSystemUserByUsername(username);
-        //同时只允许一个账号登录    获取在线的session
-        upmsSessionDao.otherFouceOut(systemUser.getUserId());
+
 
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
                 username, //用户名

@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Param;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -127,7 +128,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
-		return null;
+		return Collections.EMPTY_LIST;
 	}
 
 	@Override
@@ -145,7 +146,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
-		return null;
+		return Collections.EMPTY_LIST;
 	}
 
 	@Override
@@ -164,7 +165,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
-		return null;
+		return Collections.EMPTY_LIST;
 	}
 
 	@Override
@@ -183,7 +184,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
-		return null;
+		return Collections.EMPTY_LIST;
 	}
 
 	@Override
@@ -202,7 +203,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
-		return null;
+		return Collections.EMPTY_LIST;
 	}
 
 	@Override
@@ -221,7 +222,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 			log.error(e.getMessage(),e);
 		}
 		DynamicDataSource.clearDataSource();
-		return null;
+		return Collections.EMPTY_LIST;
 	}
 
 	@Override

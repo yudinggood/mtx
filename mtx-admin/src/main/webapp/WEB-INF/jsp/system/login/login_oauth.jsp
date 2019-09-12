@@ -163,7 +163,7 @@
 
     });
     function changeCode() {
-        $("#codeImg").attr("src", "${basePath}/code?t="+ genTimestamp());
+        $("#codeImg").attr("src", "${basePath}/code?t="+ genTimestamp()+"&type=sessionSecCode");
     }
 
 

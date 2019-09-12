@@ -35,7 +35,7 @@ public class TypeConversionUtil {
             return defaultValue;
         }
         try {
-            return object.toString();
+            return String.valueOf(object);
         } catch (Exception e) {
             return defaultValue;
         }

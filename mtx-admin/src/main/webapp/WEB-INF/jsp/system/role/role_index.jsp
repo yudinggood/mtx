@@ -144,7 +144,7 @@
             if(key=='editDate'){
                 html.push('<p><b>修改时间:</b> ' + new Date(value).format("yyyy-MM-dd HH:mm:ss") + '</p>');
             }
-            if(key=='editUser'){
+            if(key=='nickName'){
                 html.push('<p><b>修改人:</b> ' + value + '</p>');
             }
 

@@ -57,9 +57,7 @@ public class LogAspect {
     @Around("execution(* *..controller..*.*(..))")//环绕增强,相当于执行该方法，result是返回值
     public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
         // 获取request
-        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) requestAttributes;
-        HttpServletRequest request = servletRequestAttributes.getRequest();
+        HttpServletRequest request = RequestUtil.getRequest();
 
         SystemLog systemLog = new SystemLog();
         // 从注解中获取操作名称、获取响应结果
@@ -103,7 +101,6 @@ public class LogAspect {
         systemLog.setUsedTime((int) (endTime - startTime));
         systemLog.setEditDate(DateUtil.longToDate(startTime));
         systemLog.setUri(request.getRequestURI());
-        //systemLog.setUrl(ObjectUtils.toString(request.getRequestURL()));
         systemLog.setUserAgent(request.getHeader("User-Agent"));
         SystemUser systemUser=(SystemUser)RequestUtil.getRequest().getSession().getAttribute(SystemConstant.SESSION_SYSTEM_USER);
         systemLog.setEditUser(systemUser.getUserId());

@@ -62,6 +62,7 @@ public class SystemConfigVo implements Serializable {
 
     //修改或添加页面
     private String page;
-
+    //昵称
+    private String nickName;
 
 }

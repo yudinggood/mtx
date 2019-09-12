@@ -39,8 +39,8 @@ public class SystemConfigServiceImpl extends BaseServiceImpl<SystemConfigMapper,
     SystemConfigExtMapper systemConfigExtMapper;
 
     @Override
-    public List<SystemConfig> list(Page<SystemConfig> page, SystemConfigDto systemConfigDto) {
-        List<SystemConfig> list = systemConfigExtMapper.list(systemConfigDto,page.getOrderByField(),page.isAsc());
+    public List<SystemConfigVo> list(Page<SystemConfig> page, SystemConfigDto systemConfigDto) {
+        List<SystemConfigVo> list = systemConfigExtMapper.list(systemConfigDto,page.getOrderByField(),page.isAsc());
         return list;
     }
 

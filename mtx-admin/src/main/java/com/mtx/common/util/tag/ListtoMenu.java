@@ -69,7 +69,7 @@ public class ListtoMenu {
 				}
 				curIndex++;
 			}
-			return menuString.toString();
+			return String.valueOf(menuString);
 		}
 		
 		private static String getFineuiSubMenu(Menu parent, int level, Map<Integer, List<Menu>> map) {
@@ -80,7 +80,7 @@ public class ListtoMenu {
 					menuString.append(getLeafOfFineuiTree(function,map));
 				}
 			}
-			return menuString.toString();
+			return String.valueOf(menuString);
 		}
 		
 		private static String getLeafOfFineuiTree(Menu function, Map<Integer, List<Menu>> map) {
@@ -115,7 +115,7 @@ public class ListtoMenu {
 				menuString.append(getFineuiSubMenu(function,2,map));
 				menuString.append("</ul></li>");
 			}
-			return menuString.toString();
+			return String.valueOf(menuString);
 		}
 
 

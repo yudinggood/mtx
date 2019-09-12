@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.mtx.common.base.BaseService;
 import com.mtx.system.dao.model.SystemLog;
 import com.mtx.system.dao.model.SystemLogExample;
+import com.mtx.system.dao.vo.SystemLogVo;
 
 import java.util.List;
 
@@ -13,5 +14,5 @@ import java.util.List;
 */
 public interface SystemLogService extends BaseService<SystemLog, SystemLogExample> {
 
-    List<SystemLog> list(Page<SystemLog> page, String search);
+    List<SystemLogVo> list(Page<SystemLog> page, String search);
 }

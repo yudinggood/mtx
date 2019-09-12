@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -62,7 +63,7 @@ public class DictCacheKit {
 
     public List<SystemDicVo> getBizDictByCode(DictEnum dictEnum){
         if(dictEnum == null){
-            return null;
+            return Collections.EMPTY_LIST;
         }
         List<SystemDicVo> dicts = CacheKit.get(Cache.CONSTANT, CacheKey.BIZ_DICT_CODE + dictEnum.name());
         if(dicts == null){

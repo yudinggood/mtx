@@ -228,7 +228,7 @@ public class RedisUtil {
     }
 
     /**
-     * lpush
+     * lpush   数组中添加元素
      * @param key
      * @param key
      */
@@ -243,7 +243,7 @@ public class RedisUtil {
     }
 
     /**
-     * lrem
+     * lrem   数组中删除元素
      * @param key
      * @param count
      * @param value
@@ -259,7 +259,7 @@ public class RedisUtil {
     }
 
     /**
-     * sadd
+     * sadd  添加元素 时间为second
      * @param key
      * @param value
      * @param seconds
@@ -276,7 +276,7 @@ public class RedisUtil {
     }
 
     /**
-     * incr
+     * incr  将 key 中储存的数字值增一
      * @param key
      * @return value
      */
@@ -291,7 +291,7 @@ public class RedisUtil {
     }
 
     /**
-     * decr
+     * decr  将 key 中储存的数字值减一
      * @param key
      * @return value
      */

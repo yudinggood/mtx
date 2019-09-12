@@ -35,7 +35,7 @@ public class GlobalProperties {
         Set<?> keys = this.configProperties.keySet();
         for (Iterator<?> localIterator = keys.iterator(); localIterator.hasNext();) {
             Object key = localIterator.next();
-            this.configMap.put(key.toString(), this.configProperties.getProperty(key.toString()));
+            this.configMap.put(String.valueOf(key), this.configProperties.getProperty(String.valueOf(key)));
         }
     }
 
@@ -53,7 +53,7 @@ public class GlobalProperties {
 
     public List<SystemConfigVo> getBizDictByCode(PropertiesEnum propertiesEnum){
         if(propertiesEnum == null){
-            return null;
+            return Collections.EMPTY_LIST;
         }
         List<SystemConfigVo> dicts = CacheKit.get(Cache.CONSTANT, CacheKey.BIZ_DICT_CODE + propertiesEnum.name());
         if(dicts == null){

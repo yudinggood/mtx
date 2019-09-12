@@ -19,7 +19,7 @@ import java.util.List;
 */
 public class SystemRoleServiceMock extends BaseServiceMock<SystemRoleMapper, SystemRole, SystemRoleExample> implements SystemRoleService {
     @Override
-    public List<SystemRole> list(Page<SystemRole> page, String search) {
+    public List<SystemRoleVo> list(Page<SystemRole> page, String search) {
         return null;
     }
 

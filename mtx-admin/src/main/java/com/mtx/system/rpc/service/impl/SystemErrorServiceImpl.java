@@ -9,6 +9,7 @@ import com.mtx.system.dao.dto.SystemErrorDto;
 import com.mtx.system.dao.mapper.SystemErrorMapper;
 import com.mtx.system.dao.model.SystemError;
 import com.mtx.system.dao.model.SystemErrorExample;
+import com.mtx.system.dao.vo.SystemErrorVo;
 import com.mtx.system.rpc.api.SystemErrorService;
 import com.mtx.system.rpc.mapper.SystemErrorExtMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -34,13 +35,13 @@ public class SystemErrorServiceImpl extends BaseServiceImpl<SystemErrorMapper, S
     SystemErrorExtMapper systemErrorExtMapper;
 
     @Override
-    public List<SystemError> list(Page<SystemError> page,SystemErrorDto systemErrorDto) {
+    public List<SystemErrorVo> list(Page<SystemError> page, SystemErrorDto systemErrorDto) {
         if(!ToolUtil.isEmpty(systemErrorDto.getEditDate())){
             List<String> temp= RegularUtil.getRegularByString("(.*) - (.*)",systemErrorDto.getEditDate());
             systemErrorDto.setStartDate(temp.get(1));
             systemErrorDto.setEndDate(temp.get(2));
         }
-        List<SystemError> list = systemErrorExtMapper.list(systemErrorDto,page,page.getOrderByField(),page.isAsc());
+        List<SystemErrorVo> list = systemErrorExtMapper.list(systemErrorDto,page,page.getOrderByField(),page.isAsc());
         return list;
     }
 }

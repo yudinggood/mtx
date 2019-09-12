@@ -16,9 +16,12 @@ public class RegularUtil {
 
 	//把正则匹配到的结果  放入数组
 	public static List<String> getRegularByString(String reg, String content){
+		List<String> result=new ArrayList<>();
+		if(StringUtils.isEmpty(content)){
+			return result;
+		}
 		Pattern p = Pattern.compile(reg);//(\d+):(\d+)
 		Matcher m = p.matcher(content);
-		List<String> result=new ArrayList<>();
 		while(m.find())
 		{
 			for(int i = 0; i <= m.groupCount(); i++){

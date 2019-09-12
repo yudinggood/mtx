@@ -58,10 +58,6 @@ public class IndexController extends BaseController {
             Subject subject = SecurityUtils.getSubject();
             systemUser = systemApiService.selectSystemUserByUsername((String) subject.getPrincipal());
             super.getSession().setAttribute(SystemConstant.SESSION_SYSTEM_USER, systemUser);
-
-            //更新用户的登录信息
-            systemUser.setLastIp(subject.getSession().getHost());
-            systemUserService.updateByUser(systemUser);
         }
 
 

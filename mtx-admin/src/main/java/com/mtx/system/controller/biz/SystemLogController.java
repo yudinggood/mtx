@@ -6,6 +6,7 @@ import com.mtx.common.util.page.PageFactory;
 import com.mtx.common.util.page.PageInfoBT;
 import com.mtx.common.util.wrapper.WrapMapper;
 import com.mtx.system.dao.model.SystemLog;
+import com.mtx.system.dao.vo.SystemLogVo;
 import com.mtx.system.rpc.api.SystemLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -40,7 +41,7 @@ public class SystemLogController extends BaseController {
     @ResponseBody
     public Object list(@RequestParam(required = false) String search){
         Page<SystemLog> page = new PageFactory<SystemLog>().defaultPage();
-        List<SystemLog> voList = systemLogService.list(page,search);
+        List<SystemLogVo> voList = systemLogService.list(page,search);
         return new PageInfoBT<>(voList,page.getTotal());
     }
 

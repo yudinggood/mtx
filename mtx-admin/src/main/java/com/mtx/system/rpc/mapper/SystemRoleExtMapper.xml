@@ -11,14 +11,16 @@
         <result column="edit_date" jdbcType="TIMESTAMP" property="editDate" />
         <result column="edit_user" jdbcType="INTEGER" property="editUser" />
     </resultMap>
+    <resultMap extends="BaseResultMap" id="SystemRoleVO" type="com.mtx.system.dao.vo.SystemRoleVo">
+    </resultMap>
 
-    <select id="list" resultMap="BaseResultMap">
-        SELECT * FROM system_role where 1=1
+    <select id="list" resultMap="SystemRoleVO">
+        SELECT r.* ,u.nick_name as nickName FROM system_role r LEFT JOIN SYSTEM_USER u ON u.user_id=r.edit_user where 1=1
         <if test="search!= null and search != ''">
             and
             (
-            role_name LIKE CONCAT(CONCAT('%', #{search}),'%')  or
-            role_code LIKE CONCAT(CONCAT('%', #{search}),'%')
+            r.role_name LIKE CONCAT(CONCAT('%', #{search}),'%')  or
+            r.role_code LIKE CONCAT(CONCAT('%', #{search}),'%')
             )
         </if>
 
@@ -34,7 +36,7 @@
                 </choose>
             </when>
             <otherwise>
-                order by role_id ASC
+                order by r.role_id ASC
             </otherwise>
         </choose>
 

@@ -24,7 +24,7 @@ public class SystemTest extends BaseJunit{
     public void index() {
         Map map = systemPermissionService.selectForMenu();
         Assert.assertNotNull(map);//断言null则抛出异常  ，顺我者昌逆我者亡 原则
-        log.debug(map.toString());
+        log.debug(String.valueOf(map));
     }
 
     @Test

@@ -38,7 +38,7 @@ public class RequestUtil {
         } else if("https".equalsIgnoreCase(scheme) && port != 443) {
             basePath.append(":").append(String.valueOf(port));
         }
-        return basePath.toString();
+        return String.valueOf(basePath);
     }
 
     /**
@@ -115,7 +115,7 @@ public class RequestUtil {
         if (!StringUtils.isBlank(params)) {
             backUrl = backUrl.append("?").append(params);
         }
-        return backUrl.toString();
+        return String.valueOf(backUrl);
     }
 
     //专业获取HTML文本的

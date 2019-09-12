@@ -30,7 +30,7 @@ public interface SystemRoleService extends BaseService<SystemRole, SystemRoleExa
 
     int savePermission(JSONArray datas, int id);
 
-    List<SystemRole> list(Page<SystemRole> page, String search);
+    List<SystemRoleVo> list(Page<SystemRole> page, String search);
 
     List<SelectVo> selectForSelect();
 

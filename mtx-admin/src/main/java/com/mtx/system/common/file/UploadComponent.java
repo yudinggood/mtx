@@ -32,7 +32,8 @@ public class UploadComponent {
         return attachmentDir;
     }
 
-    public SystemAttachDto upload(MultipartFile file)  {
+    public SystemAttachDto upload(SystemAttachDto systemAttachDto)  {
+        MultipartFile file =systemAttachDto.getFile();
         String fileName = file.getOriginalFilename();// 原文件名
         Long fileSize = file.getSize();
         String suffixName = fileName.substring(fileName.lastIndexOf(".")+1,fileName.length());
@@ -45,9 +46,13 @@ public class UploadComponent {
         } catch (IOException e) {
             log.error(e.getMessage(),e);
         }
+        systemAttachDto.setEditDate(new Date());
+        systemAttachDto.setFileName(fileName);
+        systemAttachDto.setFilePath(filePath);
+        systemAttachDto.setFileSize(fileSize);
+        systemAttachDto.setSuffix(file.getContentType());
+        systemAttachDto.setNewName(newName);
 
-        SystemAttachDto systemAttachDto = SystemAttachDto.builder().editDate(new Date()).fileName(fileName)
-                .filePath(filePath).fileSize(fileSize).suffix(file.getContentType()).newName(newName).build();
         return systemAttachDto;
     }
 

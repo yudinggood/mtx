@@ -34,4 +34,13 @@ public class SystemLogFactory extends BaseFactory {
         systemError.setClassName(stackTraceElement.getClassName());
         return systemError;
     }
+
+    public static SystemError createErrorLog(Integer userId) {
+        SystemError systemError = new SystemError();
+        systemError.setEditUser(userId);
+        systemError.setEditDate(new Date());
+        systemError.setErrorType((byte)1);
+        systemError.setCode("登录成功");
+        return systemError;
+    }
 }

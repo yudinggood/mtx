@@ -49,7 +49,7 @@ public class SystemConfigController extends BaseController {
     @ResponseBody
     public Object list(SystemConfigDto systemConfigDto){
         Page<SystemConfig> page = new PageFactory<SystemConfig>().defaultAll();
-        List<SystemConfig> voList = systemConfigService.list(page,systemConfigDto);
+        List<SystemConfigVo> voList = systemConfigService.list(page,systemConfigDto);
         return new PageInfoBT<>(voList,voList.size());
     }
 

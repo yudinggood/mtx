@@ -10,7 +10,6 @@ import java.util.Date;
 
 @Data
 @ApiModel
-@Builder
 public class SystemAttachDto implements Serializable {
     private static final long serialVersionUID = 1L;
 

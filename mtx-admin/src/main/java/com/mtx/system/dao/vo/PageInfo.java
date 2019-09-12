@@ -30,6 +30,8 @@ public class PageInfo implements Serializable {
         this.qqAuthPath = ssoServerUrl+ SystemConstant.QQAUTHPATH;
         this.qqClientSecret  = SystemConstant.QQCLIENT_SECRET;
     }
+
+
     //文档指向的域名
     private String gitBookDomain;
 

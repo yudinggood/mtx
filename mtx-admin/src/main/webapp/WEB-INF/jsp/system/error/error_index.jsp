@@ -155,6 +155,9 @@
                     }
                 }},
                 {field: 'className', title: '错误位置',formatter: function(value, row, index) {
+                    if(null==value){
+                        return null;
+                    }
                     return value+"."+row.method;
                 }},
                 {field: 'code', title: '错误编码',formatter: function(value, row, index) {
@@ -163,7 +166,7 @@
                 {field: 'editDate', title: '错误时间',formatter: function(value, row, index) {
                     return new Date(value).format("yyyy-MM-dd HH:mm:ss");
                 }},
-                {field: 'editUser', title: '用户'},
+                {field: 'nickName', title: '用户'},
                 {field: 'action', title: '操作', align: 'center', events: 'actionEvents', clickToSelect: false,width:'5%',
                     formatter: function(value, row, index) {
                         return [

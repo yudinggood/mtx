@@ -11,7 +11,7 @@ import java.util.List;
 public interface SystemConfigExtMapper {
 
 
-    List<SystemConfig> list(@Param("systemConfigDto") SystemConfigDto systemConfigDto,
+    List<SystemConfigVo> list(@Param("systemConfigDto") SystemConfigDto systemConfigDto,
                             @Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
 
 

@@ -36,7 +36,7 @@ public class MenuTag extends TagSupport {
         try {
             out = this.pageContext.getOut();
             endString = end();
-            out.print(endString.toString());
+            out.print(String.valueOf(endString));
             out.flush();
         } catch (IOException e) {
 

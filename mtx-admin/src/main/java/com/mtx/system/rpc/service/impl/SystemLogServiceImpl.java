@@ -6,6 +6,7 @@ import com.mtx.common.base.BaseServiceImpl;
 import com.mtx.system.dao.mapper.SystemLogMapper;
 import com.mtx.system.dao.model.SystemLog;
 import com.mtx.system.dao.model.SystemLogExample;
+import com.mtx.system.dao.vo.SystemLogVo;
 import com.mtx.system.rpc.api.SystemLogService;
 import com.mtx.system.rpc.mapper.SystemLogExtMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -31,8 +32,8 @@ public class SystemLogServiceImpl extends BaseServiceImpl<SystemLogMapper, Syste
     SystemLogExtMapper systemLogExtMapper;
 
     @Override
-    public List<SystemLog> list(Page<SystemLog> page, String search) {
-        List<SystemLog> list = systemLogExtMapper.list(search,page,page.getOrderByField(),page.isAsc());
+    public List<SystemLogVo> list(Page<SystemLog> page, String search) {
+        List<SystemLogVo> list = systemLogExtMapper.list(search,page,page.getOrderByField(),page.isAsc());
         return list;
     }
 

@@ -9,6 +9,7 @@ import com.mtx.system.common.bean.DictCacheKit;
 import com.mtx.system.common.enums.DictEnum;
 import com.mtx.system.dao.dto.SystemErrorDto;
 import com.mtx.system.dao.model.SystemError;
+import com.mtx.system.dao.vo.SystemErrorVo;
 import com.mtx.system.rpc.api.SystemErrorService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -43,7 +44,7 @@ public class SystemErrorController extends BaseController {
     @ResponseBody
     public Object list(SystemErrorDto systemErrorDto){
         Page<SystemError> page = new PageFactory<SystemError>().defaultPage();
-        List<SystemError> voList = systemErrorService.list(page,systemErrorDto);
+        List<SystemErrorVo> voList = systemErrorService.list(page,systemErrorDto);
         return new PageInfoBT<>(voList,page.getTotal());
     }
 

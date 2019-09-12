@@ -1,5 +1,6 @@
 package com.mtx.system.controller.base;
 
+import com.alibaba.fastjson.JSON;
 import com.aliyuncs.dysmsapi.model.v20170525.QuerySendDetailsResponse;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.baidu.unbiz.fluentvalidator.ComplexResult;
@@ -22,20 +23,17 @@ import com.mtx.system.common.shiro.session.UpmsSession;
 import com.mtx.system.common.shiro.session.UpmsSessionDao;
 import com.mtx.system.dao.dto.SystemAttachDto;
 import com.mtx.system.dao.dto.SystemUserDto;
-import com.mtx.system.dao.model.SystemSystem;
-import com.mtx.system.dao.model.SystemSystemExample;
-import com.mtx.system.dao.model.SystemUser;
+import com.mtx.system.dao.model.*;
 import com.mtx.system.dao.vo.PageInfo;
 import com.mtx.system.dao.vo.SystemUserVo;
-import com.mtx.system.rpc.api.SystemApiService;
-import com.mtx.system.rpc.api.SystemRoleService;
-import com.mtx.system.rpc.api.SystemSystemService;
-import com.mtx.system.rpc.api.SystemUserService;
+import com.mtx.system.rpc.api.*;
+import com.mtx.system.rpc.factory.SystemLogFactory;
 import com.sun.tools.internal.xjc.Language;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -73,6 +71,7 @@ public class LoginController extends BaseController {
     private final static String UPMS_SERVER_SESSION_IDS = "upms-server-session-ids";
     // code keycon
     private final static String UPMS_SERVER_CODE = "upms-server-code";
+
     @Autowired
     private SystemApiService systemApiService;
     @Autowired
@@ -83,12 +82,14 @@ public class LoginController extends BaseController {
     private SystemUserService systemUserService;
     @Autowired
     private SystemRoleService systemRoleService;
+    @Autowired
+    SystemErrorService systemErrorService;
 
     @ApiOperation(value = "免密登录前置请求")
     @RequestMapping(value = "/pre", method = RequestMethod.GET)
-    public String pre(HttpServletRequest request) throws Exception {
-        String appid = request.getParameter("appid");
-        String backurl = request.getParameter("backurl");
+    public String pre() throws Exception {
+        String appid = getPara("appid");
+        String backurl = getPara("backurl");
         if (StringUtils.isBlank(appid)) {
             throw new RuntimeException("无效访问！");
         }
@@ -100,19 +101,19 @@ public class LoginController extends BaseController {
         if (0 == count) {
             throw new RuntimeException(String.format("未注册的系统:%s", appid));
         }
-        return "redirect:/login?backurl=" + URLEncoder.encode(backurl, "utf-8");
+        return REDIRECT+"/login?backurl=" + URLEncoder.encode(backurl, "utf-8");
     }
 
     @ApiOperation(value = "登录页")
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView index(HttpServletRequest request){
+    public ModelAndView index(){
         ModelAndView mv =this.getModelAndView();
         Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();
         String serverSessionId = session.getId().toString();
         // 判断是否已登录，如果已登录，则回跳
         String code = RedisUtil.get(UPMS_SERVER_SESSION_ID + "_" + serverSessionId);
-        String backurl = request.getParameter("backurl");
+        String backurl = getPara("backurl");
         // code校验值
         if (StringUtils.isNotBlank(code)) {
             // 回跳
@@ -127,7 +128,7 @@ public class LoginController extends BaseController {
                 }
             }
             log.debug("认证中心帐号通过，带code回跳：{}", backurl);
-            mv.setViewName("redirect:"+backurl);
+            mv.setViewName(REDIRECT+backurl);
         }else {
             //页面授权要用的
             PageInfo pageInfo = new PageInfo();
@@ -147,7 +148,7 @@ public class LoginController extends BaseController {
 
         Subject currentUser = SecurityUtils.getSubject();//将验证码放入session中
         Session session = currentUser.getSession();
-        session.setAttribute(SystemConstant.SESSION_SECURITY_CODE, code);
+        session.setAttribute(getPara("type"), code);
 
         try {
             ServletOutputStream out = response.getOutputStream();
@@ -160,8 +161,8 @@ public class LoginController extends BaseController {
     @ApiOperation(value = "校验upmsCode")
     @RequestMapping(value = "/upmsCode", method = RequestMethod.POST)
     @ResponseBody
-    public Object upmsCode(HttpServletRequest request) {
-        String codeParam = request.getParameter("code");
+    public Object upmsCode() {
+        String codeParam = getPara("code");
         String code = RedisUtil.get(UPMS_SERVER_CODE + "_" + codeParam);
         if (StringUtils.isBlank(codeParam) || !codeParam.equals(code)) {
             return WrapMapper.wrap(ErrorCodeEnum.INVALID_UPMS_CODE);
@@ -191,10 +192,10 @@ public class LoginController extends BaseController {
         if(!sessionCode.equalsIgnoreCase(systemUserDto.getCode())){
             return WrapMapper.wrap(ErrorCodeEnum.INVALID_CODE);
         }
-        //未授权判断
-        SystemUser systemUser = systemApiService.selectSystemUserByUsername((String) subject.getPrincipal());
+        //未激活判断等
+        SystemUser systemUser = systemApiService.selectSystemUserByUsername(systemUserDto.getLoginId());
         if(systemUser==null){
-            return WrapMapper.wrap(ErrorCodeEnum.ACCOUNT_NOT_ACTIVE);
+            return WrapMapper.wrap(ErrorCodeEnum.INVALID_USERNAME_PASSWORD);
         }
 
         // 判断是否已登录，如果已登录，则回跳，防止重复登录
@@ -202,11 +203,7 @@ public class LoginController extends BaseController {
         if (StringUtils.isBlank(hasCode)) {
             EasyTypeToken usernamePasswordToken = new EasyTypeToken(systemUserDto.getLoginId(), systemUserDto.getPassword());
             try {
-                if (BooleanUtils.toBoolean(systemUserDto.getRememberMe())) {
-                    usernamePasswordToken.setRememberMe(true);
-                } else {
-                    usernamePasswordToken.setRememberMe(false);
-                }
+                usernamePasswordToken.setRememberMe(BooleanUtils.toBoolean(systemUserDto.getRememberMe()));
                 subject.login(usernamePasswordToken);
             } catch (UnknownAccountException e) {
                 return WrapMapper.wrap(ErrorCodeEnum.INVALID_USERNAME_PASSWORD);
@@ -227,6 +224,8 @@ public class LoginController extends BaseController {
             RedisUtil.set(UPMS_SERVER_SESSION_ID + "_" + sessionId, code, (int) subject.getSession().getTimeout() / 1000);
             // code校验值
             RedisUtil.set(UPMS_SERVER_CODE + "_" + code, code, (int) subject.getSession().getTimeout() / 1000);
+            //登录成功
+            loginSuccess(systemUserDto.getLoginId());
         }
         //如果有openId则保存到DB
         if (StringUtils.isNotBlank(systemUserDto.getQqOpenId())){
@@ -249,30 +248,30 @@ public class LoginController extends BaseController {
 
     @ApiOperation(value = "退出登录")
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public ModelAndView logout(HttpServletRequest request) {
+    public ModelAndView logout() {
         ModelAndView mv =this.getModelAndView();
         // shiro退出登录
         SecurityUtils.getSubject().logout();
         // 跳回原地址
-        String redirectUrl = request.getHeader("Referer");
+        String redirectUrl = getHead("Referer");
         if (null == redirectUrl) {
             redirectUrl = "/";
         }
-        mv.setViewName("redirect:"+redirectUrl);
+        mv.setViewName(REDIRECT+redirectUrl);
         return mv;
     }
 
     @ApiOperation(value = "QQ授权")
     @RequestMapping(value = "/qqAuthorization", method = RequestMethod.GET)
-    public ModelAndView qqAuthorization(HttpServletRequest request){
+    public ModelAndView qqAuthorization(){
         ModelAndView mv =this.getModelAndView();
         PageInfo pageInfo=new PageInfo();
         String result = RequestUtil.getHtml("https://graph.qq.com/oauth2.0/token?grant_type=authorization_code&client_id=" + pageInfo.getQqAppId()+
-                "&client_secret="+pageInfo.getQqClientSecret()+"&redirect_uri="+URLEncoder.encode(pageInfo.getQqAuthPath())+"&code="+request.getParameter("code"));
+                "&client_secret="+pageInfo.getQqClientSecret()+"&redirect_uri="+URLEncoder.encode(pageInfo.getQqAuthPath())+"&code="+getPara("code"));
         if(result.contains("callback")){
             throw new BusinessException(ErrorCodeEnum.INVALID_QQ_AUTHO);
         }
-        String access_token= RegularUtil.getRegularByString("access_token=(.*)&expires_in=(.*)",result).get(1);
+        String access_token= StringUtil.getParam(result,"access_token");
         String result2=RequestUtil.getHtml("https://graph.qq.com/oauth2.0/me?access_token="+access_token);
         String openid=RegularUtil.getRegularByString("(.*)openid\":\"(.*)\"}(.*)",result2).get(2);
         SystemUser systemUser = systemUserService.selectByQqOpenId(openid);
@@ -323,13 +322,26 @@ public class LoginController extends BaseController {
             RedisUtil.set(UPMS_SERVER_SESSION_ID + "_" + sessionId, code, (int) subject.getSession().getTimeout() / 1000);
             // code校验值
             RedisUtil.set(UPMS_SERVER_CODE + "_" + code, code, (int) subject.getSession().getTimeout() / 1000);
+            //登录成功
+            loginSuccess(loginId);
         }
 
         // 回跳登录前地址
         SystemSystem systemSystem = systemSystemService.selectByName(PropertiesFileUtil.getInstance().get("app.name"));
         String backurl = null == systemSystem ? "/" : systemSystem.getBasepath();
         return backurl;
-
+    }
+    //登录成功的处理
+    private void loginSuccess(String loginId) {
+        SystemUser systemUser = systemApiService.selectSystemUserByUsername(loginId);
+        //同时只允许一个账号登录    获取在线的session
+        upmsSessionDao.otherFouceOut(systemUser.getUserId());
+        //更新用户的登录信息
+        systemUser.setLastIp(SecurityUtils.getSubject().getSession().getHost());
+        systemUserService.updateByUser(systemUser);
+        //登录log插入
+        SystemError systemError = SystemLogFactory.createErrorLog(systemUser.getUserId());
+        systemErrorService.insertSelective(systemError);
     }
 
     @ApiOperation(value = "校验验证码后发送短信")
@@ -351,7 +363,7 @@ public class LoginController extends BaseController {
         Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();
         String sessionId = session.getId().toString();
-        String sessionCode = (String)session.getAttribute(SystemConstant.SESSION_SECURITY_CODE);		//获取session中的验证码
+        String sessionCode = (String)session.getAttribute(SystemConstant.REGISTER_SESSION_SECURITY_CODE);
         if(!sessionCode.equalsIgnoreCase(systemUserDto.getCode())){
             return WrapMapper.wrap(ErrorCodeEnum.INVALID_CODE);
         }
@@ -364,7 +376,7 @@ public class LoginController extends BaseController {
         //发送短信
         SendSmsResponse sendSmsResponse =SendSmsUtil.sendSms(systemUserDto.getLoginId(),SendSmsUtil.getCaptcha());
         if(sendSmsResponse.getCode().equals("OK")){
-            return WrapMapper.wrap(1);
+            return WrapMapper.ok();
         }else {
             return WrapMapper.wrap(ErrorCodeEnum.SMS_ERROR.code(),sendSmsResponse.getMessage()+ErrorCodeEnum.SMS_ERROR.message());
         }

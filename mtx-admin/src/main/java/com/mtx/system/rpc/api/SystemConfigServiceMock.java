@@ -16,7 +16,7 @@ import java.util.List;
 */
 public class SystemConfigServiceMock extends BaseServiceMock<SystemConfigMapper, SystemConfig, SystemConfigExample> implements SystemConfigService {
     @Override
-    public List<SystemConfig> list(Page<SystemConfig> page, SystemConfigDto systemConfigDto) {
+    public List<SystemConfigVo> list(Page<SystemConfig> page, SystemConfigDto systemConfigDto) {
         return null;
     }
 

@@ -21,14 +21,14 @@ public class DozerTest {
         SystemPermission sourceObject = new SystemPermission();
         sourceObject.setPermissionId(1234);
         SystemPermissionVo destObject =  mapper.map(sourceObject, SystemPermissionVo.class);
-        log.debug(destObject.toString());
+        log.debug(String.valueOf(destObject));
     }
     @Test
     public void dtoObjectCopy(){
         SystemPermissionDto sourceObject = new SystemPermissionDto();
         sourceObject.setPermissionId(12345);
         SystemPermission destObject =  mapper.map(sourceObject, SystemPermission.class);
-        log.debug(destObject.toString());
+        log.debug(String.valueOf(destObject));
     }
     //map转实体类
     @Test
@@ -36,7 +36,7 @@ public class DozerTest {
         Map<String,Object> map = new HashMap();
         map.put("permissionId", 10000L);
         SystemPermission destObject = mapper.map(map, SystemPermission.class);
-        log.debug(destObject.toString());
+        log.debug(String.valueOf(destObject));
     }
 
 }

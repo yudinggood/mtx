@@ -14,12 +14,12 @@
     <resultMap extends="BaseResultMap" id="SystemConfigVo" type="com.mtx.system.dao.vo.SystemConfigVo">
     </resultMap>
 
-    <select id="list" resultMap="BaseResultMap">
-        SELECT * FROM system_config where 1=1
+    <select id="list" resultMap="SystemConfigVo">
+        SELECT c.*,u.nick_name as nickName FROM system_config c LEFT JOIN SYSTEM_USER u ON u.user_id=c.edit_user where 1=1
         <if test="systemConfigDto.search!= null and systemConfigDto.search != ''">
             and
             (
-            name LIKE CONCAT(CONCAT('%', #{systemConfigDto.search}),'%')
+            c.name LIKE CONCAT(CONCAT('%', #{systemConfigDto.search}),'%')
             )
         </if>
 
@@ -35,7 +35,7 @@
                 </choose>
             </when>
             <otherwise>
-                order by config_id asc
+                order by c.config_id asc
             </otherwise>
         </choose>
 

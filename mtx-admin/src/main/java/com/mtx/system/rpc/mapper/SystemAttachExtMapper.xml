@@ -15,21 +15,23 @@
         <result column="edit_user" jdbcType="INTEGER" property="editUser" />
         <result column="deleted" jdbcType="TINYINT" property="deleted" />
     </resultMap>
+    <resultMap extends="BaseResultMap" id="SystemAttachVo" type="com.mtx.system.dao.vo.SystemAttachVo">
+    </resultMap>
 
-    <select id="list" resultMap="BaseResultMap">
-        SELECT * FROM system_attach where 1=1
+    <select id="list" resultMap="SystemAttachVo">
+        SELECT a.*,u.nick_name as nickName FROM system_attach a LEFT JOIN SYSTEM_USER u ON u.user_id=a.edit_user where 1=1
         <if test="systemAttachDto.search!= null and systemAttachDto.search != ''">
             and
             (
-            file_name LIKE CONCAT(CONCAT('%', #{systemAttachDto.search}),'%')
+            a.file_name LIKE CONCAT(CONCAT('%', #{systemAttachDto.search}),'%')
             )
         </if>
         <if test="systemAttachDto.bizType!= null and systemAttachDto.bizType != ''">
-            and biz_type = #{systemAttachDto.bizType}
+            and a.biz_type = #{systemAttachDto.bizType}
         </if>
         <if test="systemAttachDto.editDate!= null and systemAttachDto.editDate != ''">
-            and STR_TO_DATE(edit_date,'%Y-%m-%d') <![CDATA[>=]]> #{systemAttachDto.startDate}
-            and STR_TO_DATE(edit_date,'%Y-%m-%d') <![CDATA[<=]]> #{systemAttachDto.endDate}
+            and STR_TO_DATE(a.edit_date,'%Y-%m-%d') <![CDATA[>=]]> #{systemAttachDto.startDate}
+            and STR_TO_DATE(a.edit_date,'%Y-%m-%d') <![CDATA[<=]]> #{systemAttachDto.endDate}
         </if>
         <choose>
             <when test="orderByField != null and orderByField !=''">
@@ -43,7 +45,7 @@
                 </choose>
             </when>
             <otherwise>
-                order by attach_id desc
+                order by a.attach_id desc
             </otherwise>
         </choose>
 

@@ -34,7 +34,8 @@ public class SystemConstant {
     public static final String CLIENT = "client";
 
     //登录相关
-    public static final String SESSION_SECURITY_CODE = "sessionSecCode";//验证码
+    public static final String SESSION_SECURITY_CODE = "sessionSecCode";//登录验证码
+    public static final String REGISTER_SESSION_SECURITY_CODE = "registersessionSecCode";//注册验证码
     public static final String FORCE_LOGOUT = "FORCE_LOGOUT";//强制退出标记
     public static final String SESSION_SYSTEM_USER = "systemUser";//session中的systemUser属性
     public static final String COMMON_ROLE = "common";//表示普通用户

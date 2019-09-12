@@ -12,21 +12,23 @@
         <result column="edit_date" jdbcType="TIMESTAMP" property="editDate" />
         <result column="deleted" jdbcType="TINYINT" property="deleted" />
     </resultMap>
+    <resultMap extends="BaseResultMap" id="SystemErrorVo" type="com.mtx.system.dao.vo.SystemErrorVo">
+    </resultMap>
 
-    <select id="list" resultMap="BaseResultMap">
-        SELECT * FROM system_error where 1=1
+    <select id="list" resultMap="SystemErrorVo">
+        SELECT e.*,u.nick_name as nickName FROM system_error e LEFT JOIN SYSTEM_USER u ON u.user_id=e.edit_user where 1=1
         <if test="systemErrorDto.search!= null and systemErrorDto.search != ''">
             and
             (
-            code LIKE CONCAT(CONCAT('%', #{systemErrorDto.search}),'%')
+            e.code LIKE CONCAT(CONCAT('%', #{systemErrorDto.search}),'%')
             )
         </if>
         <if test="systemErrorDto.errorType!= null and systemErrorDto.errorType != 0">
-            and error_type = #{systemErrorDto.errorType}
+            and e.error_type = #{systemErrorDto.errorType}
         </if>
         <if test="systemErrorDto.editDate!= null and systemErrorDto.editDate != ''">
-            and STR_TO_DATE(edit_date,'%Y-%m-%d') <![CDATA[>=]]> #{systemErrorDto.startDate}
-            and STR_TO_DATE(edit_date,'%Y-%m-%d') <![CDATA[<=]]> #{systemErrorDto.endDate}
+            and STR_TO_DATE(e.edit_date,'%Y-%m-%d') <![CDATA[>=]]> #{systemErrorDto.startDate}
+            and STR_TO_DATE(e.edit_date,'%Y-%m-%d') <![CDATA[<=]]> #{systemErrorDto.endDate}
         </if>
         <choose>
             <when test="orderByField != null and orderByField !=''">
@@ -40,7 +42,7 @@
                 </choose>
             </when>
             <otherwise>
-                order by error_id desc
+                order by e.error_id desc
             </otherwise>
         </choose>
 

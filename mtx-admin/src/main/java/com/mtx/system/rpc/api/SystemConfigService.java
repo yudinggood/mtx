@@ -15,7 +15,7 @@ import java.util.List;
 */
 public interface SystemConfigService extends BaseService<SystemConfig, SystemConfigExample> {
 
-    List<SystemConfig> list(Page<SystemConfig> page, SystemConfigDto systemConfigDto);
+    List<SystemConfigVo> list(Page<SystemConfig> page, SystemConfigDto systemConfigDto);
 
     SystemConfigVo selectByIdWithLeft(int configId);
 

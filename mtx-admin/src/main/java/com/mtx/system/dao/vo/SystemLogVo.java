@@ -1,14 +1,12 @@
 package com.mtx.system.dao.vo;
 
-import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@ApiModel
-public class SystemAttachVo implements Serializable {
+public class SystemLogVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -16,70 +14,77 @@ public class SystemAttachVo implements Serializable {
      *
      * @mbg.generated
      */
-    private Integer attachId;
+    private Integer logId;
 
     /**
-     * 业务编码
+     * 消耗时间
      *
      * @mbg.generated
      */
-    private String bizType;
+    private Integer usedTime;
 
     /**
-     * 业务id
+     * 日志描述
      *
      * @mbg.generated
      */
-    private Integer bizId;
+    private String description;
 
     /**
-     * 文件名称
+     * 根路径
      *
      * @mbg.generated
      */
-    private String fileName;
+    private String domain;
 
     /**
-     * 存放路径
+     * uri
      *
      * @mbg.generated
      */
-    private String filePath;
+    private String uri;
 
     /**
-     * 后缀名
+     * 请求类型
      *
      * @mbg.generated
      */
-    private String suffix;
+    private String method;
 
     /**
-     * 新UUID名称
+     * 用户标识
      *
      * @mbg.generated
      */
-    private String newName;
+    private String userAgent;
 
     /**
-     * 文件大小
+     * 用户IP
      *
      * @mbg.generated
      */
-    private Long fileSize;
+    private String ip;
 
     /**
-     * 修改日期
+     * 权限值
      *
      * @mbg.generated
      */
-    private Date editDate;
+    private String permission;
 
     /**
-     * 修改人
+     * 操作人
      *
      * @mbg.generated
      */
     private Integer editUser;
+
+    /**
+     * 操作时间
+     *
+     * @mbg.generated
+     */
+    private Date editDate;
 
     /**
      * 1是删除了
@@ -88,12 +93,20 @@ public class SystemAttachVo implements Serializable {
      */
     private Byte deleted;
 
-    //修改或添加页面
-    private String page;
-    //业务编码名称
-    private String bizTypeName;
-    //文件大小名称
-    private String fileSizeName;
+    /**
+     * 请求参数
+     *
+     * @mbg.generated
+     */
+    private String parameter;
+
+    /**
+     * 响应结果
+     *
+     * @mbg.generated
+     */
+    private String result;
+
     //昵称
     private String nickName;
 }

@@ -45,7 +45,7 @@ public class SystemAttachServiceImpl extends BaseServiceImpl<SystemAttachMapper,
 
     @Override
     public List<SystemAttachVo> list(Page<SystemAttach> page, SystemAttachDto systemAttachDto) {
-        List<SystemAttach> list = systemAttachExtMapper.list(systemAttachDto,page,page.getOrderByField(),page.isAsc());
+        List<SystemAttachVo> list = systemAttachExtMapper.list(systemAttachDto,page,page.getOrderByField(),page.isAsc());
         List<SystemAttachVo> voList = systemAttachFactory.convertList(list,SystemAttachVo.class);
         return voList;
     }
@@ -59,7 +59,7 @@ public class SystemAttachServiceImpl extends BaseServiceImpl<SystemAttachMapper,
 
     @Override
     public int insertDto(SystemAttachDto systemAttachDto) {
-        systemAttachDto =uploadComponent.upload(systemAttachDto.getFile());
+        systemAttachDto =uploadComponent.upload(systemAttachDto);
         systemAttachDto.setBizType(AttachmentEnum.COMMON_ATTACHMENT.name());
 
         SystemAttach systemAttach = systemAttachFactory.convertDtoToDo(systemAttachDto,SystemAttach.class);

@@ -48,7 +48,7 @@ public class SystemRoleController extends BaseController {
     @ResponseBody
     public Object list(@RequestParam(required = false) String search){
         Page<SystemRole> page = new PageFactory<SystemRole>().defaultPage();
-        List<SystemRole> voList = systemRoleService.list(page,search);
+        List<SystemRoleVo> voList = systemRoleService.list(page,search);
         return new PageInfoBT<>(voList,page.getTotal());
     }
 
@@ -133,8 +133,8 @@ public class SystemRoleController extends BaseController {
     @RequiresPermissions("system:role:edit")
     @RequestMapping(value = "/savePermission/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public Object savePermission(@PathVariable("id") int id, HttpServletRequest request) {
-        JSONArray datas = JSONArray.parseArray(request.getParameter("datas"));
+    public Object savePermission(@PathVariable("id") int id) {
+        JSONArray datas = JSONArray.parseArray(getPara("datas"));
         int count = systemRoleService.savePermission(datas, id);
         return WrapMapper.wrap(count);
     }

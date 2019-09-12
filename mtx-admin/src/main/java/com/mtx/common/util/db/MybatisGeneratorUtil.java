@@ -87,7 +87,7 @@ public class MybatisGeneratorUtil {
             JdbcUtil jdbcUtil = new JdbcUtil(jdbcDriver, jdbcUrl, jdbcUsername, AESUtil.aesDecode(jdbcPassword));
             List<Map> result = jdbcUtil.selectByParams(sql, list);
             for (Map map : result) {
-                String tableName =map.get("TABLE_NAME").toString();
+                String tableName =String.valueOf(map.get("TABLE_NAME"));
                 log.info(tableName);
                 tableName =tableName.replaceAll("\\$","_");
 

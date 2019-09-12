@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Request请求过滤包装
+ * Request的请求过滤包装
  */
 public class WafRequestWrapper extends HttpServletRequestWrapper {
     private boolean filterXSS = true;

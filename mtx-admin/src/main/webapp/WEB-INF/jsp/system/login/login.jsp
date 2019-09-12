@@ -259,10 +259,10 @@
 
     });
     function changeCode() {
-        $("#codeImg").attr("src", "${basePath}/code?t="+ genTimestamp());
+        $("#codeImg").attr("src", "${basePath}/code?t="+ genTimestamp()+"&type=sessionSecCode");
     }
     function changeCode2() {
-        $("#codeImg2").attr("src", "${basePath}/code?t="+ genTimestamp());
+        $("#codeImg2").attr("src", "${basePath}/code?t="+ genTimestamp()+"&type=registersessionSecCode");
     }
 
     function qqlogin(width, height){

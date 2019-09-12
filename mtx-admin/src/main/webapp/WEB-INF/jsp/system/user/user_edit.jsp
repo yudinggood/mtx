@@ -190,8 +190,8 @@
                             <input type="radio" name="userState" value="3" class="minimal" checked="checked" id="userState3"/><label for="userState3">未激活</label>
                         </c:if>
                         <c:if test="${systemUserVo.userState != 3 }">
-                            <input type="radio" name="userState" value="1" class="minimal" <c:if test="${systemUserVo.userState == 2 }">checked="checked"</c:if> id="userState1"/><label for="userState1">正常</label>
-                            <input type="radio" name="userState" value="2" class="minimal" <c:if test="${systemUserVo.userState == 3 }">checked="checked"</c:if> id="userState2"/><label for="userState2">封禁</label>
+                            <input type="radio" name="userState" value="1" class="minimal" <c:if test="${systemUserVo.userState == 1 }">checked="checked"</c:if> id="userState1"/><label for="userState1">正常</label>
+                            <input type="radio" name="userState" value="2" class="minimal" <c:if test="${systemUserVo.userState == 2 }">checked="checked"</c:if> id="userState2"/><label for="userState2">封禁</label>
                         </c:if>
 
                     </div>

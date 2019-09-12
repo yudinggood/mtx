@@ -22,24 +22,58 @@ import java.util.Map;
  */
 @Slf4j
 public class BaseController {
-
-    public ModelAndView getModelAndView(){
+    protected static String REDIRECT = "redirect:";
+    protected static String FORWARD = "forward:";
+    /**
+     * 获取视图
+     */
+    protected ModelAndView getModelAndView(){
         return new ModelAndView();
     }
-
-    public String errorListToString(List<ValidationError> list){
+    /**
+     * 错误信息转换
+     */
+    protected String errorListToString(List<ValidationError> list){
         StringBuffer sb =new StringBuffer();
         for(ValidationError error:list){
             sb.append(error.getErrorMsg());
         }
-        return sb.toString();
+        return String.valueOf(sb);
     }
-
+    /**
+     * 获取session
+     */
     protected HttpSession getSession() {
-        return RequestUtil.getRequest().getSession();
+        return getHttpServletRequest().getSession();
     }
-
+    /**
+     * 获取当前用户信息
+     */
     protected SystemUser getSystemUser(){
         return (SystemUser) getSession().getAttribute(SystemConstant.SESSION_SYSTEM_USER);
     }
+    /**
+     * 获取request
+     */
+    protected HttpServletRequest getHttpServletRequest() {
+        return RequestUtil.getRequest();
+    }
+    /**
+     * 获取param
+     */
+    protected String getPara(String name) {
+        return getHttpServletRequest().getParameter(name);
+    }
+    /**
+     * 获取header
+     */
+    protected String getHead(String name) {
+        return getHttpServletRequest().getHeader(name);
+    }
 }
+
+
+
+
+
+

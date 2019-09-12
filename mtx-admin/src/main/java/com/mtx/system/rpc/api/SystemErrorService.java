@@ -5,6 +5,7 @@ import com.mtx.common.base.BaseService;
 import com.mtx.system.dao.dto.SystemErrorDto;
 import com.mtx.system.dao.model.SystemError;
 import com.mtx.system.dao.model.SystemErrorExample;
+import com.mtx.system.dao.vo.SystemErrorVo;
 
 import java.util.List;
 
@@ -14,5 +15,5 @@ import java.util.List;
 */
 public interface SystemErrorService extends BaseService<SystemError, SystemErrorExample> {
 
-    List<SystemError> list(Page<SystemError> page,SystemErrorDto systemErrorDto);
+    List<SystemErrorVo> list(Page<SystemError> page, SystemErrorDto systemErrorDto);
 }

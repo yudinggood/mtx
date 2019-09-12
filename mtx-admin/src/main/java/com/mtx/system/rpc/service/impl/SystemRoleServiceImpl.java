@@ -49,8 +49,8 @@ public class SystemRoleServiceImpl extends BaseServiceImpl<SystemRoleMapper, Sys
 
 
     @Override
-    public List<SystemRole> list(Page<SystemRole> page, String search) {
-        List<SystemRole> list = systemRoleExtMapper.list(search,page,page.getOrderByField(),page.isAsc());
+    public List<SystemRoleVo> list(Page<SystemRole> page, String search) {
+        List<SystemRoleVo> list = systemRoleExtMapper.list(search,page,page.getOrderByField(),page.isAsc());
         return list;
     }
 

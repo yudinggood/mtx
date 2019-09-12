@@ -12,7 +12,7 @@ import java.io.Serializable;
  * The class Wrapper.
  */
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)//属性为NULL 不序列化
+@JsonInclude(JsonInclude.Include.NON_NULL)//属性为NULL 转json不序列化
 public class Wrapper<T> implements Serializable {
 
 	/**

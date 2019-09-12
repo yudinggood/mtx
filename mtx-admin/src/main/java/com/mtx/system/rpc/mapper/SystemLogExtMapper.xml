@@ -16,14 +16,16 @@
         <result column="edit_date" jdbcType="TIMESTAMP" property="editDate" />
         <result column="deleted" jdbcType="TINYINT" property="deleted" />
     </resultMap>
+    <resultMap extends="BaseResultMap" id="SystemLogVo" type="com.mtx.system.dao.vo.SystemLogVo">
+    </resultMap>
 
-    <select id="list" resultMap="BaseResultMap">
-        SELECT * FROM system_log where 1=1
+    <select id="list" resultMap="SystemLogVo">
+        SELECT l.*,u.nick_name as nickName FROM system_log l LEFT JOIN SYSTEM_USER u ON u.user_id=l.edit_user where 1=1
         <if test="search!= null and search != ''">
             and
             (
-            uri LIKE CONCAT(CONCAT('%', #{search}),'%')  or
-            description LIKE CONCAT(CONCAT('%', #{search}),'%')
+            l.uri LIKE CONCAT(CONCAT('%', #{search}),'%')  or
+            l.description LIKE CONCAT(CONCAT('%', #{search}),'%')
             )
         </if>
 
@@ -39,7 +41,7 @@
                 </choose>
             </when>
             <otherwise>
-                order by log_id desc
+                order by l.log_id desc
             </otherwise>
         </choose>
 

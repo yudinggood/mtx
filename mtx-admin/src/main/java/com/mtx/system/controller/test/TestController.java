@@ -42,7 +42,7 @@ public class TestController extends BaseController{
     //@RequiresPermissions("system:test:cookies")
     @RequestMapping(value = "/cookies", method = RequestMethod.GET)
     @ResponseBody
-    public Object getCookies(HttpServletResponse response, HttpServletRequest request){//为当前浏览器中所有cookie
+    public Object getCookies(HttpServletRequest request){//为当前浏览器中所有cookie
         Map<Object,Object> map=new HashMap<>(0);
         Cookie[] cookies = request.getCookies();
         if (null != cookies) {
@@ -58,9 +58,9 @@ public class TestController extends BaseController{
     //@RequiresPermissions("system:test:session")
     @RequestMapping(value = "/session", method = RequestMethod.GET)
     @ResponseBody
-    public Object getSession(HttpServletResponse response, HttpServletRequest request){
+    public Object getSessions(){
         Map<Object,Object> map=new HashMap<>();
-        HttpSession session=request.getSession();
+        HttpSession session=getSession();
         map.put("id", session.getId().toString());
         Enumeration enumeration =session.getAttributeNames();
         while(enumeration.hasMoreElements()){
@@ -76,7 +76,7 @@ public class TestController extends BaseController{
     //@RequiresPermissions("system:test:header")
     @RequestMapping(value = "/header", method = RequestMethod.GET)
     @ResponseBody
-    public Object getHeader(HttpServletResponse response, HttpServletRequest request){
+    public Object getHeader( HttpServletRequest request){
         Map<Object,Object> map=new HashMap<>();
         Enumeration enu = request.getHeaderNames();//取得全部头信息
         while (enu.hasMoreElements()) {
@@ -95,7 +95,7 @@ public class TestController extends BaseController{
     @ApiOperation(value = "page测试")
     @RequiresPermissions("system:test:test")
     @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public ModelAndView test(HttpServletResponse response, HttpServletRequest request){
+    public ModelAndView test(){
         //throw new UnauthorizedException();
         ModelAndView mv =this.getModelAndView();
         mv.setViewName("/system/test/test");

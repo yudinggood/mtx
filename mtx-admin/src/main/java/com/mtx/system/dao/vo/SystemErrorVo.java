@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class SystemRoleVo implements Serializable {
+public class SystemErrorVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -14,35 +14,35 @@ public class SystemRoleVo implements Serializable {
      *
      * @mbg.generated
      */
-    private Integer roleId;
+    private Integer errorId;
 
     /**
-     * 排序
+     * 错误类型1登录日志2异常日志3业务异常日志
      *
      * @mbg.generated
      */
-    private Integer orders;
+    private Byte errorType;
 
     /**
-     * 角色名称
+     * 类
      *
      * @mbg.generated
      */
-    private String roleName;
+    private String className;
 
     /**
-     * 角色编码
+     * 方法
      *
      * @mbg.generated
      */
-    private String roleCode;
+    private String method;
 
     /**
-     * 角色描述
+     * 用户
      *
      * @mbg.generated
      */
-    private String description;
+    private Integer editUser;
 
     /**
      * 修改时间
@@ -52,14 +52,26 @@ public class SystemRoleVo implements Serializable {
     private Date editDate;
 
     /**
-     * 修改人
+     * 1是删除了
      *
      * @mbg.generated
      */
-    private Integer editUser;
+    private Byte deleted;
 
-    //修改或添加页面
-    private String page;
+    /**
+     * 编码
+     *
+     * @mbg.generated
+     */
+    private String code;
+
+    /**
+     * 信息
+     *
+     * @mbg.generated
+     */
+    private String message;
+
     //昵称
     private String nickName;
 }

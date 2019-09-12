@@ -128,13 +128,13 @@ public class SqlLogInterceptor implements Interceptor {
     private String getParameterValue(Object obj) {
         String value;
         if (obj instanceof String) {
-            value = "'" + obj.toString() + "'";
+            value = "'" + String.valueOf(obj) + "'";
         } else if (obj instanceof Date) {
             DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.DEFAULT, DateFormat.DEFAULT, Locale.CHINA);
             value = "'" + formatter.format(obj) + "'";
         } else {
             if (obj != null) {
-                value = obj.toString();
+                value = String.valueOf(obj);
             } else {
                 value = "";
             }

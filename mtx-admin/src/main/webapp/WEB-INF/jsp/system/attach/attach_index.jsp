@@ -105,7 +105,7 @@
                 {field: 'editDate', title: '上传日期',formatter: function(value, row, index) {
                     return new Date(value).format("yyyy-MM-dd HH:mm:ss");
                 }},
-                {field: 'editUser', title: '上传人'},
+                {field: 'nickName', title: '上传人'},
                 {field: 'action', title: '操作', align: 'center', events: 'actionEvents', clickToSelect: false,width:'5%',
                     formatter: function(value, row, index) {
                         return [

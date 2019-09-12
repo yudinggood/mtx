@@ -32,7 +32,7 @@ public class TestConversion {
         SimpleHash simpleHash=new SimpleHash("MD5", "111111a", salt, 2);
 
 
-        System.out.print(s+"&"+simpleHash.toString());
+        System.out.print(s+"&"+String.valueOf(simpleHash));
     }
 
 

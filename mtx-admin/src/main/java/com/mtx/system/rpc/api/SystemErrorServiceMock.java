@@ -6,6 +6,7 @@ import com.mtx.system.dao.dto.SystemErrorDto;
 import com.mtx.system.dao.mapper.SystemErrorMapper;
 import com.mtx.system.dao.model.SystemError;
 import com.mtx.system.dao.model.SystemErrorExample;
+import com.mtx.system.dao.vo.SystemErrorVo;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 */
 public class SystemErrorServiceMock extends BaseServiceMock<SystemErrorMapper, SystemError, SystemErrorExample> implements SystemErrorService {
     @Override
-    public List<SystemError> list(Page<SystemError> page,SystemErrorDto systemErrorDto) {
+    public List<SystemErrorVo> list(Page<SystemError> page, SystemErrorDto systemErrorDto) {
         return null;
     }
 }

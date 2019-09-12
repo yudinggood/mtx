@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -30,7 +31,7 @@ public class SystemApiServiceImpl implements SystemApiService{
         SystemUser systemUser = systemUserMapper.selectByPrimaryKey(systemUserId);
         if (null == systemUser || 2 == systemUser.getUserState()) {
             log.info("selectSystemPermissionBySystemUserId : systemUserId={}", systemUserId);
-            return null;
+            return Collections.EMPTY_LIST;
         }
         List<SystemPermission> systemPermissions = systemUserExtMapper.selectSystemPermissionBySystemUserId(systemUserId);
         return systemPermissions;
@@ -38,7 +39,7 @@ public class SystemApiServiceImpl implements SystemApiService{
 
     @Override
     public List<SystemPermission> selectSystemPermissionBySystemUserIdByCache(Integer systemUserId) {
-        return null;
+        return Collections.EMPTY_LIST;
     }
 
     @Override
@@ -47,7 +48,7 @@ public class SystemApiServiceImpl implements SystemApiService{
         SystemUser systemUser = systemUserMapper.selectByPrimaryKey(systemUserId);
         if (null == systemUser || 2 == systemUser.getUserState()) {
             log.info("selectSystemPermissionBySystemUserIdByCache : systemUserId={}", systemUserId);
-            return null;
+            return Collections.EMPTY_LIST;
         }
         List<SystemRole> systemRoles = systemUserExtMapper.selectSystemRoleBySystemUserId(systemUserId);
         return systemRoles;
@@ -55,27 +56,27 @@ public class SystemApiServiceImpl implements SystemApiService{
 
     @Override
     public List<SystemRole> selectSystemRoleBySystemUserIdByCache(Integer systemUserId) {
-        return null;
+        return Collections.EMPTY_LIST;
     }
 
     @Override
     public List<SystemRolePermission> selectSystemRolePermisstionBySystemRoleId(Integer systemRoleId) {
-        return null;
+        return Collections.EMPTY_LIST;
     }
 
     @Override
     public List<SystemUserPermission> selectSystemUserPermissionBySystemUserId(Integer systemUserId) {
-        return null;
+        return Collections.EMPTY_LIST;
     }
 
     @Override
     public List<SystemSystem> selectSystemSystemByExample(SystemSystemExample systemSystemExample) {
-        return null;
+        return Collections.EMPTY_LIST;
     }
 
     @Override
     public List<SystemOrganization> selectSystemOrganizationByExample(SystemOrganizationExample systemOrganizationExample) {
-        return null;
+        return Collections.EMPTY_LIST;
     }
 
     @Override
