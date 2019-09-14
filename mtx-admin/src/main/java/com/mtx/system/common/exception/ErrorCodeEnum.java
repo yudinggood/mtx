@@ -5,7 +5,7 @@ public enum ErrorCodeEnum {
      * 99990401
      */
     SYS99990401(99990401, "无访问权限"),
-
+    SYS99990100(99990100, "文件已在java中打开暂时不能删除<br/>请稍后再试!"),
 
 
 
@@ -44,6 +44,9 @@ public enum ErrorCodeEnum {
     ACCOUNT_IS_EXIST(20000010, "账号已存在"),
     SMS_ERROR(20000011, ",请联系管理员"),
     SMS_INFO_ERROR(20000012, "动态码信息错误,请重新发送"),
+    SESSION_EXPIRED(20000013, "会话已经过期，请刷新页面"),
+
+
 
     ;
 

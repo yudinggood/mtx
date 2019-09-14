@@ -3,6 +3,8 @@ package com.mtx.common.base;
 import com.baidu.unbiz.fluentvalidator.ValidationError;
 import com.mtx.common.constant.SystemConstant;
 import com.mtx.common.util.base.RequestUtil;
+import com.mtx.system.common.exception.BusinessException;
+import com.mtx.system.common.exception.ErrorCodeEnum;
 import com.mtx.system.dao.model.SystemUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.AuthorizationException;
@@ -50,7 +52,8 @@ public class BaseController {
      * 获取当前用户信息
      */
     protected SystemUser getSystemUser(){
-        return (SystemUser) getSession().getAttribute(SystemConstant.SESSION_SYSTEM_USER);
+        SystemUser systemUser=(SystemUser) getSession().getAttribute(SystemConstant.SESSION_SYSTEM_USER);
+        return systemUser;
     }
     /**
      * 获取request

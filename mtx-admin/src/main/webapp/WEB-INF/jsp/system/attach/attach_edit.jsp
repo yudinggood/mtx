@@ -11,9 +11,7 @@
         .form-control{
             width:75%;float: left;
         }
-        .file-input{
-            width:75%;
-        }
+
     </style>
     <script>
         EHM.ImportLayer();
@@ -29,20 +27,19 @@
     <table class="table table-bordered table-form" align="center" style="width: 98%">
         <c:if test="${systemAttachVo.page != 'update' }">
             <tr>
-                <th width="20%"><font color="red">*</font><label class="Validform_label">上传文件:</label></th>
-                <td width="80%">
+
+                <td width="100%" >
                     <div class="form-group">
-                        <input class="form-control" type="file" name="file" id="file" multiple data-min-file-count="1">
+                        <input class="form-control" type="file" name="file" id="file"  data-min-file-count="1" >
                     </div>
                 </td>
             </tr>
         </c:if>
         <c:if test="${systemAttachVo.page == 'update' }">
             <tr>
-                <th width="20%"><label class="Validform_label">文件预览:</label></th>
-                <td width="80%">
+                <td width="100%">
                     <div class="form-group">
-                        <input class="form-control" type="file" name="file" id="file" multiple data-min-file-count="1">
+                        <input class="form-control" type="file" name="file" id="file"  data-min-file-count="1">
                     </div>
                 </td>
             </tr>
@@ -81,46 +78,49 @@
     };
     $(function () {
         <c:if test="${systemAttachVo.page != 'update' }">
+        $("#file").fileinput({
+            uploadUrl: '#', // you must set a valid URL here else you will get an error
+            language : 'zh',
+            uploadAsync:false,
+            showUpload : false, //是否显示上传按钮
+            showCaption : true,//是否显示标题
+            dropZoneEnabled : true,//是否显示拖拽区域，
+            maxFileSize : 1024*5,//上传文件不能大于5M
+            layoutTemplates:{
+                actionZoom:'',
+                actionUpload:''
+            },
+        });
+        </c:if>
+        <c:if test="${systemAttachVo.page == 'update' }">
+        if(!'${systemAttachVo.suffix}'.indexOf('image')){
             $("#file").fileinput({
                 language : 'zh',
                 showUpload : false, //是否显示上传按钮
+                initialPreviewFileType:'image',
+                initialPreview:'${basePath}/upload/${systemAttachVo.filePath}',
+                initialPreviewConfig: [
+                    {key:1,showDelete: false,size:'${systemAttachVo.fileSize}',url:'${basePath}/upload/${systemAttachVo.filePath}',caption:'${systemAttachVo.fileName}'}
+                ],
+                initialPreviewAsData: true,
+                showUpload : false,
+                showRemove : false,
+                showBrowse: false,
+                showClose: false,
                 showCaption : true,//是否显示标题
                 dropZoneEnabled : true,//是否显示拖拽区域，
                 layoutTemplates:{
                     actionZoom:''
                 },
             });
-        </c:if>
-        <c:if test="${systemAttachVo.page == 'update' }">
-            <c:if test="${systemAttachVo.suffix == 'png'||systemAttachVo.suffix == 'jpg' }">
-                $("#file").fileinput({
-                language : 'zh',
-                showUpload : false, //是否显示上传按钮
-                initialPreviewFileType:'image',
-                initialPreview:'${basePath}/upload/${systemAttachVo.filePath}',
-                initialPreviewConfig: [
-                {key:1,showDelete: false,size:'${systemAttachVo.fileSize}',url:'${basePath}/upload/${systemAttachVo.filePath}',caption:'${systemAttachVo.fileName}'}
-                ],
-                initialPreviewAsData: true,
-                showUpload : false,
-                showRemove : false,
-                showBrowse: false,
-                showClose: false,
-                showCaption : true,//是否显示标题
-                dropZoneEnabled : true,//是否显示拖拽区域，
-                layoutTemplates:{
-                actionZoom:''
-                },
-                });
-            </c:if>
-            <c:if test="${systemAttachVo.suffix != 'png' }">
-                $("#file").fileinput({
+        }else {
+            $("#file").fileinput({
                 language : 'zh',
                 showUpload : false, //是否显示上传按钮
                 initialPreviewFileType:'object',
                 initialPreview:'<div class=\'file-preview-other\'><h2><i class=\'glyphicon glyphicon-file\'></i></h2></div>',
                 initialPreviewConfig: [
-                {key:1,showDelete: false,size:'${systemAttachVo.fileSize}',url:'${basePath}/upload/${systemAttachVo.filePath}',caption:'${systemAttachVo.fileName}'}
+                    {key:1,showDelete: false,size:'${systemAttachVo.fileSize}',url:'${basePath}/upload/${systemAttachVo.filePath}',caption:'${systemAttachVo.fileName}'}
                 ],
                 initialPreviewAsData: true,
                 showUpload : false,
@@ -130,10 +130,11 @@
                 showCaption : true,//是否显示标题
                 dropZoneEnabled : true,//是否显示拖拽区域，
                 layoutTemplates:{
-                actionZoom:''
+                    actionZoom:''
                 },
-                });
-            </c:if>
+            });
+        }
+
         </c:if>
 
 

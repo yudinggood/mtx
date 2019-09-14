@@ -4,10 +4,7 @@ import com.alibaba.dubbo.common.utils.StringUtils;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.session.Session;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 /**
  * session序列化工具

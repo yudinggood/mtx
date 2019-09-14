@@ -98,9 +98,16 @@
                 {field: 'bizTypeName', title: '业务名称'},
                 {field: 'fileName', title: '原文件名'},
                 {field: 'newName', title: '存储文件名'},
-                {field: 'filePath', title: '上传日期',formatter: function(value, row, index) {
-                    return '<img  src='+${basePath}/upload/+value+' width="50" height="50" class="img-rounded" >';
+                {field: 'filePath', title: '缩略图',formatter: function(value, row, index) {
+                    if(!row.suffix.indexOf("image")){
+                        return '<div id=image'+row.attachId+' class="layer-photos-demo">' +
+                            '<img onclick=image('+row.attachId+') layer-src='+${basePath}/upload/+value+' src='+${basePath}/upload/+value+' width="50" height="50" class="img-rounded" >'+
+                            '</div>';
+
+                    }
+
                 }},
+                {field: 'suffix', title: '文件类型'},
                 {field: 'fileSizeName', title: '文件大小'},
                 {field: 'editDate', title: '上传日期',formatter: function(value, row, index) {
                     return new Date(value).format("yyyy-MM-dd HH:mm:ss");
@@ -112,8 +119,15 @@
                             '<a class="update" href="javascript:;" onclick="update(\''+row.attachId+'\')" data-toggle="tooltip" title="查看"><i class="fa fa-globe"></i></a>　',
                             '<a class="delete" href="javascript:;" onclick="deleteOne(\''+row.attachId+'\')" data-toggle="tooltip" title="删除"><i class="fa fa-trash"></i></a>'
                         ].join('');
-                    }}
+                    }
+                }
             ]
+        });
+    }
+    function image(id) {
+        layer.photos({
+            photos: { "data": [{"src": $('#image'+id +' img')[0].src}] }
+            ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
         });
     }
     function add() {
@@ -123,7 +137,8 @@
             shadeClose: false,
             shade: 0.4,
             maxmin: true,
-            area: ['70%', '70%'],
+            offset: '15%',
+            area: ['50%', '50%'],
             content: '${basePath}/system/attach/edit/0/create'
         });
     }
@@ -134,7 +149,8 @@
             shadeClose: false,
             shade: 0.4,
             maxmin: true,
-            area: ['70%', '70%'],
+            offset: '15%',
+            area: ['50%', '50%'],
             content: '${basePath}/system/attach/edit/'+id+'/update'
         });
     }

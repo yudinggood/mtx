@@ -33,6 +33,7 @@ public class SystemConstant {
     public static final String SERVER = "server";
     public static final String CLIENT = "client";
 
+    public static final long FILE_MAX_SIZE = 5 * 1024 * 1024;//5M大小
     //登录相关
     public static final String SESSION_SECURITY_CODE = "sessionSecCode";//登录验证码
     public static final String REGISTER_SESSION_SECURITY_CODE = "registersessionSecCode";//注册验证码

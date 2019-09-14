@@ -44,6 +44,12 @@ public class KaptchaUtil {
             ImageIO.write(bi, "jpg", output);
         } catch (IOException e) {
             log.error(e.getMessage(),e);
+        } finally {
+            try {
+                output.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return code;
     }

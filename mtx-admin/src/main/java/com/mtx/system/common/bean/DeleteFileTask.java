@@ -18,7 +18,7 @@ import java.io.File;
 @Component
 @Slf4j
 public class DeleteFileTask {
-    private final String DEFAULT_ATTACHMENT_DIR = PropertiesFileUtil.getInstance("base").get("upload.path");
+    private UploadComponent uploadComponent = new UploadComponent();
     @Autowired
     ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
@@ -32,8 +32,7 @@ public class DeleteFileTask {
                             if (StringUtils.isBlank(filePath)) {
                                 continue;
                             }
-                            File file = new File(DEFAULT_ATTACHMENT_DIR+"/"+filePath);
-                            FileUtils.deleteQuietly(file);
+                            uploadComponent.delete(filePath);
                         }
                     } catch (Exception e) {
                         log.error(e.getMessage(),e);
