@@ -76,7 +76,7 @@ public class SystemUser implements Serializable {
     private String qqOpenId;
 
     /**
-     * 状态1正常2封禁
+     * 状态1正常2封禁3未激活
      *
      * @mbg.generated
      */

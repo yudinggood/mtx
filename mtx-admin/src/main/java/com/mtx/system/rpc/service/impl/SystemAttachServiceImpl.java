@@ -1,8 +1,11 @@
 package com.mtx.system.rpc.service.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.google.common.base.Preconditions;
 import com.mtx.common.annotation.BaseService;
 import com.mtx.common.base.BaseServiceImpl;
+import com.mtx.common.constant.SystemConstant;
+import com.mtx.common.util.base.FileUtil;
 import com.mtx.common.util.base.StringUtil;
 import com.mtx.common.util.base.TypeConversionUtil;
 import com.mtx.common.util.db.DataSourceEnum;
@@ -17,12 +20,17 @@ import com.mtx.system.dao.vo.SystemAttachVo;
 import com.mtx.system.rpc.api.SystemAttachService;
 import com.mtx.system.rpc.factory.SystemAttachFactory;
 import com.mtx.system.rpc.mapper.SystemAttachExtMapper;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +50,10 @@ public class SystemAttachServiceImpl extends BaseServiceImpl<SystemAttachMapper,
     SystemAttachMapper systemAttachMapper;
     @Autowired
     SystemAttachExtMapper systemAttachExtMapper;
+    /*@Autowired
+    UploadManager uploadManager;
+    @Autowired
+    Auth auth;*/
 
     @Override
     public List<SystemAttachVo> list(Page<SystemAttach> page, SystemAttachDto systemAttachDto) {
@@ -65,6 +77,34 @@ public class SystemAttachServiceImpl extends BaseServiceImpl<SystemAttachMapper,
         SystemAttach systemAttach = systemAttachFactory.convertDtoToDo(systemAttachDto,SystemAttach.class);
         return systemAttachMapper.insertSelective(systemAttach);
     }
+
+    @Override
+    public int insertDtoCloud(SystemAttachDto systemAttachDto) {
+        MultipartFile file =systemAttachDto.getFile();
+        Preconditions.checkArgument(file.getSize() <= SystemConstant.FILE_MAX_SIZE, "上传文件不能大于5M");
+        FileUtil.checkFileType(file.getContentType());//判断文件类型是否正确
+
+        String fileName = file.getOriginalFilename();// 原文件名
+        String newName = FileUtil.generateNewFileName(fileName);
+        String filePath = FileUtil.generateFilePath(newName);
+        File destFile = FileUtil.generateFile(UploadComponent.DEFAULT_ATTACHMENT_DIR+"/"+filePath);//绝对路径
+
+        /*try {
+            Response response = uploadManager.put(file.getBytes(), destFile.getPath(), getUpToken(""));
+
+
+
+        } catch (IOException e) {
+            log.error(e.getMessage(),e);
+        }*/
+
+
+        return 0;
+    }
+
+    /*private String getUpToken(String bucketName) {
+        return auth.uploadToken(bucketName);
+    }*/
 
     @Override
     public String[] selectForFilePaths(String ids) {

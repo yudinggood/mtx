@@ -8,6 +8,7 @@
     <result column="file_name" jdbcType="VARCHAR" property="fileName" />
     <result column="file_path" jdbcType="VARCHAR" property="filePath" />
     <result column="suffix" jdbcType="VARCHAR" property="suffix" />
+    <result column="address_type" jdbcType="TINYINT" property="addressType" />
     <result column="new_name" jdbcType="VARCHAR" property="newName" />
     <result column="file_size" jdbcType="BIGINT" property="fileSize" />
     <result column="edit_date" jdbcType="TIMESTAMP" property="editDate" />
@@ -73,8 +74,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    attach_id, biz_type, biz_id, file_name, file_path, suffix, new_name, file_size, edit_date, 
-    edit_user, deleted
+    attach_id, biz_type, biz_id, file_name, file_path, suffix, address_type, new_name, 
+    file_size, edit_date, edit_user, deleted
   </sql>
   <select id="selectByExample" parameterType="com.mtx.system.dao.model.SystemAttachExample" resultMap="BaseResultMap">
     select
@@ -109,12 +110,14 @@
   <insert id="insert" parameterType="com.mtx.system.dao.model.SystemAttach">
     insert into system_attach (attach_id, biz_type, biz_id, 
       file_name, file_path, suffix, 
-      new_name, file_size, edit_date, 
-      edit_user, deleted)
+      address_type, new_name, file_size, 
+      edit_date, edit_user, deleted
+      )
     values (#{attachId,jdbcType=INTEGER}, #{bizType,jdbcType=VARCHAR}, #{bizId,jdbcType=INTEGER}, 
       #{fileName,jdbcType=VARCHAR}, #{filePath,jdbcType=VARCHAR}, #{suffix,jdbcType=VARCHAR}, 
-      #{newName,jdbcType=VARCHAR}, #{fileSize,jdbcType=BIGINT}, #{editDate,jdbcType=TIMESTAMP}, 
-      #{editUser,jdbcType=INTEGER}, #{deleted,jdbcType=TINYINT})
+      #{addressType,jdbcType=TINYINT}, #{newName,jdbcType=VARCHAR}, #{fileSize,jdbcType=BIGINT}, 
+      #{editDate,jdbcType=TIMESTAMP}, #{editUser,jdbcType=INTEGER}, #{deleted,jdbcType=TINYINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.mtx.system.dao.model.SystemAttach">
     insert into system_attach
@@ -136,6 +139,9 @@
       </if>
       <if test="suffix != null">
         suffix,
+      </if>
+      <if test="addressType != null">
+        address_type,
       </if>
       <if test="newName != null">
         new_name,
@@ -171,6 +177,9 @@
       </if>
       <if test="suffix != null">
         #{suffix,jdbcType=VARCHAR},
+      </if>
+      <if test="addressType != null">
+        #{addressType,jdbcType=TINYINT},
       </if>
       <if test="newName != null">
         #{newName,jdbcType=VARCHAR},
@@ -216,6 +225,9 @@
       <if test="record.suffix != null">
         suffix = #{record.suffix,jdbcType=VARCHAR},
       </if>
+      <if test="record.addressType != null">
+        address_type = #{record.addressType,jdbcType=TINYINT},
+      </if>
       <if test="record.newName != null">
         new_name = #{record.newName,jdbcType=VARCHAR},
       </if>
@@ -244,6 +256,7 @@
       file_name = #{record.fileName,jdbcType=VARCHAR},
       file_path = #{record.filePath,jdbcType=VARCHAR},
       suffix = #{record.suffix,jdbcType=VARCHAR},
+      address_type = #{record.addressType,jdbcType=TINYINT},
       new_name = #{record.newName,jdbcType=VARCHAR},
       file_size = #{record.fileSize,jdbcType=BIGINT},
       edit_date = #{record.editDate,jdbcType=TIMESTAMP},
@@ -271,6 +284,9 @@
       <if test="suffix != null">
         suffix = #{suffix,jdbcType=VARCHAR},
       </if>
+      <if test="addressType != null">
+        address_type = #{addressType,jdbcType=TINYINT},
+      </if>
       <if test="newName != null">
         new_name = #{newName,jdbcType=VARCHAR},
       </if>
@@ -296,6 +312,7 @@
       file_name = #{fileName,jdbcType=VARCHAR},
       file_path = #{filePath,jdbcType=VARCHAR},
       suffix = #{suffix,jdbcType=VARCHAR},
+      address_type = #{addressType,jdbcType=TINYINT},
       new_name = #{newName,jdbcType=VARCHAR},
       file_size = #{fileSize,jdbcType=BIGINT},
       edit_date = #{editDate,jdbcType=TIMESTAMP},

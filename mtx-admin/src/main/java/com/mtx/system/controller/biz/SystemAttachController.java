@@ -3,11 +3,14 @@ package com.mtx.system.controller.biz;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.mtx.common.base.BaseController;
 import com.mtx.common.util.base.FileUtil;
+import com.mtx.common.util.base.TypeConversionUtil;
 import com.mtx.common.util.page.PageFactory;
 import com.mtx.common.util.page.PageInfoBT;
 import com.mtx.common.util.wrapper.WrapMapper;
 import com.mtx.common.util.wrapper.Wrapper;
 import com.mtx.system.common.bean.DeleteFileTask;
+import com.mtx.system.common.bean.GlobalProperties;
+import com.mtx.system.common.enums.PropertiesEnum;
 import com.mtx.system.common.exception.BusinessException;
 import com.mtx.system.common.exception.ErrorCodeEnum;
 import com.mtx.system.common.file.UploadComponent;
@@ -79,6 +82,7 @@ public class SystemAttachController extends BaseController {
         }
 
         systemAttachDto.setEditUser(super.getSystemUser().getUserId());
+        systemAttachDto.setAddressType(TypeConversionUtil.objectToByte(GlobalProperties.me().getValueByCode(PropertiesEnum.FILE_ADDRESS_TYPE)));
         int count = systemAttachService.insertDto(systemAttachDto);
         return WrapMapper.wrap(count);
     }

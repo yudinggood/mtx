@@ -31,6 +31,11 @@ public class SystemAttachServiceMock extends BaseServiceMock<SystemAttachMapper,
     }
 
     @Override
+    public int insertDtoCloud(SystemAttachDto systemAttachDto) {
+        return 0;
+    }
+
+    @Override
     public String[] selectForFilePaths(String ids) {
         return new String[0];
     }

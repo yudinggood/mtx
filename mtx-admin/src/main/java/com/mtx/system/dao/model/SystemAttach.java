@@ -47,6 +47,13 @@ public class SystemAttach implements Serializable {
     private String suffix;
 
     /**
+     * 1.本地2.七牛云
+     *
+     * @mbg.generated
+     */
+    private Byte addressType;
+
+    /**
      * 新UUID名称
      *
      * @mbg.generated
@@ -131,6 +138,14 @@ public class SystemAttach implements Serializable {
         this.suffix = suffix;
     }
 
+    public Byte getAddressType() {
+        return addressType;
+    }
+
+    public void setAddressType(Byte addressType) {
+        this.addressType = addressType;
+    }
+
     public String getNewName() {
         return newName;
     }
@@ -183,6 +198,7 @@ public class SystemAttach implements Serializable {
         sb.append(", fileName=").append(fileName);
         sb.append(", filePath=").append(filePath);
         sb.append(", suffix=").append(suffix);
+        sb.append(", addressType=").append(addressType);
         sb.append(", newName=").append(newName);
         sb.append(", fileSize=").append(fileSize);
         sb.append(", editDate=").append(editDate);
@@ -210,6 +226,7 @@ public class SystemAttach implements Serializable {
             && (this.getFileName() == null ? other.getFileName() == null : this.getFileName().equals(other.getFileName()))
             && (this.getFilePath() == null ? other.getFilePath() == null : this.getFilePath().equals(other.getFilePath()))
             && (this.getSuffix() == null ? other.getSuffix() == null : this.getSuffix().equals(other.getSuffix()))
+            && (this.getAddressType() == null ? other.getAddressType() == null : this.getAddressType().equals(other.getAddressType()))
             && (this.getNewName() == null ? other.getNewName() == null : this.getNewName().equals(other.getNewName()))
             && (this.getFileSize() == null ? other.getFileSize() == null : this.getFileSize().equals(other.getFileSize()))
             && (this.getEditDate() == null ? other.getEditDate() == null : this.getEditDate().equals(other.getEditDate()))
@@ -227,6 +244,7 @@ public class SystemAttach implements Serializable {
         result = prime * result + ((getFileName() == null) ? 0 : getFileName().hashCode());
         result = prime * result + ((getFilePath() == null) ? 0 : getFilePath().hashCode());
         result = prime * result + ((getSuffix() == null) ? 0 : getSuffix().hashCode());
+        result = prime * result + ((getAddressType() == null) ? 0 : getAddressType().hashCode());
         result = prime * result + ((getNewName() == null) ? 0 : getNewName().hashCode());
         result = prime * result + ((getFileSize() == null) ? 0 : getFileSize().hashCode());
         result = prime * result + ((getEditDate() == null) ? 0 : getEditDate().hashCode());

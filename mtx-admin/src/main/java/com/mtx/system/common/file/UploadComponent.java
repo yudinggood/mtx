@@ -15,7 +15,7 @@ import java.util.Date;
 
 @Slf4j
 public class UploadComponent {
-    private static final String DEFAULT_ATTACHMENT_DIR = PropertiesFileUtil.getInstance("base").get("upload.path");
+    public static final String DEFAULT_ATTACHMENT_DIR = PropertiesFileUtil.getInstance("base").get("upload.path");
 
     private String attachmentDir;
 

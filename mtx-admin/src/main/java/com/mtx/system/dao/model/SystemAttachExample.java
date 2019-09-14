@@ -508,6 +508,66 @@ public class SystemAttachExample implements Serializable {
             return (Criteria) this;
         }
 
+        public Criteria andAddressTypeIsNull() {
+            addCriterion("address_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeIsNotNull() {
+            addCriterion("address_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeEqualTo(Byte value) {
+            addCriterion("address_type =", value, "addressType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeNotEqualTo(Byte value) {
+            addCriterion("address_type <>", value, "addressType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeGreaterThan(Byte value) {
+            addCriterion("address_type >", value, "addressType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeGreaterThanOrEqualTo(Byte value) {
+            addCriterion("address_type >=", value, "addressType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeLessThan(Byte value) {
+            addCriterion("address_type <", value, "addressType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeLessThanOrEqualTo(Byte value) {
+            addCriterion("address_type <=", value, "addressType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeIn(List<Byte> values) {
+            addCriterion("address_type in", values, "addressType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeNotIn(List<Byte> values) {
+            addCriterion("address_type not in", values, "addressType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeBetween(Byte value1, Byte value2) {
+            addCriterion("address_type between", value1, value2, "addressType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeNotBetween(Byte value1, Byte value2) {
+            addCriterion("address_type not between", value1, value2, "addressType");
+            return (Criteria) this;
+        }
+
         public Criteria andNewNameIsNull() {
             addCriterion("new_name is null");
             return (Criteria) this;

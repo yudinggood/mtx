@@ -61,7 +61,12 @@ public class SystemAttachDto implements Serializable {
      * @mbg.generated
      */
     private String newName;
-
+    /**
+     * 1.本地2.七牛云
+     *
+     * @mbg.generated
+     */
+    private Byte addressType;
     /**
      * 文件大小
      *

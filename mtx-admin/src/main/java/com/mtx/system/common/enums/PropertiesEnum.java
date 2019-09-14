@@ -15,7 +15,7 @@ public enum PropertiesEnum {
     ACCESS_KEY_ID("阿里云授权ID"),
     ACCESS_KEY_SECRET("阿里云授权密钥"),
     GIT_BOOK("文档域名"),
-
+    FILE_ADDRESS_TYPE("文件保存的地方"),
 
 
     ;

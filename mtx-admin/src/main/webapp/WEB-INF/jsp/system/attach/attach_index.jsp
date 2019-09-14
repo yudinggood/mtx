@@ -95,6 +95,13 @@
                     //返回序号，注意index是从0开始的，所以要加上1
                     return pageSize * (pageNumber - 1) + index + 1;
                 }},
+                {field: 'addressType', title: '存储位置',formatter: function(value, row, index) {
+                    if (value == 1) {
+                        return '<span class="label label-success">本地</span>';
+                    } else if(value == 2){
+                        return '<span class="label label-default">七牛云</span>';
+                    }
+                }},
                 {field: 'bizTypeName', title: '业务名称'},
                 {field: 'fileName', title: '原文件名'},
                 {field: 'newName', title: '存储文件名'},

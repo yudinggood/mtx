@@ -9,6 +9,7 @@
         <result column="file_name" jdbcType="VARCHAR" property="fileName" />
         <result column="file_path" jdbcType="VARCHAR" property="filePath" />
         <result column="suffix" jdbcType="VARCHAR" property="suffix" />
+        <result column="address_type" jdbcType="TINYINT" property="addressType" />
         <result column="new_name" jdbcType="VARCHAR" property="newName" />
         <result column="file_size" jdbcType="BIGINT" property="fileSize" />
         <result column="edit_date" jdbcType="TIMESTAMP" property="editDate" />
