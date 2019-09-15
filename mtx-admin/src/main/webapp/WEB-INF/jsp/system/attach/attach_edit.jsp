@@ -98,10 +98,18 @@
                 language : 'zh',
                 showUpload : false, //是否显示上传按钮
                 initialPreviewFileType:'image',
+                <c:if test="${systemAttachVo.addressType == 1 }">
                 initialPreview:'${basePath}/upload/${systemAttachVo.filePath}',
                 initialPreviewConfig: [
                     {key:1,showDelete: false,size:'${systemAttachVo.fileSize}',url:'${basePath}/upload/${systemAttachVo.filePath}',caption:'${systemAttachVo.fileName}'}
                 ],
+                </c:if>
+                <c:if test="${systemAttachVo.addressType == 2 }">
+                initialPreview:'${systemAttachVo.yunPath}',
+                initialPreviewConfig: [
+                    {key:1,showDelete: false,size:'${systemAttachVo.fileSize}',url:'${systemAttachVo.yunPath}',caption:'${systemAttachVo.fileName}'}
+                ],
+                </c:if>
                 initialPreviewAsData: true,
                 showUpload : false,
                 showRemove : false,
@@ -118,10 +126,18 @@
                 language : 'zh',
                 showUpload : false, //是否显示上传按钮
                 initialPreviewFileType:'object',
+                <c:if test="${systemAttachVo.addressType == 1 }">
                 initialPreview:'<div class=\'file-preview-other\'><h2><i class=\'glyphicon glyphicon-file\'></i></h2></div>',
                 initialPreviewConfig: [
                     {key:1,showDelete: false,size:'${systemAttachVo.fileSize}',url:'${basePath}/upload/${systemAttachVo.filePath}',caption:'${systemAttachVo.fileName}'}
                 ],
+                </c:if>
+                <c:if test="${systemAttachVo.addressType == 2 }">
+                initialPreview:'<div class=\'file-preview-other\'><h2><i class=\'glyphicon glyphicon-file\'></i></h2></div>',
+                initialPreviewConfig: [
+                    {key:1,showDelete: false,size:'${systemAttachVo.fileSize}',url:'${systemAttachVo.yunPath}',caption:'${systemAttachVo.fileName}'}
+                ],
+                </c:if>
                 initialPreviewAsData: true,
                 showUpload : false,
                 showRemove : false,
@@ -154,12 +170,73 @@
         })
 
     });
+    /*function ddd(url){    可以跨域下载图片
+        let src = url;
+        var canvas = document.createElement('canvas');
+        var img = document.createElement('img');
+        img.onload = function(e) {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            var context = canvas.getContext('2d');
+            context.drawImage(img, 0, 0, img.width, img.height);
+            canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
+            canvas.toBlob((blob)=>{
+                let link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = '${systemAttachVo.fileName}';
+            link.click();
+        }, "image/jpeg");
+        }
+        img.setAttribute("crossOrigin",'Anonymous');
+        img.src = src;
+    }*/
+    /**
+     * 获取页面文件名
+     * @param url 文件url
+     */
+    function downloadUrlFile(url) {
+        url= url.replace(/\\/g, '/');
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.responseType = 'blob';
+        //xhr.setRequestHeader('Authorization', 'Basic a2VybWl0Omtlcm1pdA==');
+        xhr.onload = () => {
+            if (xhr.status === 200) {
+                // 获取文件blob数据并保存
+                var fileName = '${systemAttachVo.fileName}';
+                saveAs(xhr.response, fileName);
+            }
+        };
+
+        xhr.send();
+    }
+
+    /**
+     * URL方式保存文件到本地
+     * @param data 文件的blob数据
+     * @param name 文件名
+     */
+    function saveAs(data, name) {
+        var urlObject = window.URL || window.webkitURL || window;
+        var export_blob = new Blob([data]);
+        var save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a')
+        save_link.href = urlObject.createObjectURL(export_blob);
+        save_link.download = name;
+        save_link.click();
+    }
+
+
     function download() {
+        <c:if test="${systemAttachVo.addressType == 1 }">
         var a = document.createElement('a');
         a.href = '${basePath}/upload/${systemAttachVo.filePath}'; //图片地址
         a.download = '${systemAttachVo.fileName}'; //图片名及格式
         document.body.appendChild(a);
         a.click()
+        </c:if>
+        <c:if test="${systemAttachVo.addressType == 2 }">
+        downloadUrlFile('${systemAttachVo.yunPath}')
+        </c:if>
     }
     function commit() {
         $('#form').bootstrapValidator('validate');

@@ -55,6 +55,19 @@
     }
     $(function () {
         initTable();
+        $("#table").on('load-success.bs.table', function (e, name, args) {
+            $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({//icheck
+                checkboxClass: 'icheckbox_flat-green',
+                radioClass: 'iradio_flat-green'
+            });
+            $('input[name="allcheck"]').on('ifChanged', function(event){
+                if ($('input[name="allcheck"]').is(':checked')){
+                    $('input[name="devCks"]').not(':disabled').iCheck('check');
+                }else {
+                    $('input[name="devCks"]').not(':disabled').iCheck('uncheck');
+                }
+            });
+        });
     });
     function onloadFun(){
         AttachIndex.$table.bootstrapTable('resetView', {
@@ -86,7 +99,15 @@
             pageList: [20, 50, 100],
             pageSize: 20,
             columns: [
-                {field: 'ck', checkbox: true},
+                {title:"<input type='checkbox' class='flat-red' name='allcheck' value='0'>", width:"1%",
+                    formatter: function(value, row, index) {
+                        if (row.addressType == 1) {
+                            return "<input type='checkbox' class='flat-red' name='devCks' value='"+row.attachId+"' style=''>";
+                        } else{
+                            return "<input type='checkbox' disabled class='flat-red' name='devCks' value='"+row.attachId+"' >";
+                        }
+
+                    }},
                 {field: 'id', title: '编号',width:'2%',formatter: function(value, row, index) {
                     //获取每页显示的数量
                     var pageSize=AttachIndex.$table.bootstrapTable('getOptions').pageSize;
@@ -107,10 +128,15 @@
                 {field: 'newName', title: '存储文件名'},
                 {field: 'filePath', title: '缩略图',formatter: function(value, row, index) {
                     if(!row.suffix.indexOf("image")){
-                        return '<div id=image'+row.attachId+' class="layer-photos-demo">' +
-                            '<img onclick=image('+row.attachId+') layer-src='+${basePath}/upload/+value+' src='+${basePath}/upload/+value+' width="50" height="50" class="img-rounded" >'+
-                            '</div>';
-
+                        if(row.addressType == 1){
+                            return '<div id=image'+row.attachId+' class="layer-photos-demo">' +
+                                '<img onclick=image('+row.attachId+') layer-src='+${basePath}/upload/+value+' src='+${basePath}/upload/+value+' width="50" height="50" class="img-rounded" >'+
+                                '</div>';
+                        }else {
+                            return '<div id=image'+row.attachId+' class="layer-photos-demo">' +
+                                '<img onclick=image('+row.attachId+') layer-src='+row.yunPath+' src='+row.yunPath+' width="50" height="50" class="img-rounded" >'+
+                                '</div>';
+                        }
                     }
 
                 }},
@@ -205,19 +231,15 @@
         });
     }
     function removeAll() {
-        var rows = AttachIndex.$table.bootstrapTable('getSelections');
-        if(rows.length==0){
-            var j =layer.confirm('请选择要删除的内容', {
+        var neArr = getCheckedNe();
+        if(neArr.length==0){
+            var k =layer.confirm('请选择要删除的内容', {
                 shade: 0,
                 btn: ['确认']
             }, function(){
-                layer.close(j);
+                layer.close(k);
             });
             return ;
-        }
-        var ids = new Array();
-        for (var i in rows) {
-            ids.push(rows[i].attachId);
         }
 
         var i =layer.confirm('确认删除这些文件吗？', {
@@ -227,7 +249,7 @@
             $.ajax({
                 type: 'post',
                 url: '${basePath}/system/attach/deletes',
-                data: {_method:"DELETE",ids:ids.join("-")},
+                data: {_method:"DELETE",ids:neArr.join("-")},
                 beforeSend: function() {
                     AttachIndex.index = layer.load(1, {
 

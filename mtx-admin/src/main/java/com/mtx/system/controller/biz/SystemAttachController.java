@@ -83,7 +83,13 @@ public class SystemAttachController extends BaseController {
 
         systemAttachDto.setEditUser(super.getSystemUser().getUserId());
         systemAttachDto.setAddressType(TypeConversionUtil.objectToByte(GlobalProperties.me().getValueByCode(PropertiesEnum.FILE_ADDRESS_TYPE)));
-        int count = systemAttachService.insertDto(systemAttachDto);
+        int count = 0;
+        if(systemAttachDto.getAddressType()==1){
+            count = systemAttachService.insertDto(systemAttachDto);
+        }else {
+            count = systemAttachService.insertDtoCloud(systemAttachDto);
+        }
+
         return WrapMapper.wrap(count);
     }
 
@@ -93,15 +99,20 @@ public class SystemAttachController extends BaseController {
     @ResponseBody
     public Object delete(@PathVariable("id") int id) {
         SystemAttachVo systemAttachVo = systemAttachService.selectByIdWithLeft(id);
+        int count = systemAttachService.deleteByPrimaryKey(id);
         String destFilePath = UploadComponent.getAbsolutePaths(systemAttachVo.getFilePath());
         File file = new File(destFilePath);
-        //文件已在java中打开，从而不能删除
-        boolean fileInUsed = FileUtil.fileInUsed(file);
-        if(!fileInUsed){
-            throw new BusinessException(ErrorCodeEnum.SYS99990100);
+        if(systemAttachVo.getAddressType()==1){
+            //文件已在java中打开，从而不能删除
+            boolean fileInUsed = FileUtil.fileInUsed(file);
+            if(!fileInUsed){
+                throw new BusinessException(ErrorCodeEnum.SYS99990100);
+            }
+            deleteFileTask.deleteFileByPaths(systemAttachVo.getFilePath());
+        }else {
+            systemAttachService.deleteYunFile(systemAttachVo.getFilePath());
         }
-        int count = systemAttachService.deleteByPrimaryKey(id);
-        deleteFileTask.deleteFileByPaths(systemAttachVo.getFilePath());
+
         return WrapMapper.wrap(count);
     }
 
@@ -119,6 +130,7 @@ public class SystemAttachController extends BaseController {
                 throw new BusinessException(ErrorCodeEnum.SYS99990100);
             }
         }
+        //暂时设置为只能群删本地文件
 
         int count = systemAttachService.deleteByPrimaryKeys(ids);
         deleteFileTask.deleteFileByPaths(filePaths);

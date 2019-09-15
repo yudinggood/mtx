@@ -31,6 +31,11 @@ public class SystemAttachServiceMock extends BaseServiceMock<SystemAttachMapper,
     }
 
     @Override
+    public void deleteYunFile(String filePath) {
+
+    }
+
+    @Override
     public int insertDtoCloud(SystemAttachDto systemAttachDto) {
         return 0;
     }

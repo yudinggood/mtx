@@ -16,6 +16,11 @@ public enum PropertiesEnum {
     ACCESS_KEY_SECRET("阿里云授权密钥"),
     GIT_BOOK("文档域名"),
     FILE_ADDRESS_TYPE("文件保存的地方"),
+    QINIU_ACCESS_KEY_ID("七牛云授权ID"),
+    QINIU_ACCESS_KEY_SECRET("七牛云授权密钥"),
+    BUCKET_NAME("七牛云上传空间"),
+    QINIU_IMAGE_DOMAIN("七牛云域名"),
+
 
 
     ;

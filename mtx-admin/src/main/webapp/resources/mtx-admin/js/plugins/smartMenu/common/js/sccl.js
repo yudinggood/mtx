@@ -1,4 +1,17 @@
 /*左侧菜单点击*/
+// 添加标签
+function addOneTab(subtitle, url, icon) {
+    var id = "";
+    id = createTabId(subtitle);
+    window.top.addFineuiTab({id:id,title:subtitle,close: true,url: url});
+}
+function createTabId(str){
+    var val="";
+    for(var i = 0; i < str.length; i++){
+        val += str.charCodeAt(i).toString(16);
+    }
+    return val;
+}
 $(".side-menu").on('click', 'li a', function(e) {
 	var animationSpeed = 300;
 	var $this = $(this);

@@ -32,6 +32,10 @@ public enum ErrorCodeEnum {
     CONFIG10040001(10040001, "配置编码已经存在"),
 
 
+    ATTACH10050001(10050001, "上传图片失败"),
+    ATTACH10050002(10050002, "今日流量已用尽, 请明天再试"),
+
+
     INVALID_CODE(20000001, "验证码错误"),
     INVALID_USERNAME(20000002, "帐号不存在"),
     INVALID_PASSWORD(20000003, "密码错误"),

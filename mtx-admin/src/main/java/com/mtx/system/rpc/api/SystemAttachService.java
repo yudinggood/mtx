@@ -25,4 +25,6 @@ public interface SystemAttachService extends BaseService<SystemAttach, SystemAtt
     int insertDtoCloud(SystemAttachDto systemAttachDto);
 
     String[] selectForFilePaths(String ids);
+
+    void deleteYunFile(String filePath);
 }

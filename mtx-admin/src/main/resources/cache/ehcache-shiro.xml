@@ -9,7 +9,6 @@
             maxElementsOnDisk="10000000"
             diskExpiryThreadIntervalSeconds="120"
             memoryStoreEvictionPolicy="LRU">
-        <persistence strategy="localTempSwap"/>
     </defaultCache>
 
     <!-- 登录记录缓存 锁定10分钟 -->

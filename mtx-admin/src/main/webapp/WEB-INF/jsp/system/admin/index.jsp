@@ -194,9 +194,6 @@
                 content: $(".modal-body").html()
             });
 
-            /*$('#about').modal({
-                keyboard: true
-            }).modal('show');*/
         }
         function fullScreen(id) {
             if ($.support.fullscreen) {
@@ -216,6 +213,10 @@
         }
         function logout(){
             location.href="${basePath}/logout";
+        }
+
+        function personalSetting() {
+            addOneTab('个人设置','${basePath}/system/profile','default');
         }
 
         function clearLocalstorage(){

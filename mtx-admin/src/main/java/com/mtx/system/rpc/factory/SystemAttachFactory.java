@@ -3,6 +3,7 @@ package com.mtx.system.rpc.factory;
 import com.mtx.common.util.base.StringUtil;
 import com.mtx.common.util.base.TypeConversionUtil;
 import com.mtx.common.util.factory.BaseFactory;
+import com.mtx.system.common.bean.GlobalProperties;
 import com.mtx.system.common.enums.AttachmentEnum;
 import com.mtx.system.common.enums.PropertiesEnum;
 import com.mtx.system.dao.dto.SystemAttachDto;
@@ -15,6 +16,7 @@ public class SystemAttachFactory extends BaseFactory {
         if(v instanceof SystemAttachVo){
             ((SystemAttachVo) v).setBizTypeName(AttachmentEnum.codeOf((String) getGetMethod(e,"bizType")).getName());
             ((SystemAttachVo) v).setFileSizeName(StringUtil.convertFileSize(TypeConversionUtil.objectToLong(getGetMethod(e,"fileSize"))));
+            ((SystemAttachVo) v).setYunPath("http://"+GlobalProperties.me().getValueByCode(PropertiesEnum.QINIU_IMAGE_DOMAIN)+"/mtx/upload/"+getGetMethod(e,"filePath"));
 
         }
         return v;

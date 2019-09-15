@@ -62,5 +62,10 @@ public class SystemConstant {
     public static final String MSG_SIGN_NAME = "i助理";
     public static final String MSG_CAPTCHA_TEL_CODE = "SMS_173760206";//
 
+    //七牛云
+    public static final String QINIU_YUN_FILE_PATH = "mtx/upload/";
+    public static final String SYSTEM_QIUNIU_FILESIZE = "system_qiuniu_filesize";
+
+
 
 }

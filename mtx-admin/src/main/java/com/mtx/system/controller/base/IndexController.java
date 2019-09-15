@@ -2,8 +2,6 @@ package com.mtx.system.controller.base;
 
 import com.mtx.common.base.BaseController;
 import com.mtx.common.constant.SystemConstant;
-import com.mtx.common.util.base.RedisUtil;
-import com.mtx.common.util.base.TypeConversionUtil;
 import com.mtx.common.util.tag.Menu;
 import com.mtx.system.common.bean.GlobalProperties;
 import com.mtx.system.common.enums.PropertiesEnum;
@@ -17,11 +15,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.mgt.DefaultSecurityManager;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.session.mgt.DefaultSessionManager;
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,10 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import redis.clients.jedis.Jedis;
 
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -82,6 +73,12 @@ public class IndexController extends BaseController {
         return menuList;
     }
 
-
+    @ApiOperation(value = "个人设置页")
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    public ModelAndView profile(){
+        ModelAndView mv =this.getModelAndView();
+        mv.setViewName("/system/admin/profile");
+        return mv;
+    }
 
 }

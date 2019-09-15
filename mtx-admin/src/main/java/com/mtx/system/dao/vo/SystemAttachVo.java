@@ -101,4 +101,7 @@ public class SystemAttachVo implements Serializable {
     private String fileSizeName;
     //昵称
     private String nickName;
+
+    //七牛云图片路径
+    private String yunPath;
 }
