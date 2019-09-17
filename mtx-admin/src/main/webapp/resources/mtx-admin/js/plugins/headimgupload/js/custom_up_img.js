@@ -1,45 +1,28 @@
 $(document).ready(function(){
         $("#up-img-touch").click(function(){
-        		  $("#doc-modal-1").modal({width:'600px'});
+        		  $("#up-modal-frame").modal({});
+
         });
 });
 $(function() {
     'use strict';
     // 初始化
-    var $image = $('#image');
+    var $image = $('#up-img-show');
     $image.cropper({
         aspectRatio: '1',
         autoCropArea:0.8,
         preview: '.up-pre-after',
-        
+        responsive:true,
     });
-
-    // 事件代理绑定事件
-    $('.docs-buttons').on('click', '[data-method]', function() {
-   
-        var $this = $(this);
-        var data = $this.data();
-        var result = $image.cropper(data.method, data.option, data.secondOption);
-        switch (data.method) {
-            case 'getCroppedCanvas':
-            if (result) {
-                // 显示 Modal
-                $('#cropped-modal').modal().find('.am-modal-bd').html(result);
-                $('#download').attr('href', result.toDataURL('image/jpeg'));
-            }
-            break;
-        }
-    });
-    
-    
 
     // 上传图片
-    var $inputImage = $('#inputImage');
+    var $inputImage = $('.up-modal-frame .up-img-file');
     var URL = window.URL || window.webkitURL;
     var blobURL;
 
     if (URL) {
         $inputImage.change(function () {
+        	
             var files = this.files;
             var file;
 
@@ -54,75 +37,98 @@ $(function() {
                     }).cropper('reset').cropper('replace', blobURL);
                     $inputImage.val('');
                 } else {
-                    window.alert('Please choose an image file.');
+                   var i =layer.confirm("请选择图片上传", {
+                       shade: 0,
+                       btn: ['确认'] //按钮
+                   }, function(){
+                       layer.close(i);
+                   });
                 }
             }
-
-            // Amazi UI 上传文件显示代码
-            var fileNames = '';
-            $.each(this.files, function() {
-                fileNames += '<span class="am-badge">' + this.name + '</span> ';
-            });
-            $('#file-list').html(fileNames);
         });
     } else {
         $inputImage.prop('disabled', true).parent().addClass('disabled');
     }
     
     //绑定上传事件
-    $('#up-btn-ok').on('click',function(){
-    	var $modal = $('#my-modal-loading');
-    	var $modal_alert = $('#my-alert');
+    $('.up-modal-frame .up-btn-ok').on('click',function(){
+    	var $modal_loading = $('#up-modal-loading');
+    	var $modal_alert = $('#up-modal-alert');
     	var img_src=$image.attr("src");
     	if(img_src==""){
-    		set_alert_info("没有选择上传的图片");
-    		$modal_alert.modal();
+            var i =layer.confirm("没有选择上传的图片", {
+                shade: 0,
+                btn: ['确认'] //按钮
+            }, function(){
+                layer.close(i);
+            });
+
     		return false;
     	}
     	
-    	$modal.modal();
-    	
-    	var url=$(this).attr("url");
-    	var canvas=$("#image").cropper('getCroppedCanvas');
-        canvas=canvas.toDataURL(); //转成base64
-        $.ajax( {  
-                url:url,  
-                dataType:'json',  
-                type: "POST",  
-                data: {"image":canvas.toString()},
-                success: function(data, textStatus){
-                	$modal.modal('close');
-                	set_alert_info(data.result);
-                	$modal_alert.modal();
-                	if(data.result=="ok"){
 
-                		$("#up-img-touch").attr("src",data.file);
-                	
-                		var img_name=data.file.split('/')[2];
-                		//console.log(img_name);
-                		$("#pic").text(img_name);
-                	}
-                },
-                error: function(){
-                	$modal.modal('close');
-                	set_alert_info("上传文件失败了！");
-                	$modal_alert.modal();
-                	//console.log('Upload error');  
-                }  
-         });  
+    	var parameter=$(this).attr("parameter");
+    	var parame_json = eval('(' + parameter + ')');
+    	var width=parame_json.width;
+    	var height=parame_json.height;
+
+
+    	//控制裁剪图片的大小
+    	var canvas=$image.cropper('getCroppedCanvas',{width: width,height: height});
+    	var data=canvas.toDataURL(); //转成base64
+
+
+        var formData = new FormData();
+        formData.append('file',  dataURLtoFile(data,"head.jpg"));
+        formData.append('bizType' , "HEAD_ATTACHMENT");
+        var url = '/system/attach/create';
+        $.ajax({
+            type: 'post',
+            url: url,
+            data: 	formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function() {
+                UserInfo.index = layer.load(1, {
+                });
+            },
+            success: function(result) {
+                if (result.code == 200) {
+                    top.location.reload();
+                    $("#up-modal-frame").modal('close');
+                }else {
+                    var i =layer.confirm(result.message, {
+                        shade: 0,
+                        btn: ['确认'] //按钮
+                    }, function(){
+                        layer.close(i);
+                    });
+                }
+            },
+            complete:function (data) {
+                layer.close(UserInfo.index);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                var i =layer.confirm(textStatus, {
+                    shade: 0,
+                    btn: ['确认'] //按钮
+                }, function(){
+                    layer.close(i);
+                });
+            }
+        });
+
     	
     });
     
+    $('#up-btn-left').on('click',function(){
+    	$("#up-img-show").cropper('rotate', 90);
+    });
+    $('#up-btn-right').on('click',function(){
+    	$("#up-img-show").cropper('rotate', -90);
+    });
 });
 
-function rotateimgright() {
-$("#image").cropper('rotate', 90);
-}
-
-
-function rotateimgleft() {
-$("#image").cropper('rotate', -90);
-}
 
 function set_alert_info(content){
 	$("#alert_content").html(content);

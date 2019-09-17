@@ -3,6 +3,7 @@ package com.mtx.system.rpc.api;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.mtx.common.base.BaseServiceMock;
 import com.mtx.system.dao.dto.SystemAttachDto;
+import com.mtx.system.dao.dto.SystemUserDto;
 import com.mtx.system.dao.mapper.SystemAttachMapper;
 import com.mtx.system.dao.model.SystemAttach;
 import com.mtx.system.dao.model.SystemAttachExample;
@@ -32,6 +33,11 @@ public class SystemAttachServiceMock extends BaseServiceMock<SystemAttachMapper,
 
     @Override
     public void deleteYunFile(String filePath) {
+
+    }
+
+    @Override
+    public void insertDtoQqHead(SystemUserDto systemUserDto) {
 
     }
 

@@ -1,6 +1,5 @@
 package com.mtx.system.controller.base;
 
-import com.alibaba.fastjson.JSON;
 import com.aliyuncs.dysmsapi.model.v20170525.QuerySendDetailsResponse;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.baidu.unbiz.fluentvalidator.ComplexResult;
@@ -8,9 +7,7 @@ import com.baidu.unbiz.fluentvalidator.FluentValidator;
 import com.baidu.unbiz.fluentvalidator.ResultCollectors;
 import com.mtx.common.base.BaseController;
 import com.mtx.common.constant.SystemConstant;
-import com.mtx.common.spring.SpringContextUtil;
 import com.mtx.common.util.base.*;
-import com.mtx.common.util.validator.LengthValidator;
 import com.mtx.common.util.validator.NotNullValidator;
 import com.mtx.common.util.wrapper.WrapMapper;
 import com.mtx.common.util.wrapper.Wrapper;
@@ -21,26 +18,26 @@ import com.mtx.system.common.exception.ErrorCodeEnum;
 import com.mtx.system.common.shiro.EasyTypeToken;
 import com.mtx.system.common.shiro.session.UpmsSession;
 import com.mtx.system.common.shiro.session.UpmsSessionDao;
-import com.mtx.system.dao.dto.SystemAttachDto;
 import com.mtx.system.dao.dto.SystemUserDto;
-import com.mtx.system.dao.model.*;
+import com.mtx.system.dao.model.SystemError;
+import com.mtx.system.dao.model.SystemSystem;
+import com.mtx.system.dao.model.SystemSystemExample;
+import com.mtx.system.dao.model.SystemUser;
 import com.mtx.system.dao.vo.PageInfo;
-import com.mtx.system.dao.vo.SystemUserVo;
 import com.mtx.system.rpc.api.*;
 import com.mtx.system.rpc.factory.SystemLogFactory;
-import com.sun.tools.internal.xjc.Language;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.BooleanUtils;
-import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.*;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authc.ExcessiveAttemptsException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,15 +46,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Slf4j
@@ -84,6 +79,8 @@ public class LoginController extends BaseController {
     private SystemRoleService systemRoleService;
     @Autowired
     SystemErrorService systemErrorService;
+    @Autowired
+    SystemAttachService systemAttachService;
 
     @ApiOperation(value = "免密登录前置请求")
     @RequestMapping(value = "/pre", method = RequestMethod.GET)
@@ -230,7 +227,11 @@ public class LoginController extends BaseController {
         //如果有openId则保存到DB
         if (StringUtils.isNotBlank(systemUserDto.getQqOpenId())){
             systemUser.setQqOpenId(systemUserDto.getQqOpenId());
+            systemUser.setNickName(systemUserDto.getNickName());
             systemUserService.updateOpenId(systemUser);
+            //保存头像
+            systemUserDto.setUserId(systemUser.getUserId());
+            systemAttachService.insertDtoQqHead(systemUserDto);
         }
 
 
@@ -274,9 +275,17 @@ public class LoginController extends BaseController {
         String access_token= StringUtil.getParam(result,"access_token");
         String result2=RequestUtil.getHtml("https://graph.qq.com/oauth2.0/me?access_token="+access_token);
         String openid=RegularUtil.getRegularByString("(.*)openid\":\"(.*)\"}(.*)",result2).get(2);
+        String result3=RequestUtil.getHtml("https://graph.qq.com/user/get_user_info?access_token="+access_token+"&oauth_consumer_key="+pageInfo.getQqAppId()+"&openid="+openid);
+        Map<String, Object> resp = TypeConversionUtil.json2map(result3);
+        String nickname = StringUtil.filterOffUtf8Mb4((String)resp.get("nickname")).trim();
+        String avatar = (String)resp.get("figureurl_2");
+        String gender = (String)resp.get("gender");
+
         SystemUser systemUser = systemUserService.selectByQqOpenId(openid);
         if(systemUser==null) {//需要绑定 账号
             mv.addObject("OPENID_QQ",openid);
+            mv.addObject("nickname",nickname);
+            mv.addObject("avatar",avatar);
             mv.setViewName("/system/login/login_oauth");
         }else {//直接登录
             Subject subject = SecurityUtils.getSubject();

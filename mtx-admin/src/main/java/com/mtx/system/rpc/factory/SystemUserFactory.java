@@ -1,15 +1,11 @@
 package com.mtx.system.rpc.factory;
 
-import com.mtx.common.util.base.StringUtil;
 import com.mtx.common.util.base.ToolUtil;
 import com.mtx.common.util.base.TypeConversionUtil;
 import com.mtx.common.util.factory.BaseFactory;
 import com.mtx.common.util.model.SelectVo;
-import com.mtx.common.util.secret.MD5Util;
 import com.mtx.system.common.bean.DictCacheKit;
-import com.mtx.system.common.bean.GlobalProperties;
 import com.mtx.system.common.enums.DictEnum;
-import com.mtx.system.common.enums.PropertiesEnum;
 import com.mtx.system.dao.dto.SystemUserDto;
 import com.mtx.system.dao.model.SystemOrganization;
 import com.mtx.system.dao.model.SystemUser;
@@ -24,6 +20,7 @@ public class SystemUserFactory extends BaseFactory{
 
     @Override
     protected <V, E> V convertAttribute(E e, V v) {
+
 
 
         return v;
@@ -69,7 +66,9 @@ public class SystemUserFactory extends BaseFactory{
     public SystemUser convertDtoToDoEdit(SystemUserDto systemUserDto, Class<SystemUser> systemUserClass) {
         SystemUser systemUser = convertModel(systemUserDto,systemUserClass);
         systemUser.setEditDate(new Date());
-        systemUser.setExtendMap(TypeConversionUtil.objectToJsonToBytes(systemUserDto.getExtProps()));
+        if(ToolUtil.isNotEmpty(systemUserDto.getExtProps())){
+            systemUser.setExtendMap(TypeConversionUtil.objectToJsonToBytes(systemUserDto.getExtProps()));
+        }
 
         return systemUser;
     }

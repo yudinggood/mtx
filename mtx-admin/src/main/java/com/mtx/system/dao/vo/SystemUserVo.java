@@ -134,26 +134,37 @@ public class SystemUserVo implements Serializable {
     private Map extProps = new HashMap();
 
     public Map getExtProps() {
+        if(null!=getRealName()){
+            extProps.put("realName",getRealName());
+        }
+        if(null!=getEmailToken()){
+            extProps.put("emailToken",getEmailToken());
+        }
         return extProps;
     }
 
     public void setExtProps(Map extProps) {
         this.extProps = extProps;
         if(null!=extProps){
-            realName= (String) extProps.get("realName");
+            this.realName = (String) extProps.get("realName");
+            this.emailToken =(String) extProps.get("emailToken");
         }
 
     }
 
     //姓名
     private String realName;
+    //邮箱token
+    private String emailToken;
 
 
     //性别
     private String sexName ;
     //状态
     private String userStateName;
-
-
+    //存储位置
+    private Byte addressType;
+    //云地址
+    private String yunPath;
 
 }

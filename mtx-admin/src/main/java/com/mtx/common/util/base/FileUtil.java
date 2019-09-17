@@ -3,11 +3,20 @@ package com.mtx.common.util.base;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.*;
 
 /**
@@ -294,5 +303,44 @@ public class FileUtil {
     }
 
 
+    public static MultipartFile createFileItem(String url) {
+        FileItem item = null;
+        OutputStream os = null;
+        InputStream is =null;
+        try {
+            HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+            conn.setReadTimeout(30000);
+            conn.setConnectTimeout(30000);
+            //设置应用程序要从网络连接读取数据
+            conn.setDoInput(true);
+            conn.setRequestMethod("GET");
+            if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                is = conn.getInputStream();
 
+                FileItemFactory factory = new DiskFileItemFactory(16, null);
+                String textFieldName = "uploadfile";
+                item = factory.createItem(textFieldName, "image/jpeg", false, "qq_head.jpg");
+                os = item.getOutputStream();
+
+                int bytesRead = 0;
+                byte[] buffer = new byte[8192];
+                while ((bytesRead = is.read(buffer, 0, 8192)) != -1) {
+                    os.write(buffer, 0, bytesRead);
+                }
+
+            }
+        } catch (IOException e) {
+            log.error(e.getMessage(),e);
+        }finally {
+            try {
+                os.close();
+                is.close();
+            } catch (IOException e) {
+                log.error(e.getMessage(),e);
+            }
+
+        }
+
+        return new CommonsMultipartFile(item);
+    }
 }

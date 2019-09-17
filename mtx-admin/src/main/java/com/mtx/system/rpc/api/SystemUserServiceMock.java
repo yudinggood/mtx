@@ -59,4 +59,14 @@ public class SystemUserServiceMock extends BaseServiceMock<SystemUserMapper, Sys
     public void updateByUser(SystemUser newUser) {
 
     }
+
+    @Override
+    public int updateDtoOnly(SystemUserDto systemUserDto) {
+        return 0;
+    }
+
+    @Override
+    public void activeEmail(SystemUserDto systemUserDto) {
+
+    }
 }

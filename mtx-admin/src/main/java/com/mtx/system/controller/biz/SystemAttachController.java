@@ -10,14 +10,17 @@ import com.mtx.common.util.wrapper.WrapMapper;
 import com.mtx.common.util.wrapper.Wrapper;
 import com.mtx.system.common.bean.DeleteFileTask;
 import com.mtx.system.common.bean.GlobalProperties;
+import com.mtx.system.common.enums.AttachmentEnum;
 import com.mtx.system.common.enums.PropertiesEnum;
 import com.mtx.system.common.exception.BusinessException;
 import com.mtx.system.common.exception.ErrorCodeEnum;
 import com.mtx.system.common.file.UploadComponent;
+import com.mtx.system.common.socket.MyMessageHandler;
 import com.mtx.system.dao.dto.SystemAttachDto;
 import com.mtx.system.dao.model.SystemAttach;
 import com.mtx.system.dao.vo.SystemAttachVo;
 import com.mtx.system.rpc.api.SystemAttachService;
+import com.mtx.system.rpc.api.SystemUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -40,6 +43,10 @@ public class SystemAttachController extends BaseController {
     SystemAttachService systemAttachService;
     @Autowired
     DeleteFileTask deleteFileTask;
+    @Autowired
+    private SystemUserService systemUserService;
+    @Autowired
+    private MyMessageHandler handler;
 
     @ApiOperation(value = "文件管理首页")
     @RequiresPermissions("system:attach:read")
@@ -79,6 +86,10 @@ public class SystemAttachController extends BaseController {
     public Object create(SystemAttachDto systemAttachDto) {
         if (null == systemAttachDto.getFile()) {
             return WrapMapper.wrap(Wrapper.ILLEGAL_ARGUMENT_CODE_,Wrapper.ILLEGAL_ARGUMENT_MESSAGE);
+        }
+        //判断是什么业务
+        if(systemAttachDto.getBizType().equals(AttachmentEnum.HEAD_ATTACHMENT.name())){
+            systemAttachDto.setBizId(super.getSystemUser().getUserId());
         }
 
         systemAttachDto.setEditUser(super.getSystemUser().getUserId());

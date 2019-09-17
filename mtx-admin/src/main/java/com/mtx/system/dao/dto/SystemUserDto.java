@@ -138,14 +138,21 @@ public class SystemUserDto implements Serializable {
     private Map extProps = new HashMap();
     public void setExtProps(Map extProps) {
         this.extProps = extProps;
+        if(null!=getRealName()){
+            extProps.put("realName",getRealName());
+        }
+        if(null!=getEmailToken()){
+            extProps.put("emailToken",getEmailToken());
+        }
     }
+
     public Map getExtProps() {
-        extProps.put("realName",getRealName());
         return extProps;
     }
     //姓名
     private String realName;
-
+    //邮箱token
+    private String emailToken;
 
 
     //用户组织
@@ -160,4 +167,8 @@ public class SystemUserDto implements Serializable {
     private String code;//验证码
     private String verifyNo;//动态码
 
+    //旧密码
+    private String oldPwd;
+    //新密码
+    private String newPwd;
 }

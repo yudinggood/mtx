@@ -1,7 +1,6 @@
 package com.mtx.system.dao.dto;
 
 import io.swagger.annotations.ApiModel;
-import lombok.Builder;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -102,6 +101,7 @@ public class SystemAttachDto implements Serializable {
     private String endDate;
     //上传的文件
     private MultipartFile file;
-
+    //base64文件上传
+    private String headImage;
 
 }

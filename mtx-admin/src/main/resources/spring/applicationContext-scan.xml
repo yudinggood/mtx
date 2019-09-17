@@ -27,6 +27,7 @@
 	<context:component-scan base-package="**.task" />
 	<!-- 自己配置的注解 -->
 	<context:component-scan base-package="**.common.bean" />
+	<context:component-scan base-package="**.common.socket" />
 	<!-- @Value注解的配置 -->
 	<!--<context:property-placeholder location="classpath*:**.properties"/>-->
 

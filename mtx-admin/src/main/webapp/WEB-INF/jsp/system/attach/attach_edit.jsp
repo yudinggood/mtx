@@ -253,7 +253,7 @@
 
         var formData = new FormData();
         formData.append('file', $('#file')[0].files[0]);
-
+        formData.append('bizType' , "COMMON_ATTACHMENT")
         $.ajax({
             type: 'post',
             url: url,

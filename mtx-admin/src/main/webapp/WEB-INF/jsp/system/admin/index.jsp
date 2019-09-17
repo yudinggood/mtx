@@ -71,15 +71,34 @@
                     </li>
                     <li style="border-left: solid 1px rgb(54,127,169);" class="dropdown user user-menu" id="user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img id="headimg1" src="${basePath}/resources/mtx-admin/image/avatar5.png" class="user-image" alt="User Image">
-                            <span class="hidden-xs">${systemUser.nickName}</span>
+                            <c:if test="${systemUser.avatar == null }">
+                                <img id="headimg1" src="${basePath}/resources/mtx-admin/image/avatar5.png" class="user-image" alt="User Image">
+                            </c:if>
+                            <c:if test="${systemUser.avatar != null }">
+                                <c:if test="${systemUser.addressType == 1 }">
+                                    <img id="headimg1" src="${basePath}/upload/${systemUser.avatar}" class="user-image" alt="User Image">
+                                </c:if>
+                                <c:if test="${systemUser.addressType == 2 }">
+                                    <img id="headimg1" src="${systemUser.yunPath}" class="user-image" alt="User Image">
+                                </c:if>
+                            </c:if>
+                            <span class="hidden-xs" id="nickName1">${systemUser.nickName}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img id="headimg2" src="${basePath}/resources/mtx-admin/image/avatar5.png" class="img-circle" alt="User Image">
-
-                                <p>
+                                <c:if test="${systemUser.avatar == null }">
+                                    <img id="headimg2" src="${basePath}/resources/mtx-admin/image/avatar5.png" class="img-circle" alt="User Image">
+                                </c:if>
+                                <c:if test="${systemUser.avatar != null }">
+                                    <c:if test="${systemUser.addressType == 1 }">
+                                        <img id="headimg2" src="${basePath}/upload/${systemUser.avatar}" class="img-circle" alt="User Image">
+                                    </c:if>
+                                    <c:if test="${systemUser.addressType == 2 }">
+                                        <img id="headimg2" src="${systemUser.yunPath}" class="img-circle" alt="User Image">
+                                    </c:if>
+                                </c:if>
+                                <p id="nickName2">
                                     你好！${systemUser.nickName}
                                 </p>
                             </li>
@@ -156,6 +175,7 @@
         EHM.ImportSmartMenu();
         var PermissionEdit = {
             initTopID:1,
+            websocket:null,
         };
 
         $(function(){
@@ -175,6 +195,35 @@
             });
 
             $("body").css("height",document.documentElement.clientHeight);
+
+            // 首先判断是否 支持 WebSocket
+            if('WebSocket' in window) {
+                PermissionEdit.websocket = new WebSocket("ws://${domain}/refreshInfo?userId=${systemUser.userId}");
+            } else if('MozWebSocket' in window) {
+                PermissionEdit.websocket = new MozWebSocket("ws://${domain}/refreshInfo?userId=${systemUser.userId}");
+            } else {
+                PermissionEdit.websocket = new SockJS("${basePath}/socketJs/refreshInfo?userId=${systemUser.userId}");
+            }
+            // 打开连接时
+            PermissionEdit.websocket.onopen = function(evnt) {
+
+            };
+
+            // 收到消息时
+            PermissionEdit.websocket.onmessage = function(evnt) {
+                $("#nickName1").html(evnt.data);
+                $("#nickName2").html(evnt.data);
+            };
+
+            PermissionEdit.websocket.onerror = function(evnt) {
+
+            };
+
+            PermissionEdit.websocket.onclose = function(evnt) {
+
+            };
+
+
         });
         function show(obj){
             $("#sysmenu").addClass("open");

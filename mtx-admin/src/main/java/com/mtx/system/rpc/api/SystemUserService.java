@@ -33,4 +33,8 @@ public interface SystemUserService extends BaseService<SystemUser, SystemUserExa
     void updateOpenId(SystemUser systemUser);
 
     void updateByUser(SystemUser newUser);
+
+    int updateDtoOnly(SystemUserDto systemUserDto);
+
+    void activeEmail(SystemUserDto systemUserDto);
 }

@@ -12,7 +12,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -132,7 +131,7 @@ public class RequestUtil {
             // 读取内容
             byte[] responseBody = getMethod.getResponseBody();
             // 处理内容
-            html = new String(responseBody);
+            html = new String(responseBody, "UTF-8");
         } catch (Exception e) {
             html="";
             log.error("页面无法访问");

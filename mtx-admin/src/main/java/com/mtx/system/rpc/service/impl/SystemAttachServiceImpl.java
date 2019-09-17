@@ -17,6 +17,7 @@ import com.mtx.system.common.exception.BusinessException;
 import com.mtx.system.common.exception.ErrorCodeEnum;
 import com.mtx.system.common.file.UploadComponent;
 import com.mtx.system.dao.dto.SystemAttachDto;
+import com.mtx.system.dao.dto.SystemUserDto;
 import com.mtx.system.dao.mapper.SystemAttachMapper;
 import com.mtx.system.dao.model.SystemAttach;
 import com.mtx.system.dao.model.SystemAttachExample;
@@ -58,7 +59,8 @@ public class SystemAttachServiceImpl extends BaseServiceImpl<SystemAttachMapper,
     SystemAttachMapper systemAttachMapper;
     @Autowired
     SystemAttachExtMapper systemAttachExtMapper;
-
+    @Autowired
+    SystemAttachService systemAttachService;
 
     @Override
     public List<SystemAttachVo> list(Page<SystemAttach> page, SystemAttachDto systemAttachDto) {
@@ -77,7 +79,6 @@ public class SystemAttachServiceImpl extends BaseServiceImpl<SystemAttachMapper,
     @Override
     public int insertDto(SystemAttachDto systemAttachDto) {
         systemAttachDto =uploadComponent.upload(systemAttachDto);
-        systemAttachDto.setBizType(AttachmentEnum.COMMON_ATTACHMENT.name());
 
         SystemAttach systemAttach = systemAttachFactory.convertDtoToDo(systemAttachDto,SystemAttach.class);
         return systemAttachMapper.insertSelective(systemAttach);
@@ -139,7 +140,6 @@ public class SystemAttachServiceImpl extends BaseServiceImpl<SystemAttachMapper,
         systemAttachDto.setFileSize(file.getSize());
         systemAttachDto.setSuffix(file.getContentType());
         systemAttachDto.setNewName(newName);
-        systemAttachDto.setBizType(AttachmentEnum.COMMON_ATTACHMENT.name());
         SystemAttach systemAttach = systemAttachFactory.convertDtoToDo(systemAttachDto,SystemAttach.class);
         return systemAttachMapper.insertSelective(systemAttach);
     }
@@ -179,5 +179,22 @@ public class SystemAttachServiceImpl extends BaseServiceImpl<SystemAttachMapper,
             strings.add(systemAttach.getFilePath());
         }
         return TypeConversionUtil.listToStrings(strings);
+    }
+
+    @Override
+    public void insertDtoQqHead(SystemUserDto systemUserDto) {
+        SystemAttachDto systemAttachDto = new SystemAttachDto();
+        //判断是什么业务
+        MultipartFile file = FileUtil.createFileItem(systemUserDto.getAvatar());
+        systemAttachDto.setFile(file);
+        systemAttachDto.setBizType(AttachmentEnum.HEAD_ATTACHMENT.name());
+        systemAttachDto.setBizId(systemUserDto.getUserId());
+        systemAttachDto.setEditUser(systemUserDto.getUserId());
+        systemAttachDto.setAddressType(TypeConversionUtil.objectToByte(GlobalProperties.me().getValueByCode(PropertiesEnum.FILE_ADDRESS_TYPE)));
+        if(systemAttachDto.getAddressType()==1){
+            systemAttachService.insertDto(systemAttachDto);
+        }else {
+            systemAttachService.insertDtoCloud(systemAttachDto);
+        }
     }
 }

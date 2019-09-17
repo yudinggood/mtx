@@ -10,11 +10,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 
-<%--<%
-    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();//  https://localhost:8443/YuBack
-%>--%>
+<%
+    String domain = request.getServerName()+":"+request.getServerPort()+request.getContextPath();//  admin.mtx.com:1111
+%>
 <c:set var="basePath" value="${pageContext.request.contextPath}"/>
-<%--<c:set var="basePath" value="<%=basePath%>"/>  相当于自定义标签--%>
+<c:set var="domain" value="<%=domain%>"/>
 <title>i助理 - 个人小助手</title>
 <link rel="shortcut icon" href="${basePath}/resources/mtx-admin/image/favicon.ico" type="image/x-icon" />
 <script type="text/javascript" src="${basePath}/resources/mtx-admin/js/EHM/base.js"></script>

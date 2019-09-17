@@ -8,7 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -262,4 +262,56 @@ public class StringUtil {
         Map<String, String> split = Splitter.on("&").withKeyValueSeparator("=").split(params);
         return split.get(name);
     }
+
+    /**
+     * 过滤utf8mb4表情符号
+     *
+     */
+    public static String filterOffUtf8Mb4(String text) {
+        byte[] bytes= "".getBytes();
+        try{
+            bytes = text.getBytes("utf-8");
+
+        }catch (Exception e){
+
+        }
+        ByteBuffer buffer = ByteBuffer.allocate(bytes.length);
+        int i = 0;
+        while (i < bytes.length) {
+            short b = bytes[i];
+            if (b > 0) {
+                buffer.put(bytes[i++]);
+                continue;
+            }
+
+            b += 256; // 去掉符号位
+
+            if (((b >> 5) ^ 0x6) == 0) {
+                buffer.put(bytes, i, 2);
+                i += 2;
+            } else if (((b >> 4) ^ 0xE) == 0) {
+                buffer.put(bytes, i, 3);
+                i += 3;
+            } else if (((b >> 3) ^ 0x1E) == 0) {
+                i += 4;
+            } else if (((b >> 2) ^ 0x3E) == 0) {
+                i += 5;
+            } else if (((b >> 1) ^ 0x7E) == 0) {
+                i += 6;
+            } else {
+                buffer.put(bytes[i++]);
+            }
+        }
+        buffer.flip();
+        String str="";
+        try{
+            str = new String(buffer.array(), "utf-8");
+
+        }catch (Exception e){
+
+        }
+        return str;
+    }
+
+
 }

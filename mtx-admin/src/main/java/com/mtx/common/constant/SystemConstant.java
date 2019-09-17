@@ -66,6 +66,13 @@ public class SystemConstant {
     public static final String QINIU_YUN_FILE_PATH = "mtx/upload/";
     public static final String SYSTEM_QIUNIU_FILESIZE = "system_qiuniu_filesize";
 
+    //邮箱
+    public static final String FROM_ADDRESS=GlobalProperties.me().getValueByCode(PropertiesEnum.FROM_ADDRESS);     //系统邮箱
+    public static final String FROM_ADDRESS_PWD=GlobalProperties.me().getValueByCode(PropertiesEnum.FROM_ADDRESS_PWD);       //系统邮箱的密码
+    public static final String FROM_ADDRESS_PORT=GlobalProperties.me().getValueByCode(PropertiesEnum.FROM_ADDRESS_PORT);       //系统邮箱的端口
+    public static final String FROM_ADDRESS_SMTP=GlobalProperties.me().getValueByCode(PropertiesEnum.FROM_ADDRESS_SMTP);       //系统邮箱的smtp
+
+
 
 
 }

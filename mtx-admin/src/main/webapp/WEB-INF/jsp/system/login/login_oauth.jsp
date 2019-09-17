@@ -114,6 +114,8 @@
                     password: $('#password').val(),
                     rememberMe: $('#saveid').is(':checked'),
                     backurl: BACK_URL,
+                    nickName:'${nickname}',
+                    avatar:'${avatar}',
                     qqOpenId:'${OPENID_QQ}',
                     code:$('#code').val(),
                 },

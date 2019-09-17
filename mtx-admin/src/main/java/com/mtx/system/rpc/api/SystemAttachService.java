@@ -3,6 +3,7 @@ package com.mtx.system.rpc.api;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.mtx.common.base.BaseService;
 import com.mtx.system.dao.dto.SystemAttachDto;
+import com.mtx.system.dao.dto.SystemUserDto;
 import com.mtx.system.dao.model.SystemAttach;
 import com.mtx.system.dao.model.SystemAttachExample;
 import com.mtx.system.dao.vo.SystemAttachVo;
@@ -27,4 +28,6 @@ public interface SystemAttachService extends BaseService<SystemAttach, SystemAtt
     String[] selectForFilePaths(String ids);
 
     void deleteYunFile(String filePath);
+
+    void insertDtoQqHead(SystemUserDto systemUserDto);
 }

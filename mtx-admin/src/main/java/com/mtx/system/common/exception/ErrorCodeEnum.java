@@ -27,6 +27,7 @@ public enum ErrorCodeEnum {
 
     USER10030001(10030001, "用户手机号已经存在"),
     USER10030002(10030002, "用户邮箱已经存在"),
+    USER10030003(10030003, "邮箱认证失败"),
 
 
     CONFIG10040001(10040001, "配置编码已经存在"),
@@ -49,7 +50,7 @@ public enum ErrorCodeEnum {
     SMS_ERROR(20000011, ",请联系管理员"),
     SMS_INFO_ERROR(20000012, "动态码信息错误,请重新发送"),
     SESSION_EXPIRED(20000013, "会话已经过期，请刷新页面"),
-
+    INVALID_PASSWORD_EDIT(20000014, "旧密码输入错误"),
 
 
     ;

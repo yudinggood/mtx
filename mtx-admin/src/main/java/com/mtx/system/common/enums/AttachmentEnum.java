@@ -8,7 +8,7 @@ public enum  AttachmentEnum {
      * 普通文件上传
      */
     COMMON_ATTACHMENT("普通文件上传"),
-
+    HEAD_ATTACHMENT("头像上传"),
 
 
 

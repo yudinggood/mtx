@@ -144,6 +144,8 @@ public class SystemUserController extends BaseController {
             return WrapMapper.wrap(Wrapper.ILLEGAL_ARGUMENT_CODE_,errorListToString(result.getErrors()));
         }
 
+        SystemUserVo systemUserVo = systemUserService.selectByIdWithLeft(id);
+        systemUserDto.setExtProps(systemUserVo.getExtProps());
         systemUserDto.setEditUser(super.getSystemUser().getUserId());
         int count = systemUserService.updateDto(systemUserDto);
         return WrapMapper.wrap(count);
