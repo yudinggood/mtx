@@ -29,7 +29,7 @@ $(function() {
             if (files && files.length) {
                file = files[0];
 
-               if (/^image\/\w+$/.test(file.type)) {
+               if (/^image\/\w+$/.test(file.type)&&!includeStr(file.type,"gif")) {
                     blobURL = URL.createObjectURL(file);
                     $image.one('built.cropper', function () {
                         // Revoke when load complete
@@ -37,7 +37,7 @@ $(function() {
                     }).cropper('reset').cropper('replace', blobURL);
                     $inputImage.val('');
                 } else {
-                   var i =layer.confirm("请选择图片上传", {
+                   var i =layer.confirm("请选择jpg或png图片上传", {
                        shade: 0,
                        btn: ['确认'] //按钮
                    }, function(){

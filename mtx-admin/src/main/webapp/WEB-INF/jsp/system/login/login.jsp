@@ -27,8 +27,8 @@
             <div class="register-wrap" id="register-wrap">
                 <div class="register" id="register">
                     <div class="register-top" id="reg-top">
-                        <h2 class="normal" id="normal">登录</h2>
-                        <h2 class="nopassword" id="nopw">注册</h2>
+                        <h2 class="normal" id="normal"><spring:message code="login.login"/></h2>
+                        <h2 class="nopassword" id="nopw"><spring:message code="login.register"/></h2>
                         <a id="qrcode" href="#">
                             <span class="aui-tag-size">扫码登录</span>
                         </a>
@@ -53,8 +53,11 @@
                             <div class="col-sm-6" style="float:left;">
                                 <input id="saveid" onclick="savePaw();" type="checkbox" style=""><label  style="margin-left:10px;font-size: 12px;font-weight: normal" for="saveid">保持登录7天</label>
                             </div>
-                            <div class="col-sm-3" style="float:right;">
-                                <a style="cursor: pointer;">忘记密码?</a>
+                            <div class="col-sm-3" style="float:right;width: 100px;">
+                                <%--<a style="cursor: pointer;">忘记密码?</a>--%>
+                                    <a href="${basePath}/changeLang?langType=zh" style="cursor: pointer;">中文</a>
+                                    <a>|</a>
+                                    <a href="${basePath}/changeLang?langType=en" style="cursor: pointer;">英文</a>
                             </div>
                         </div>
                         </div>
@@ -147,8 +150,11 @@
 <script>
     var Login = {
         index:null,
+        langType:cookie.getCookie("org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE"),
     };
     $(function () {
+        setLang(Login.langType);
+
         changeCode();
         $("#codeImg").bind("click", changeCode);
         changeCode2();
@@ -276,6 +282,12 @@
         var left = ($(window).width() - width+100) / 2;
         var top = ($(window).height() - height) / 2;
         window.open(url, "_blank", "toolbar=yes, location=yes, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=no, copyhistory=yes, left="+left+", top="+top+", width="+width+", height="+height);
+    }
+    
+    function setLang(lang) {
+        if(!isEmpty(lang)){
+            cookie.setCookie("org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE", lang, 30);
+        }
     }
 
     <c:if test="${param.forceLogout == 1}">

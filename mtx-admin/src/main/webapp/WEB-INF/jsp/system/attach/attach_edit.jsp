@@ -239,10 +239,14 @@
         </c:if>
     }
     function commit() {
-        $('#form').bootstrapValidator('validate');
-        if(!$("#form").data('bootstrapValidator').isValid()){
+        if(!getPhotoSize($('#file')[0])){
+            top.layer.msg('上传文件不能大于5M', {
+                time: 2000,
+                offset: '31%',
+            });
             return;
         }
+
         var url;
         <c:if test="${systemAttachVo.page == 'update' }">
         url = '${basePath}/system/attach/update/${systemAttachVo.attachId}';

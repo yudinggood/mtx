@@ -98,7 +98,50 @@ function dataURLtoFile(dataurl, filename) {
     }
     return new File([u8arr], filename, {type:mime});
 }
-
+//保存cookie
+var cookie={   //cookie工具类
+    setCookie:function(c_name,value,expiredays){  //设值
+        var exdate=new Date()
+        exdate.setDate(exdate.getDate()+expiredays)
+        document.cookie=c_name+ "=" +escape(value)+
+            ((expiredays==null) ? "" : ";expires="+exdate.toGMTString())
+    },
+    getCookie:function(c_name){   //取值
+        if (document.cookie.length>0)
+        {
+            c_start=document.cookie.indexOf(c_name + "=")
+            if (c_start!=-1)
+            {
+                c_start=c_start + c_name.length+1
+                c_end=document.cookie.indexOf(";",c_start)
+                if (c_end==-1) c_end=document.cookie.length
+                return unescape(document.cookie.substring(c_start,c_end))
+            }
+        }
+        return "";
+    }
+}
+//判断照片大小
+function getPhotoSize(obj){
+    var fileSize = 0;
+    var isIE = /msie/i.test(navigator.userAgent) && !window.opera;
+    if (isIE && !obj.files) {
+        var filePath = obj.value;
+        var fileSystem = new ActiveXObject("Scripting.FileSystemObject");
+        var file = fileSystem.GetFile (filePath);
+        fileSize = file.Size;
+    }else {
+        fileSize = obj.files[0].size;
+    }
+    fileSize=Math.round(fileSize/1024*100)/100; //单位为KB
+    if(fileSize>=5120){
+        return false;
+    }
+}
+//判断字符串中是否包含某个字符串
+function includeStr(str,type) {
+    return str.indexOf(type) != -1;   // true
+}
 
 
 

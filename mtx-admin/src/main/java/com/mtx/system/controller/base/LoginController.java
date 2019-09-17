@@ -39,21 +39,22 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -357,6 +358,11 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "/sendSms", method = RequestMethod.POST)
     @ResponseBody
     public Object sendSms(SystemUserDto systemUserDto) {
+        //判断当前网络状态
+        if(!ToolUtil.isNetConnect()){
+            throw new BusinessException(ErrorCodeEnum.SYS99990200);
+        }
+
         ComplexResult result = FluentValidator.checkAll()
                 .on(systemUserDto.getLoginId(), new NotNullValidator("账号"))
                 .on(systemUserDto.getCode(), new NotNullValidator("验证码"))
@@ -449,6 +455,23 @@ public class LoginController extends BaseController {
         return WrapMapper.wrap(ErrorCodeEnum.SMS_INFO_ERROR);
     }
 
+    @ApiOperation(value = "国际化切换")
+    @RequestMapping(value = "/changeLang", method = RequestMethod.GET)
+    public ModelAndView changeLang(HttpServletRequest request, HttpServletResponse response, @RequestParam(value="langType", defaultValue="zh") String langType) {
+        if(langType.equals("zh")){
+            Locale locale = new Locale("zh", "CN");
+            (new CookieLocaleResolver()).setLocale (request, response, locale);
+        }else if(langType.equals("en")){
+            Locale locale = new Locale("en", "US");
+            (new CookieLocaleResolver()).setLocale (request, response, locale);
+        }else{
+            (new CookieLocaleResolver()).setLocale (request, response, LocaleContextHolder.getLocale());
+        }
+
+        ModelAndView mv =this.getModelAndView();
+        mv.setViewName(REDIRECT+"/");
+        return mv;
+    }
 
 }
 

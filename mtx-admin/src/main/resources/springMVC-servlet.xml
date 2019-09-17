@@ -26,20 +26,7 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-    <!-- i18n国际化 -->
-    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <!-- 找不到key时用key作为返回值 -->
-        <property name="useCodeAsDefaultMessage" value="false"/>
-        <!-- 资源刷新时间 -->
-        <property name="cacheSeconds" value="60"/>
-        <!-- 资源文件列表 -->
-        <property name="basenames">
-            <list>
-                <value>classpath:i18n/messages</value>
-            </list>
-        </property>
-        <property name="defaultEncoding" value="UTF-8"/>
-    </bean>
+
     <!-- 处理静态资源 -->
     <mvc:default-servlet-handler/>
 
@@ -73,7 +60,29 @@
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
     </bean>
 
+    <!-- i18n国际化 -->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <!-- 国际化信息所在的文件名 -->
+        <property name="basenames">
+            <list>
+                <value>i18n/messages</value>
+            </list>
+        </property>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <!--    如果在国际化资源文件中找不到对应代码的信息，就用这个代码作为名称 -->
+        <property name="useCodeAsDefaultMessage" value="true" />
+    </bean>
 
+    <mvc:interceptors>
+        <!-- 国际化操作拦截器 如果采用基于（请求/Session/Cookie）则必需配置 -->
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+    </mvc:interceptors>
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <!-- 设置最大有效时间，如果是-1，则不存储，浏览器关闭后即失效，默认为Integer.MAX_INT-->
+        <property name="cookieMaxAge" value="100000" />
+        <!-- 设置cookie可见的地址，默认是“/”即对网站所有地址都是可见的，如果设为其它地址，则只有该地址或其后的地址才可见-->
+        <property name="cookiePath" value="/" />
+    </bean>
 
 
 

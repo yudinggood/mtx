@@ -189,6 +189,11 @@ public class IndexController extends BaseController {
     @RequestMapping(value = "/sendEmail/{id}", method = RequestMethod.POST)
     @ResponseBody
     public Object sendEmail(@PathVariable("id") int id, SystemUserDto systemUserDto) {
+        //判断当前网络状态
+        if(!ToolUtil.isNetConnect()){
+            throw new BusinessException(ErrorCodeEnum.SYS99990200);
+        }
+
         SystemUserVo systemUserVo = systemUserService.selectByIdWithLeft(id);
         String token = MD5Util.md5(systemUserDto.getEmail()+System.currentTimeMillis());
         systemUserDto.setEmailToken(token);

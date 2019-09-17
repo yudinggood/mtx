@@ -72,14 +72,14 @@
                     <li style="border-left: solid 1px rgb(54,127,169);" class="dropdown user user-menu" id="user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <c:if test="${systemUser.avatar == null }">
-                                <img id="headimg1" src="${basePath}/resources/mtx-admin/image/avatar5.png" class="user-image" alt="User Image">
+                                <img id="headimg1" src="${basePath}/resources/mtx-admin/image/avatar5.png" class="user-image" alt="Image">
                             </c:if>
                             <c:if test="${systemUser.avatar != null }">
                                 <c:if test="${systemUser.addressType == 1 }">
-                                    <img id="headimg1" src="${basePath}/upload/${systemUser.avatar}" class="user-image" alt="User Image">
+                                    <img id="headimg1" src="${basePath}/upload/${systemUser.avatar}" class="user-image" alt="Image">
                                 </c:if>
                                 <c:if test="${systemUser.addressType == 2 }">
-                                    <img id="headimg1" src="${systemUser.yunPath}" class="user-image" alt="User Image">
+                                    <img id="headimg1" src="${systemUser.yunPath}" class="user-image" alt="Image">
                                 </c:if>
                             </c:if>
                             <span class="hidden-xs" id="nickName1">${systemUser.nickName}</span>
@@ -88,14 +88,14 @@
                             <!-- User image -->
                             <li class="user-header">
                                 <c:if test="${systemUser.avatar == null }">
-                                    <img id="headimg2" src="${basePath}/resources/mtx-admin/image/avatar5.png" class="img-circle" alt="User Image">
+                                    <img id="headimg2" src="${basePath}/resources/mtx-admin/image/avatar5.png" class="img-circle" alt="Image">
                                 </c:if>
                                 <c:if test="${systemUser.avatar != null }">
                                     <c:if test="${systemUser.addressType == 1 }">
-                                        <img id="headimg2" src="${basePath}/upload/${systemUser.avatar}" class="img-circle" alt="User Image">
+                                        <img id="headimg2" src="${basePath}/upload/${systemUser.avatar}" class="img-circle" alt="Image">
                                     </c:if>
                                     <c:if test="${systemUser.addressType == 2 }">
-                                        <img id="headimg2" src="${systemUser.yunPath}" class="img-circle" alt="User Image">
+                                        <img id="headimg2" src="${systemUser.yunPath}" class="img-circle" alt="Image">
                                     </c:if>
                                 </c:if>
                                 <p id="nickName2">
@@ -105,10 +105,10 @@
 
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" onclick="personalSetting();" class="btn btn-default btn-flat">个人设置</a>
+                                    <a href="#" onclick="personalSetting();" class="btn btn-default btn-flat"><spring:message code="index.profile"/></a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="#" onclick="logout();" class="btn btn-default btn-flat">退出登录</a>
+                                    <a href="#" onclick="logout();" class="btn btn-default btn-flat"><spring:message code="index.logout"/></a>
                                 </div>
                             </li>
                         </ul>

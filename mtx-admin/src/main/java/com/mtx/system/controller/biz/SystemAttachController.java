@@ -3,6 +3,7 @@ package com.mtx.system.controller.biz;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.mtx.common.base.BaseController;
 import com.mtx.common.util.base.FileUtil;
+import com.mtx.common.util.base.ToolUtil;
 import com.mtx.common.util.base.TypeConversionUtil;
 import com.mtx.common.util.page.PageFactory;
 import com.mtx.common.util.page.PageInfoBT;
@@ -84,6 +85,11 @@ public class SystemAttachController extends BaseController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
     public Object create(SystemAttachDto systemAttachDto) {
+        //判断当前网络状态
+        if(!ToolUtil.isNetConnect()){
+            throw new BusinessException(ErrorCodeEnum.SYS99990200);
+        }
+
         if (null == systemAttachDto.getFile()) {
             return WrapMapper.wrap(Wrapper.ILLEGAL_ARGUMENT_CODE_,Wrapper.ILLEGAL_ARGUMENT_MESSAGE);
         }

@@ -2,12 +2,11 @@ package com.mtx.system.server.test;
 
 import com.aliyuncs.dysmsapi.model.v20170525.QuerySendDetailsResponse;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
-import com.mtx.common.util.base.FileUtil;
 import com.mtx.common.util.base.SendSmsUtil;
 import com.mtx.common.util.base.StringUtil;
+import com.mtx.common.util.base.ToolUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
-import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 public class LogTest {
@@ -43,9 +42,7 @@ public class LogTest {
 
     @Test
     public void index5() {
-        String url = "http://qzapp.qlogo.cn/qzapp/101464318/245835C0F2923CF468B71CD6F2CAE88C/100";
-        MultipartFile file = FileUtil.createFileItem(url);
-        System.out.print(file);
+        log.info("ping结果:"+ToolUtil.isNetConnect());
     }
 
 
