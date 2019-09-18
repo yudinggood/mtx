@@ -5,6 +5,7 @@ import com.baidu.unbiz.fluentvalidator.FluentValidator;
 import com.baidu.unbiz.fluentvalidator.ResultCollectors;
 import com.mtx.common.base.BaseController;
 import com.mtx.common.constant.SystemConstant;
+import com.mtx.common.interceptor.NotDisplaySql;
 import com.mtx.common.util.base.StringUtil;
 import com.mtx.common.util.base.ToolUtil;
 import com.mtx.common.util.secret.MD5Util;
@@ -60,6 +61,7 @@ public class IndexController extends BaseController {
 
     @ApiOperation(value = "后台首页")
     @RequestMapping(value = "/index", method = RequestMethod.GET)
+    @NotDisplaySql
     public ModelAndView index(){
         SystemUser systemUser =  super.getSystemUser();
         if(null==systemUser){

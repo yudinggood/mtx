@@ -34,7 +34,7 @@
     <mvc:resources mapping="/resources/**" location="/resources/" cache-period="10"/>
     <!-- swagger -->
     <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
-    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
+    <mvc:resources mapping="/webjars/**" location="classpath*:/META-INF/resources/webjars/"/>
     <bean class="com.mtx.common.util.base.SwaggerConfig" />
 
     <!-- 上传文件配置 20*1024*1024即20M resolveLazily属性启用是为了推迟文件解析，以便捕获文件大小异常 -->
@@ -45,9 +45,6 @@
     </bean>
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
-
-    <!-- 日志记录AOP实现 -->
-    <bean class="com.mtx.system.common.interceptor.LogAspect"/>
 
     <!-- 根目录'/'对应页面 -->
     <mvc:view-controller path="/" view-name="/index"/>

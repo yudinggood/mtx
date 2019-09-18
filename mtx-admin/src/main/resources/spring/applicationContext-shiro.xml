@@ -53,7 +53,7 @@
     </bean>
 
     <!-- realm实现，继承自AuthorizingRealm -->
-    <bean id="upmsRealm" class="com.mtx.system.common.bean.UpmsRealm">
+    <bean id="upmsRealm" class="com.mtx.system.common.shiro.UpmsRealm">
         <!-- 将凭证匹配器设置到realm中，realm按照凭证匹配器的要求进行散列 -->
         <property name="credentialsMatcher" ref="credentialsMatcher"/>
         <!-- 配置缓存相关 -->

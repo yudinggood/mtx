@@ -1,5 +1,7 @@
 package com.mtx.common.util.base;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.*;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +11,7 @@ import java.util.UUID;
 /**
  * 工具类
  */
+@Slf4j
 public class ToolUtil {
     /**
      * 对象是否为空
@@ -95,7 +98,7 @@ public class ToolUtil {
             try {
                 sw.close();
             } catch (IOException e1) {
-                e1.printStackTrace();
+                log.error(e1.getMessage(),e1);
             }
         }
         return sw.getBuffer().toString().replaceAll("\\$","T");
@@ -140,7 +143,7 @@ public class ToolUtil {
             isr.close();
             br.close();
 
-            if (null != sb && !sb.toString().equals("")) {
+            if (null != sb && !"".equals(String.valueOf(sb))) {
                 String logString = "";
                 if (sb.toString().indexOf("TTL") > 0) {
                     // 网络畅通
@@ -151,7 +154,7 @@ public class ToolUtil {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
         return connect;
     }

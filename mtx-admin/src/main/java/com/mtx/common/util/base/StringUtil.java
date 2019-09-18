@@ -227,7 +227,7 @@ public class StringUtil {
      *
      */
     public static String toSecretString(String salt) {
-        SimpleHash simpleHash=new SimpleHash("MD5", GlobalProperties.me().getValueByCodeProperties(PropertiesEnum.COMMON_INIT_PASSWORD), ByteSource.Util.bytes(salt), 2);
+        SimpleHash simpleHash=new SimpleHash("MD5", GlobalProperties.me().getValueByCode(PropertiesEnum.COMMON_INIT_PASSWORD), ByteSource.Util.bytes(salt), 2);
         return String.valueOf(simpleHash);
     }
     public static String toSecretUncommonString(String password,String salt) {

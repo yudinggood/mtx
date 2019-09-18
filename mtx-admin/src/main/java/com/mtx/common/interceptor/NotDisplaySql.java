@@ -1,5 +1,5 @@
 
-package com.mtx.common.annotation;
+package com.mtx.common.interceptor;
 
 import java.lang.annotation.*;
 

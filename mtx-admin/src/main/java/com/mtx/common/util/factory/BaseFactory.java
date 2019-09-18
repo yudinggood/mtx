@@ -101,9 +101,9 @@ public abstract class BaseFactory {
                 V v = (V) field.get(e);
                 voList.add(v);
             } catch (NoSuchFieldException e1) {
-                e1.printStackTrace();
+                log.error(e1.getMessage(),e1);
             } catch (IllegalAccessException e1) {
-                e1.printStackTrace();
+                log.error(e1.getMessage(),e1);
             }
 
         }

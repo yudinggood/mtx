@@ -11,17 +11,6 @@
             diskExpiryThreadIntervalSeconds="120"
             memoryStoreEvictionPolicy="LRU">
     </defaultCache>
-    <cache
-            name="mtx-admin-ehcache"
-            eternal="false"
-            timeToIdleSeconds="120"
-            timeToLiveSeconds="300"
-            maxEntriesLocalHeap="10000"
-            maxEntriesLocalDisk="10000000"
-            diskExpiryThreadIntervalSeconds="120"
-            memoryStoreEvictionPolicy="LRU">
-    </cache>
-
 
     <!-- 全局变量：永不过期-->
     <cache name="CONSTANT"

@@ -1,8 +1,5 @@
 package com.mtx.common.util.base;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -155,16 +152,5 @@ public class TypeConversionUtil {
         return list.toArray(new String[list.size()]);
     }
 
-    //json型string转map
-    public static Map<String, Object> json2map(String str_json) {
-        Map<String, Object> res = null;
-        try {
-            Gson gson = new Gson();
-            res = gson.fromJson(str_json, new TypeToken<Map<String, Object>>() {
-            }.getType());
-        } catch (JsonSyntaxException e) {
-            log.error(e.getMessage(),e);
-        }
-        return res;
-    }
+
 }

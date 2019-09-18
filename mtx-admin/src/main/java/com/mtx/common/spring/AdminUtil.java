@@ -1,5 +1,6 @@
-package com.mtx.common.util.base;
+package com.mtx.common.spring;
 
+import com.mtx.common.util.base.JarUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.web.context.ServletContextAware;

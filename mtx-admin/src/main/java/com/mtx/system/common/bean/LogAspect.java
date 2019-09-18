@@ -1,11 +1,10 @@
-package com.mtx.system.common.interceptor;
+package com.mtx.system.common.bean;
 
-import com.alibaba.fastjson.JSON;
 import com.mtx.common.constant.SystemConstant;
 import com.mtx.common.util.base.DateUtil;
+import com.mtx.common.util.base.JsonUtil;
 import com.mtx.common.util.base.RequestUtil;
 import com.mtx.common.util.base.TypeConversionUtil;
-import com.mtx.system.common.bean.GlobalProperties;
 import com.mtx.system.common.enums.PropertiesEnum;
 import com.mtx.system.dao.model.SystemLog;
 import com.mtx.system.dao.model.SystemUser;
@@ -23,9 +22,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -33,8 +30,10 @@ import java.lang.reflect.Method;
 /**
  * 日志切面编程
  */
-@Aspect
+
 @Slf4j
+@Aspect
+@Component
 public class LogAspect {
     @Autowired
     SystemLogService systemLogService;
@@ -93,7 +92,7 @@ public class LogAspect {
         } else {
             systemLog.setParameter(ObjectUtils.toString(request.getParameterMap()));
         }
-        String json =JSON.toJSONString(result);
+        String json = JsonUtil.toJson(result);
         if(json.length()>10000){
             json=json.substring(0,10000);
         }

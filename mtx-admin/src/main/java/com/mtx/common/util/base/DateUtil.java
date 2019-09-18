@@ -12,13 +12,16 @@ import java.util.Date;
  */
 @Slf4j
 public class DateUtil {
+
     /**
-     * mysql的 blob转string
+     * long转换成日期
      */
     public static Date longToDate(long time)  {
         return new Date(time);
     }
-
+    /**
+     * 日期转换成字符串
+     */
     public static String getFormat(Date date){
         return DateFormatUtils.format(new Date(), "yyyy/MM/dd");
     }
@@ -42,7 +45,7 @@ public class DateUtil {
      * @param str
      * @return
      */
-    public static Date StrToDate(String str) {
+    public static Date strToDate(String str) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = null;
         try {

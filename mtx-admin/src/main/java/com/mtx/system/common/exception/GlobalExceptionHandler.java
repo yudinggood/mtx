@@ -1,10 +1,11 @@
-package com.mtx.system.common.bean;
+package com.mtx.system.common.exception;
 
 import com.mtx.common.constant.SystemConstant;
 import com.mtx.common.util.base.RequestUtil;
+import com.mtx.common.util.base.ToolUtil;
 import com.mtx.common.util.exception.ErrorManager;
 import com.mtx.common.util.wrapper.WrapMapper;
-import com.mtx.system.common.exception.ErrorCodeEnum;
+import com.mtx.system.common.bean.ErrorTaskFactory;
 import com.mtx.system.dao.model.SystemUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.UnauthorizedException;
@@ -34,6 +35,8 @@ public class GlobalExceptionHandler {
             ErrorManager.me().executeLog(ErrorTaskFactory.me().exceptionLog(systemUser.getUserId(),exception));
         }
         ModelAndView mv =this.getModelAndView();
+        mv.addObject("code",exception.getClass().getName());
+        mv.addObject("message", ToolUtil.getExceptionMsg(exception));
         mv.addObject("ex",exception);
         if (null != request.getHeader("X-Requested-With") && "XMLHttpRequest".equalsIgnoreCase(request.getHeader("X-Requested-With"))) {
             request.setAttribute("requestHeader", "ajax");//当ajax请求时，返回错误
@@ -53,6 +56,7 @@ public class GlobalExceptionHandler {
             mv.setViewName("/base/error");
             return mv;
         }
+
         mv.setViewName("/base/error");
         return mv;
     }

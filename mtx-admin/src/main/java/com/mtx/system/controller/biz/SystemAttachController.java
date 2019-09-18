@@ -125,7 +125,7 @@ public class SystemAttachController extends BaseController {
             if(!fileInUsed){
                 throw new BusinessException(ErrorCodeEnum.SYS99990100);
             }
-            deleteFileTask.deleteFileByPaths(systemAttachVo.getFilePath());
+            deleteFileTask.deleteFile(systemAttachVo.getFilePath());
         }else {
             systemAttachService.deleteYunFile(systemAttachVo.getFilePath());
         }
@@ -150,7 +150,7 @@ public class SystemAttachController extends BaseController {
         //暂时设置为只能群删本地文件
 
         int count = systemAttachService.deleteByPrimaryKeys(ids);
-        deleteFileTask.deleteFileByPaths(filePaths);
+        deleteFileTask.deleteFile(filePaths);
         return WrapMapper.wrap(count);
     }
 }

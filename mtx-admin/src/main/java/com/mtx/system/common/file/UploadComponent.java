@@ -57,7 +57,7 @@ public class UploadComponent {
                 inputStream.close();
                 out.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error(e.getMessage(),e);
             }
         }
         systemAttachDto.setEditDate(new Date());

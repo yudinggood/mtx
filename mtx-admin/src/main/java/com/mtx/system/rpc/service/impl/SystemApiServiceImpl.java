@@ -3,6 +3,8 @@ package com.mtx.system.rpc.service.impl;
 import com.mtx.common.annotation.BaseService;
 import com.mtx.common.util.base.RegularUtil;
 import com.mtx.common.util.base.ToolUtil;
+import com.mtx.common.util.db.DataSourceEnum;
+import com.mtx.common.util.db.DynamicDataSource;
 import com.mtx.system.dao.mapper.SystemUserMapper;
 import com.mtx.system.dao.model.*;
 import com.mtx.system.rpc.api.SystemApiService;
@@ -81,6 +83,7 @@ public class SystemApiServiceImpl implements SystemApiService{
 
     @Override
     public SystemUser selectSystemUserByUsername(String username) {
+        DynamicDataSource.setDataSource(DataSourceEnum.SLAVE.getName());
         SystemUserExample systemUserExample = new SystemUserExample();
         SystemUserExample.Criteria criteria = systemUserExample.createCriteria();
         if(RegularUtil.getRegularResult(RegularUtil.PHONE,username)){
@@ -94,6 +97,7 @@ public class SystemApiServiceImpl implements SystemApiService{
         if (ToolUtil.isNotEmpty(systemUsers)) {
             return systemUsers.get(0);
         }
+        DynamicDataSource.clearDataSource();
         return null;
 
     }

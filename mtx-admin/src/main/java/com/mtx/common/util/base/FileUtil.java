@@ -89,11 +89,6 @@ public class FileUtil {
      */
     public static boolean fileInUsed(File file){
         return file.renameTo(file);
-        /*if(file.renameTo(file)){
-            System.out.println("文件未被操作");
-        }else{
-            System.out.println("文件正在被操作");
-        }*/
     }
 
     /**
@@ -302,7 +297,9 @@ public class FileUtil {
         FILE_TYPE_MAP.put("flac", "664c6143800000221200");
     }
 
-
+    /**
+     * url转MultipartFile，文件类型image/jpeg
+     */
     public static MultipartFile createFileItem(String url) {
         FileItem item = null;
         OutputStream os = null;

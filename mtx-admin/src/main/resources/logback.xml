@@ -9,7 +9,7 @@
     <property resource="base.properties" />
     <property name="log.home_url" value="${log.home_url}" />
     <property name="log.level" value="debug" />
-    <property name="log.maxHistory" value="30000" />
+    <property name="log.maxHistory" value="30" />
 
     <!-- 动态日志级别 -->
     <jmxConfigurator/>

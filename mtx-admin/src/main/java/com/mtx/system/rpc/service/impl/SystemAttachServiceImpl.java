@@ -26,9 +26,10 @@ import com.mtx.system.rpc.api.SystemAttachService;
 import com.mtx.system.rpc.factory.SystemAttachFactory;
 import com.mtx.system.rpc.mapper.SystemAttachExtMapper;
 import com.qiniu.common.QiniuException;
-import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;
+import com.qiniu.storage.Configuration;
+import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
@@ -62,6 +63,7 @@ public class SystemAttachServiceImpl extends BaseServiceImpl<SystemAttachMapper,
     @Autowired
     SystemAttachService systemAttachService;
 
+
     @Override
     public List<SystemAttachVo> list(Page<SystemAttach> page, SystemAttachDto systemAttachDto) {
         List<SystemAttachVo> list = systemAttachExtMapper.list(systemAttachDto,page,page.getOrderByField(),page.isAsc());
@@ -89,8 +91,7 @@ public class SystemAttachServiceImpl extends BaseServiceImpl<SystemAttachMapper,
         Auth auth = Auth.create(GlobalProperties.me().getValueByCode(PropertiesEnum.QINIU_ACCESS_KEY_ID),
                 GlobalProperties.me().getValueByCode(PropertiesEnum.QINIU_ACCESS_KEY_SECRET));
         String bucketName = GlobalProperties.me().getValueByCode(PropertiesEnum.BUCKET_NAME);
-        Zone zone = Zone.autoZone();
-        BucketManager bucketManager = new BucketManager(auth, new com.qiniu.storage.Configuration(zone));
+        BucketManager bucketManager = new BucketManager(auth, new Configuration(Region.autoRegion()));
         String destPath = SystemConstant.QINIU_YUN_FILE_PATH+filePath;//绝对路径
         try {
             bucketManager.delete(bucketName, destPath);
@@ -120,8 +121,7 @@ public class SystemAttachServiceImpl extends BaseServiceImpl<SystemAttachMapper,
             Auth auth = Auth.create(GlobalProperties.me().getValueByCode(PropertiesEnum.QINIU_ACCESS_KEY_ID),
                     GlobalProperties.me().getValueByCode(PropertiesEnum.QINIU_ACCESS_KEY_SECRET));
             String bucketName = GlobalProperties.me().getValueByCode(PropertiesEnum.BUCKET_NAME);
-            Zone zone = Zone.autoZone();
-            UploadManager uploadManager = new UploadManager(new com.qiniu.storage.Configuration(zone));
+            UploadManager uploadManager = new UploadManager(new Configuration(Region.autoRegion()));
             Response response = uploadManager.put(file.getBytes(), destPath, auth.uploadToken(bucketName));
             DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
             if (ToolUtil.isEmpty(putRet) || org.apache.commons.lang3.StringUtils.isEmpty(putRet.key)) {

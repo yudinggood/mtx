@@ -1,10 +1,5 @@
-package com.mtx.system.common.bean;
+package com.mtx.system.common.shiro;
 
-import com.mtx.common.constant.SystemConstant;
-import com.mtx.common.util.base.PropertiesFileUtil;
-import com.mtx.common.util.secret.MD5Util;
-import com.mtx.system.common.exception.BusinessException;
-import com.mtx.system.common.exception.ErrorCodeEnum;
 import com.mtx.system.common.shiro.session.UpmsSessionDao;
 import com.mtx.system.dao.model.SystemPermission;
 import com.mtx.system.dao.model.SystemRole;
@@ -16,17 +11,10 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.subject.Subject;
-import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.apache.shiro.util.ByteSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,7 +22,7 @@ import java.util.Set;
 /**
  * 用户认证和授权
  */
-@Component
+
 @Slf4j
 public class UpmsRealm extends AuthorizingRealm {
 

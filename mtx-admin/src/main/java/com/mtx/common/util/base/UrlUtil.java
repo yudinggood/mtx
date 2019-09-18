@@ -10,7 +10,7 @@ import java.io.UnsupportedEncodingException;
  */
 @Slf4j
 public class UrlUtil {
-    private final static String ENCODE = "GBK";
+    private final static String ENCODE = "utf-8";
 
     /**
      * URL 解码

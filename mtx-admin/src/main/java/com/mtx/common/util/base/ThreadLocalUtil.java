@@ -77,5 +77,6 @@ public class ThreadLocalUtil {
      */
     public static void remove() {
         getContextMap().clear();
+        THREAD_CONTEXT.remove();
     }
 }

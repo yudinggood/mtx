@@ -14,25 +14,21 @@
 	<!-- 装载service -->
 	<context:component-scan base-package="**.service" />
 
-	<!-- 装载自定义bean -->
+	<!-- 只包含 装载自定义bean -->
 	<context:component-scan base-package="**.*" use-default-filters="false">
 		<context:include-filter type="assignable" expression="com.mtx.common.base.BaseInterface"></context:include-filter>
 	</context:component-scan>
 
-	<!-- 启动时初始化Spring上下文环境工具类 -->
-	<!--<bean id="springContextUtil" class="com.mtx.common.spring.SpringContextUtil"></bean>-->
+	<context:component-scan base-package="**.common.bean" />
 
 	<!-- 启动任务注解 -->
 	<task:annotation-driven />
-	<context:component-scan base-package="**.task" />
-	<!-- 自己配置的注解 -->
-	<context:component-scan base-package="**.common.bean" />
-	<context:component-scan base-package="**.common.socket" />
+
 	<!-- @Value注解的配置 -->
 	<!--<context:property-placeholder location="classpath*:**.properties"/>-->
 
 	<!-- 配置进行解密 xml引用 properties ,可能与<context:property-placeholder冲突，两者取其1-->
-	<bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+	<!--<bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="location" value="classpath:config.properties" />
-	</bean>
+	</bean>-->
 </beans>

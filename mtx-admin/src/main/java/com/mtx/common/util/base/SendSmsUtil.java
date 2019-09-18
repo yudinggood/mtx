@@ -28,7 +28,7 @@ public class SendSmsUtil {
      */
     public static String getCaptcha() {
         String str = "0,1,2,3,4,5,6,7,8,9";
-        String str2[] = str.split(",");// 将字符串以,分割
+        String[] str2 = str.split(",");// 将字符串以,分割
         Random rand = new Random();// 创建Random类的对象rand
         int index = 0;
         String randStr = "";// 创建内容为空字符串对象randStr

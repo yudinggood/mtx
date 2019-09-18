@@ -4,7 +4,8 @@ import com.mtx.system.common.bean.GlobalProperties;
 import com.mtx.system.common.enums.PropertiesEnum;
 
 public class SystemConstant {
-    public interface Number {//内部接口总是静态的
+    //内部接口总是静态的
+    public interface Number {
         int THOUSAND_INT = 1000;
         int HUNDRED_INT = 100;
         int ONE_INT = 1;
@@ -18,22 +19,17 @@ public class SystemConstant {
         int NINE_INT = 9;
         int TEN_INT = 10;
     }
+
     //普通
     public static final String LOG_LINE ="==========================================================================";
     public static final String EMPTY_STRING = " ";
-
-    /** 系统模式--开发模式 */
-    public static final String SYS_MODE_DEV = "development";
-    /** 系统模式--发布模式 */
-    public static final String SYS_MODE_PUB = "production";
-
+    public static final String SYS_MODE_DEV = "development";//开发模式
+    public static final String SYS_MODE_PUB = "production";//产品模式
     public static final String ASC="asc";
     public static final String DESC="desc";
-
     public static final String SERVER = "server";
     public static final String CLIENT = "client";
 
-    public static final long FILE_MAX_SIZE = 5 * 1024 * 1024;//5M大小
     //登录相关
     public static final String SESSION_SECURITY_CODE = "sessionSecCode";//登录验证码
     public static final String REGISTER_SESSION_SECURITY_CODE = "registersessionSecCode";//注册验证码
@@ -41,12 +37,9 @@ public class SystemConstant {
     public static final String SESSION_SYSTEM_USER = "systemUser";//session中的systemUser属性
     public static final String COMMON_ROLE = "common";//表示普通用户
     public static final String COMMON_ROLE_ZH = "普通用户";//表示普通用户 中文
-    // 局部会话key
-    public final static String UPMS_CLIENT_SESSION_ID = "upms-client-session-id";
-    // 单点同一个code所有局部会话key
-    public final static String UPMS_CLIENT_SESSION_IDS = "upms-client-session-ids";
-    //当前登录类型
-    public static final String UPMS_TYPE = "upms.type";
+    public final static String UPMS_CLIENT_SESSION_ID = "upms-client-session-id";// 局部会话key
+    public final static String UPMS_CLIENT_SESSION_IDS = "upms-client-session-ids";// 单点同一个code所有局部会话key
+    public static final String UPMS_TYPE = "upms.type";//当前登录类型
 
     //关于QQ三方登录的若干
     public static final String QQAPPID = GlobalProperties.me().getValueByCode(PropertiesEnum.QQAPPID);   //id
@@ -65,6 +58,7 @@ public class SystemConstant {
     //七牛云
     public static final String QINIU_YUN_FILE_PATH = "mtx/upload/";
     public static final String SYSTEM_QIUNIU_FILESIZE = "system_qiuniu_filesize";
+    public static final long FILE_MAX_SIZE = 5 * 1024 * 1024;//5M大小
 
     //邮箱
     public static final String FROM_ADDRESS=GlobalProperties.me().getValueByCode(PropertiesEnum.FROM_ADDRESS);     //系统邮箱

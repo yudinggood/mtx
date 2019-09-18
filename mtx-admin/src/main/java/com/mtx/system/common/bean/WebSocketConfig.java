@@ -1,5 +1,7 @@
-package com.mtx.system.common.socket;
+package com.mtx.system.common.bean;
 
+import com.mtx.system.common.socket.MyMessageHandler;
+import com.mtx.system.common.socket.WebSocketInterceptor;
 import org.eclipse.jetty.websocket.api.WebSocketBehavior;
 import org.eclipse.jetty.websocket.api.WebSocketPolicy;
 import org.eclipse.jetty.websocket.server.WebSocketServerFactory;

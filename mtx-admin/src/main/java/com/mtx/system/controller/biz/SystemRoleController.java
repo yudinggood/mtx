@@ -6,6 +6,7 @@ import com.baidu.unbiz.fluentvalidator.FluentValidator;
 import com.baidu.unbiz.fluentvalidator.ResultCollectors;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.mtx.common.base.BaseController;
+import com.mtx.common.util.base.JsonUtil;
 import com.mtx.common.util.page.PageFactory;
 import com.mtx.common.util.page.PageInfoBT;
 import com.mtx.common.util.validator.LengthValidator;
@@ -23,7 +24,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -134,7 +134,7 @@ public class SystemRoleController extends BaseController {
     @RequestMapping(value = "/savePermission/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public Object savePermission(@PathVariable("id") int id) {
-        JSONArray datas = JSONArray.parseArray(getPara("datas"));
+        JSONArray datas = JsonUtil.toJsonArray(getPara("datas"));
         int count = systemRoleService.savePermission(datas, id);
         return WrapMapper.wrap(count);
     }

@@ -1,19 +1,27 @@
 package com.mtx.common.util.base;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.baidu.unbiz.fluentvalidator.util.Preconditions;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Map;
 
 /**
  * Json转换
  */
+@Slf4j
 public class JsonUtil {//统一使用新版fasterxml，不用codehaus
     private static ObjectMapper defaultMapper;
     private static ObjectMapper formatedMapper;
@@ -38,6 +46,21 @@ public class JsonUtil {//统一使用新版fasterxml，不用codehaus
     public static String toJson(Object obj) throws IOException {
         Preconditions.checkArgument(obj != null, "对象不能为空!");
         return defaultMapper.writeValueAsString(obj);
+    }
+
+    /**
+     * 将string转化为JSONObject
+     */
+    public static JSONObject toJson(String jsonValue) throws IOException {
+        Preconditions.checkArgument(StringUtils.isNotEmpty(jsonValue), "字符串不能为空!");
+        return JSONObject.parseObject(jsonValue);
+    }
+    /**
+     * 将string转化为JSONArray
+     */
+    public static JSONArray toJsonArray(String jsonValue)  {
+        Preconditions.checkArgument(StringUtils.isNotEmpty(jsonValue), "字符串不能为空!");
+        return JSONArray.parseArray(jsonValue);
     }
 
     /**
@@ -94,5 +117,17 @@ public class JsonUtil {//统一使用新版fasterxml，不用codehaus
     public static <T> T parseJsonWithFormat(String jsonValue, TypeReference<T> valueTypeRef) throws IOException {
         Preconditions.checkArgument(StringUtils.isNotEmpty(jsonValue), "字符串不能为空!");
         return (T) formatedMapper.readValue(jsonValue, valueTypeRef);
+    }
+    //json型string转map
+    public static Map<String, Object> json2map(String strJson) {
+        Map<String, Object> res = null;
+        try {
+            Gson gson = new Gson();
+            res = gson.fromJson(strJson, new TypeToken<Map<String, Object>>() {
+            }.getType());
+        } catch (JsonSyntaxException e) {
+            log.error(e.getMessage(),e);
+        }
+        return res;
     }
 }

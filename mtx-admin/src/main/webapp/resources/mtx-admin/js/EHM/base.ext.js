@@ -11,6 +11,7 @@ EHM.ImportJquery172 = function () {//jQuery 1.7.2
 EHM.ImportError = function () {//error相关
     EHM.Import("/resources/mtx-admin/js/plugins/error/ChangeSkin.js");
     EHM.Import("/resources/mtx-admin/js/plugins/error/cookie.js");
+    EHM.Import("/resources/mtx-admin/js/myjs/highlight.js");
     EHM.ImportCss("/resources/mtx-admin/js/plugins/error/css/style.css");
 }
 

@@ -4,6 +4,7 @@ import com.baidu.unbiz.fluentvalidator.ComplexResult;
 import com.baidu.unbiz.fluentvalidator.FluentValidator;
 import com.baidu.unbiz.fluentvalidator.ResultCollectors;
 import com.mtx.common.base.BaseController;
+import com.mtx.common.spring.SpringContextUtil;
 import com.mtx.common.util.base.RequestUtil;
 import com.mtx.common.util.validator.LengthValidator;
 import com.mtx.common.util.wrapper.WrapMapper;
@@ -138,7 +139,6 @@ public class TestController extends BaseController{
     @RequestMapping(value = "/test4", method    = RequestMethod.GET)
     @ResponseBody
     public Object test4(){
-        log.info(GlobalProperties.me().getValueByCodeProperties(PropertiesEnum.COMMON_INIT_PASSWORD));
         log.info(GlobalProperties.me().getValueByCode(PropertiesEnum.INDEX_PAGE));
 
 
@@ -150,7 +150,7 @@ public class TestController extends BaseController{
     @RequestMapping(value = "/test5", method    = RequestMethod.GET)
     @ResponseBody
     public Object test5(){
-
+        SpringContextUtil.printAllBeans();
 
         return RequestUtil.getIpAddr(getHttpServletRequest());
 

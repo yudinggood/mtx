@@ -48,7 +48,7 @@ public class KaptchaUtil {
             try {
                 output.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error(e.getMessage(),e);
             }
         }
         return code;

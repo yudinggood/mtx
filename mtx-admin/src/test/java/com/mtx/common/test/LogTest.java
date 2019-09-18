@@ -1,4 +1,4 @@
-package com.mtx.system.server.test;
+package com.mtx.common.test;
 
 import com.aliyuncs.dysmsapi.model.v20170525.QuerySendDetailsResponse;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;

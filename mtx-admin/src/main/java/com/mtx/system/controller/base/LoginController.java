@@ -53,6 +53,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.*;
 
@@ -265,19 +266,19 @@ public class LoginController extends BaseController {
 
     @ApiOperation(value = "QQ授权")
     @RequestMapping(value = "/qqAuthorization", method = RequestMethod.GET)
-    public ModelAndView qqAuthorization(){
+    public ModelAndView qqAuthorization() throws UnsupportedEncodingException {
         ModelAndView mv =this.getModelAndView();
         PageInfo pageInfo=new PageInfo();
         String result = RequestUtil.getHtml("https://graph.qq.com/oauth2.0/token?grant_type=authorization_code&client_id=" + pageInfo.getQqAppId()+
-                "&client_secret="+pageInfo.getQqClientSecret()+"&redirect_uri="+URLEncoder.encode(pageInfo.getQqAuthPath())+"&code="+getPara("code"));
+                "&client_secret="+pageInfo.getQqClientSecret()+"&redirect_uri="+URLEncoder.encode(pageInfo.getQqAuthPath(), "utf-8")+"&code="+getPara("code"));
         if(result.contains("callback")){
             throw new BusinessException(ErrorCodeEnum.INVALID_QQ_AUTHO);
         }
-        String access_token= StringUtil.getParam(result,"access_token");
-        String result2=RequestUtil.getHtml("https://graph.qq.com/oauth2.0/me?access_token="+access_token);
+        String accessToken= StringUtil.getParam(result,"access_token");
+        String result2=RequestUtil.getHtml("https://graph.qq.com/oauth2.0/me?access_token="+accessToken);
         String openid=RegularUtil.getRegularByString("(.*)openid\":\"(.*)\"}(.*)",result2).get(2);
-        String result3=RequestUtil.getHtml("https://graph.qq.com/user/get_user_info?access_token="+access_token+"&oauth_consumer_key="+pageInfo.getQqAppId()+"&openid="+openid);
-        Map<String, Object> resp = TypeConversionUtil.json2map(result3);
+        String result3=RequestUtil.getHtml("https://graph.qq.com/user/get_user_info?access_token="+accessToken+"&oauth_consumer_key="+pageInfo.getQqAppId()+"&openid="+openid);
+        Map<String, Object> resp = JsonUtil.json2map(result3);
         String nickname = StringUtil.filterOffUtf8Mb4((String)resp.get("nickname")).trim();
         String avatar = (String)resp.get("figureurl_2");
         String gender = (String)resp.get("gender");
@@ -390,7 +391,7 @@ public class LoginController extends BaseController {
 
         //发送短信
         SendSmsResponse sendSmsResponse =SendSmsUtil.sendSms(systemUserDto.getLoginId(),SendSmsUtil.getCaptcha());
-        if(sendSmsResponse.getCode().equals("OK")){
+        if("OK".equals(sendSmsResponse.getCode())){
             return WrapMapper.ok();
         }else {
             return WrapMapper.wrap(ErrorCodeEnum.SMS_ERROR.code(),sendSmsResponse.getMessage()+ErrorCodeEnum.SMS_ERROR.message());
@@ -420,8 +421,8 @@ public class LoginController extends BaseController {
         //判断动态码正确性
         QuerySendDetailsResponse querySendDetailsResponse = SendSmsUtil.querySendDetails(systemUserDto.getLoginId());
         List<QuerySendDetailsResponse.SmsSendDetailDTO> dto = (List<QuerySendDetailsResponse.SmsSendDetailDTO>) querySendDetailsResponse.getSmsSendDetailDTOs();
-        if(querySendDetailsResponse.getCode().equals("OK")&&ToolUtil.isNotEmpty(dto)){
-            Date receiveDate = DateUtil.StrToDate(dto.get(0).getReceiveDate());
+        if("OK".equals(querySendDetailsResponse.getCode())&&ToolUtil.isNotEmpty(dto)){
+            Date receiveDate = DateUtil.strToDate(dto.get(0).getReceiveDate());
             boolean isExpired = DateUtil.inMinute(receiveDate,5);
             boolean isSamePhone = querySendDetailsResponse.getSmsSendDetailDTOs().get(0).getPhoneNum().equalsIgnoreCase(systemUserDto.getLoginId());
             boolean isSameCode = querySendDetailsResponse.getSmsSendDetailDTOs().get(0).getOutId().equalsIgnoreCase(systemUserDto.getVerifyNo());
@@ -458,10 +459,10 @@ public class LoginController extends BaseController {
     @ApiOperation(value = "国际化切换")
     @RequestMapping(value = "/changeLang", method = RequestMethod.GET)
     public ModelAndView changeLang(HttpServletRequest request, HttpServletResponse response, @RequestParam(value="langType", defaultValue="zh") String langType) {
-        if(langType.equals("zh")){
+        if("zh".equals(langType)){
             Locale locale = new Locale("zh", "CN");
             (new CookieLocaleResolver()).setLocale (request, response, locale);
-        }else if(langType.equals("en")){
+        }else if("en".equals(langType)){
             Locale locale = new Locale("en", "US");
             (new CookieLocaleResolver()).setLocale (request, response, locale);
         }else{

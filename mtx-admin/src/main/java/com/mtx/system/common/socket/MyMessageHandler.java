@@ -18,9 +18,9 @@ public class MyMessageHandler implements WebSocketHandler {
     /**
      * userMap:存储用户连接webscoket信息
      */
-    private final static Map<String, WebSocketSession> userMap;
+    private final static Map<String, WebSocketSession> USER_MAP;
     static {
-        userMap = new ConcurrentHashMap<String,WebSocketSession>(30);
+        USER_MAP = new ConcurrentHashMap<String,WebSocketSession>(30);
     }
     /**
      * 关闭websocket时调用该方法
@@ -29,7 +29,7 @@ public class MyMessageHandler implements WebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         String userId = this.getUserId(session);
         if(StringUtils.isNotBlank(userId)){
-            userMap.remove(userId);
+            USER_MAP.remove(userId);
         }
 
     }
@@ -44,7 +44,7 @@ public class MyMessageHandler implements WebSocketHandler {
 
         String userId = this.getUserId(session);
         if(StringUtils.isNotBlank(userId)){
-            userMap.put(userId, session);
+            USER_MAP.put(userId, session);
             //session.sendMessage(new TextMessage("建立WebSocket连接成功！"));
         }
 
@@ -85,7 +85,7 @@ public class MyMessageHandler implements WebSocketHandler {
      * sendMessageToUser:发给指定用户
      */
     public void sendMessageToUser(String userId,String contents) {
-        WebSocketSession session = userMap.get(userId);
+        WebSocketSession session = USER_MAP.get(userId);
         if(session !=null && session.isOpen()) {
             try {
                 TextMessage message = new TextMessage(contents);
@@ -100,7 +100,7 @@ public class MyMessageHandler implements WebSocketHandler {
      * sendMessageToAllUsers:发给所有的用户
      */
     public void sendMessageToAllUsers(String contents) {
-        Set<String> userIds = userMap.keySet();
+        Set<String> userIds = USER_MAP.keySet();
         for(String userId: userIds) {
             this.sendMessageToUser(userId, contents);
         }

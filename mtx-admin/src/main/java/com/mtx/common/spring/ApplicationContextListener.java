@@ -4,7 +4,8 @@ import com.mtx.common.annotation.BaseService;
 import com.mtx.common.base.BaseInterface;
 import com.mtx.common.constant.SystemConstant;
 import com.mtx.common.util.base.FileUtil;
-import com.mtx.common.util.base.PropertiesFileUtil;
+import com.mtx.system.common.bean.GlobalProperties;
+import com.mtx.system.common.enums.PropertiesEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -17,7 +18,6 @@ import java.util.Map;
 public class ApplicationContextListener implements ApplicationListener<ContextRefreshedEvent> {
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        // root application context
         if(null == contextRefreshedEvent.getApplicationContext().getParent()) {
             log.debug(">>>>> spring初始化完毕 <<<<<");
             // spring初始化完毕后，通过反射调用所有使用BaseService注解的initMapper方法
@@ -46,7 +46,7 @@ public class ApplicationContextListener implements ApplicationListener<ContextRe
 
             //启动成功提示
             log.info("\n"+ SystemConstant.LOG_LINE+ FileUtil.txtToString()+
-                    PropertiesFileUtil.getInstance("base").get("system.version")+
+                    GlobalProperties.me().getValueByCode(PropertiesEnum.SYSTEM_VERSION) +
                     "\n"+SystemConstant.LOG_LINE);
 
         }

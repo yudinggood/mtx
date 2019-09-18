@@ -14,25 +14,28 @@ public class DeleteFileTask {
     @Autowired
     ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
-    public void deleteFileByPaths(final String... filePaths){
-            // 使用线程池多线程处理
-            threadPoolTaskExecutor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        for (String filePath : filePaths) {
-                            if (StringUtils.isBlank(filePath)) {
-                                continue;
-                            }
-                            uploadComponent.delete(filePath);
-                        }
-                    } catch (Exception e) {
-                        log.error(e.getMessage(),e);
-                    }
-                }
-            });
-
+    public void deleteFile(final String... filePaths) {
+        this.threadPoolTaskExecutor.execute(new DeleteFileThread(filePaths));
     }
+
+    private class DeleteFileThread implements Runnable {
+        String[] filePaths ;
+        private DeleteFileThread(String[] filePaths) {
+            super();
+            this.filePaths =filePaths;
+        }
+        @Override
+        public void run() {
+            for (String filePath : filePaths) {
+                if (StringUtils.isBlank(filePath)) {
+                    continue;
+                }
+                uploadComponent.delete(filePath);
+            }
+        }
+    }
+
+
 
 
 }
