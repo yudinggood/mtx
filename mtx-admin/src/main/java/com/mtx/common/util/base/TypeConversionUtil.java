@@ -3,6 +3,8 @@ package com.mtx.common.util.base;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -69,10 +71,19 @@ public class TypeConversionUtil {
             return 0L;
         }
         try {
-            return Long.parseLong(object.toString());
+            if (object instanceof BigDecimal) {
+                return ((BigDecimal) object).longValue();
+            }
+            if (object instanceof BigInteger) {
+                return ((BigInteger) object).longValue();
+            }
+            if (object instanceof Long) {
+                return Long.parseLong(String.valueOf(object));
+            }
         } catch (Exception e) {
             return defaultValue;
         }
+        return defaultValue;
     }
 
     /**

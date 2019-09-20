@@ -12,6 +12,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Map;
 
 /**
@@ -41,29 +43,45 @@ public class RequestUtil {
     }
 
     /**
-     * 获取ip工具类，除了getRemoteAddr，其他ip均可伪造
-     * @param request
+     * 获取客户端IP地址
+     * @param request 请求
      * @return
      */
     public static String getIpAddr(HttpServletRequest request) {
-        String ip = request.getHeader("Cdn-Src-Ip");    // 网宿cdn的真实ip
-        if (ip == null || ip.length() == 0 || " unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("HTTP_CLIENT_IP");   // 蓝讯cdn的真实ip
-        }
-        if (ip == null || ip.length() == 0 || " unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("X-Forwarded-For");  // 获取代理ip
-        }
-        if (ip == null || ip.length() == 0 || " unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("Proxy-Client-IP"); // 获取代理ip
+
+        String ip = request.getHeader("x-forwarded-for");
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
         }
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("WL-Proxy-Client-IP"); // 获取代理ip
+            ip = request.getHeader("WL-Proxy-Client-IP");
         }
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddr(); // 获取真实ip
+            ip = request.getRemoteAddr();
+            if (ip.equals("127.0.0.1")) {
+                //根据网卡取本机配置的IP
+                InetAddress inet = null;
+                try {
+                    inet = InetAddress.getLocalHost();
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+                ip = inet.getHostAddress();
+            }
+        }
+        // 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
+        if (ip != null && ip.length() > 15) {
+            if (ip.indexOf(",") > 0) {
+                ip = ip.substring(0, ip.indexOf(","));
+            }
+        }
+        if("0:0:0:0:0:0:0:1".equals(ip)){
+            ip = "127.0.0.1";
         }
         return ip;
     }
+
+
 
     /**
      * 获取 HttpServletResponse
