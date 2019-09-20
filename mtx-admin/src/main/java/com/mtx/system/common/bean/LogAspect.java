@@ -1,10 +1,7 @@
 package com.mtx.system.common.bean;
 
 import com.mtx.common.constant.SystemConstant;
-import com.mtx.common.util.base.DateUtil;
-import com.mtx.common.util.base.JsonUtil;
-import com.mtx.common.util.base.RequestUtil;
-import com.mtx.common.util.base.TypeConversionUtil;
+import com.mtx.common.util.base.*;
 import com.mtx.system.common.enums.PropertiesEnum;
 import com.mtx.system.dao.model.SystemLog;
 import com.mtx.system.dao.model.SystemUser;
@@ -101,7 +98,7 @@ public class LogAspect {
         systemLog.setEditDate(DateUtil.longToDate(startTime));
         systemLog.setUri(request.getRequestURI());
         systemLog.setUserAgent(request.getHeader("User-Agent"));
-        SystemUser systemUser=(SystemUser)RequestUtil.getRequest().getSession().getAttribute(SystemConstant.SESSION_SYSTEM_USER);
+        SystemUser systemUser=(SystemUser) ThreadLocalUtil.get(SystemConstant.SESSION_SYSTEM_USER);
         systemLog.setEditUser(systemUser.getUserId());
         systemLogService.insertSelective(systemLog);
         return result;

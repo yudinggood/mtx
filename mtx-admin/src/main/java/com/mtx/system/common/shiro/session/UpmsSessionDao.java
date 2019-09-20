@@ -2,23 +2,19 @@ package com.mtx.system.common.shiro.session;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.mtx.common.constant.SystemConstant;
-import com.mtx.common.util.base.RedisUtil;
-import com.mtx.common.util.base.SerializableUtil;
-import com.mtx.common.util.base.ToolUtil;
-import com.mtx.common.util.base.TypeConversionUtil;
+import com.mtx.common.util.base.*;
 import com.mtx.system.dao.model.SystemUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.ObjectUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.session.Session;
-import org.apache.shiro.session.mgt.DefaultSessionManager;
 import org.apache.shiro.session.mgt.ValidatingSession;
 import org.apache.shiro.session.mgt.eis.CachingSessionDAO;
 import redis.clients.jedis.Jedis;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 基于redis的sessionDao，缓存共享session
@@ -174,7 +170,7 @@ public class UpmsSessionDao extends CachingSessionDAO {
             String session = RedisUtil.get(UPMS_SHIRO_SESSION_ID + "_" + sessionId);
             if(ToolUtil.isNotEmpty(session)){
                 UpmsSession upmsSession = (UpmsSession) SerializableUtil.deserialize(session);
-                SystemUser tempUser = (SystemUser) upmsSession.getAttribute(SystemConstant.SESSION_SYSTEM_USER);
+                SystemUser tempUser = (SystemUser)  ThreadLocalUtil.get(SystemConstant.SESSION_SYSTEM_USER);
                 if(tempUser != null&&userId.equals(tempUser.getUserId())) {
                     upmsSession.setStatus(UpmsSession.OnlineStatus.force_logout);
                     upmsSession.setAttribute(SystemConstant.FORCE_LOGOUT, SystemConstant.FORCE_LOGOUT);

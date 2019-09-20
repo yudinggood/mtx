@@ -7,6 +7,7 @@ import com.mtx.common.base.BaseController;
 import com.mtx.common.constant.SystemConstant;
 import com.mtx.common.interceptor.NotDisplaySql;
 import com.mtx.common.util.base.StringUtil;
+import com.mtx.common.util.base.ThreadLocalUtil;
 import com.mtx.common.util.base.ToolUtil;
 import com.mtx.common.util.secret.MD5Util;
 import com.mtx.common.util.tag.Menu;
@@ -64,14 +65,6 @@ public class IndexController extends BaseController {
     @NotDisplaySql
     public ModelAndView index(){
         SystemUser systemUser =  super.getSystemUser();
-        if(null==systemUser){
-            //保存用户信息到session
-            Subject subject = SecurityUtils.getSubject();
-            systemUser = systemApiService.selectSystemUserByUsername((String) subject.getPrincipal());
-            super.getSession().setAttribute(SystemConstant.SESSION_SYSTEM_USER, systemUser);
-        }
-
-
         ModelAndView mv =this.getModelAndView();
         //mv.addObject("menuMap",systemPermissionService.selectForMenu());
         mv.addObject("topMenuList",systemPermissionService.selectForTopMenu());
@@ -87,9 +80,7 @@ public class IndexController extends BaseController {
     @RequestMapping(value = "/menu/{nowMenuId}", method = RequestMethod.GET)
     @ResponseBody
     public Object menu(@PathVariable("nowMenuId") int nowMenuId){
-        SystemUser systemUser = (SystemUser) super.getSession().getAttribute(SystemConstant.SESSION_SYSTEM_USER);
-        List<SystemRole> roleList = systemApiService.selectSystemRoleBySystemUserId(systemUser.getUserId());
-
+        List<SystemRole> roleList = systemApiService.selectSystemRoleBySystemUserId(super.getSystemUser().getUserId());
         List<Menu> menuList = systemPermissionService.selectForMenuUseJs(nowMenuId,roleList);
         return menuList;
     }
@@ -144,18 +135,19 @@ public class IndexController extends BaseController {
         if (!result.isSuccess()) {
             return WrapMapper.wrap(Wrapper.ILLEGAL_ARGUMENT_CODE_,errorListToString(result.getErrors()));
         }
+
         SystemUserVo systemUserVo = systemUserService.selectByIdWithLeft(id);
         systemUserDto.setExtProps(systemUserVo.getExtProps());
-
         int count = systemUserService.updateDtoOnly(systemUserDto);
         if(count>0){
             Subject subject = SecurityUtils.getSubject();
             SystemUser systemUser = systemApiService.selectSystemUserByUsername((String) subject.getPrincipal());
             //刷新用户信息
-            super.getSession().setAttribute(SystemConstant.SESSION_SYSTEM_USER, systemUser);
+            ThreadLocalUtil.put(SystemConstant.SESSION_SYSTEM_USER, systemUser);
             //发送websocket信息
             handler.sendMessageToUser(String.valueOf(id), systemUser.getNickName());
         }
+
         return WrapMapper.wrap(count);
     }
 
@@ -173,16 +165,17 @@ public class IndexController extends BaseController {
         if (!result.isSuccess()) {
             return WrapMapper.wrap(Wrapper.ILLEGAL_ARGUMENT_CODE_,errorListToString(result.getErrors()));
         }
+
         //判断旧密码是否正确
         SystemUserVo systemUserVo = systemUserService.selectByIdWithLeft(id);
         String old = StringUtil.toSecretUncommonString(systemUserDto.getOldPwd(),systemUserVo.getSalt());
         if(!old.equals(systemUserVo.getPassword())){
             return new BusinessException(ErrorCodeEnum.INVALID_PASSWORD_EDIT);
         }
-
         systemUserDto.setSalt(ToolUtil.getUuid())
                 .setPassword(StringUtil.toSecretUncommonString(systemUserDto.getNewPwd(),systemUserDto.getSalt()));
         int count = systemUserService.updateDtoOnly(systemUserDto);
+
         return WrapMapper.wrap(count);
     }
 

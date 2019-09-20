@@ -3,8 +3,6 @@ package com.mtx.system.common.shiro;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.SessionListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 会话监听
@@ -16,6 +14,10 @@ public class UpmsSessionListener implements SessionListener {
     @Override
     public void onStart(Session session) {
         log.debug("会话创建：" + session.getId());
+
+
+
+
     }
 
     @Override

@@ -150,6 +150,7 @@ public class TestController extends BaseController{
     @RequestMapping(value = "/test5", method    = RequestMethod.GET)
     @ResponseBody
     public Object test5(){
+        int a=3/0;
         SpringContextUtil.printAllBeans();
 
         return RequestUtil.getIpAddr(getHttpServletRequest());

@@ -93,7 +93,7 @@ public class LoginController extends BaseController {
             throw new RuntimeException("无效访问！");
         }
         // 判断请求认证系统是否注册
-        SystemSystemExample systemSystemExample = new SystemSystemExample();
+        SystemSystemExample     systemSystemExample = new SystemSystemExample();
         systemSystemExample.createCriteria()
                 .andNameEqualTo(appid);
         int count = systemSystemService.countByExample(systemSystemExample);

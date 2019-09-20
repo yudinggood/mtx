@@ -1,11 +1,11 @@
-package com.mtx.system.common.exception;
+package com.mtx.system.common.bean;
 
 import com.mtx.common.constant.SystemConstant;
-import com.mtx.common.util.base.RequestUtil;
+import com.mtx.common.util.base.ThreadLocalUtil;
 import com.mtx.common.util.base.ToolUtil;
 import com.mtx.common.util.exception.ErrorManager;
 import com.mtx.common.util.wrapper.WrapMapper;
-import com.mtx.system.common.bean.ErrorTaskFactory;
+import com.mtx.system.common.exception.ErrorCodeEnum;
 import com.mtx.system.dao.model.SystemUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.UnauthorizedException;
@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
     public Object exceptionHandler(HttpServletRequest request, HttpServletResponse response, Exception exception) {
         log.error("统一异常处理：", exception);
         //先存入DB
-        SystemUser systemUser=(SystemUser) RequestUtil.getRequest().getSession().getAttribute(SystemConstant.SESSION_SYSTEM_USER);
+        SystemUser systemUser=(SystemUser)  ThreadLocalUtil.get(SystemConstant.SESSION_SYSTEM_USER);
         if(systemUser!=null){
             ErrorManager.me().executeLog(ErrorTaskFactory.me().exceptionLog(systemUser.getUserId(),exception));
         }

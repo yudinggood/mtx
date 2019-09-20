@@ -3,21 +3,14 @@ package com.mtx.common.base;
 import com.baidu.unbiz.fluentvalidator.ValidationError;
 import com.mtx.common.constant.SystemConstant;
 import com.mtx.common.util.base.RequestUtil;
-import com.mtx.system.common.exception.BusinessException;
-import com.mtx.system.common.exception.ErrorCodeEnum;
+import com.mtx.common.util.base.ThreadLocalUtil;
 import com.mtx.system.dao.model.SystemUser;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.AuthorizationException;
-import org.apache.shiro.authz.UnauthorizedException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * controller基础类
@@ -52,7 +45,8 @@ public class BaseController {
      * 获取当前用户信息
      */
     protected SystemUser getSystemUser(){
-        SystemUser systemUser=(SystemUser) getSession().getAttribute(SystemConstant.SESSION_SYSTEM_USER);
+        //SystemUser systemUser=(SystemUser) getSession().getAttribute(SystemConstant.SESSION_SYSTEM_USER);
+        SystemUser systemUser=(SystemUser) ThreadLocalUtil.get(SystemConstant.SESSION_SYSTEM_USER);
         return systemUser;
     }
     /**
