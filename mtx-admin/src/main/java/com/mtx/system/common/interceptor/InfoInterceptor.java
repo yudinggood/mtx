@@ -21,12 +21,13 @@ public class InfoInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        SystemUser systemUser=(SystemUser)  ThreadLocalUtil.get(SystemConstant.SESSION_SYSTEM_USER);
+        SystemUser systemUser=(SystemUser)  SecurityUtils.getSubject().getSession().getAttribute(SystemConstant.SESSION_SYSTEM_USER);
         if(null==systemUser){
             //保存用户信息到ThreadLocal
             systemUser = systemApiService.selectSystemUserByUsername((String) SecurityUtils.getSubject().getPrincipal());
-            ThreadLocalUtil.put(SystemConstant.SESSION_SYSTEM_USER, systemUser);
+            SecurityUtils.getSubject().getSession().setAttribute(SystemConstant.SESSION_SYSTEM_USER,systemUser);
         }
+        ThreadLocalUtil.put(SystemConstant.SESSION_SYSTEM_USER, systemUser);
         return true;
     }
 

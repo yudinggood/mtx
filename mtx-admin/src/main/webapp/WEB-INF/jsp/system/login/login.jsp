@@ -172,9 +172,9 @@
                 type: 'post',
                 url: '${basePath}/register',
                 data:  {
-                    loginId: $('#username').val(),
-                    phone: $('#username').val(),
-                    password: $('#password').val(),
+                    loginId: $('#username2').val(),
+                    phone: $('#username2').val(),
+                    password: $('#password2').val(),
                     backurl: BACK_URL,
                     verifyNo:$('#verifyNo').val(),
                 },

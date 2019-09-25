@@ -4,8 +4,6 @@ import com.baidu.unbiz.fluentvalidator.ComplexResult;
 import com.baidu.unbiz.fluentvalidator.FluentValidator;
 import com.baidu.unbiz.fluentvalidator.ResultCollectors;
 import com.mtx.common.base.BaseController;
-import com.mtx.common.spring.SpringContextUtil;
-import com.mtx.common.util.base.RequestUtil;
 import com.mtx.common.util.validator.LengthValidator;
 import com.mtx.common.util.wrapper.WrapMapper;
 import com.mtx.common.util.wrapper.Wrapper;
@@ -150,10 +148,10 @@ public class TestController extends BaseController{
     @RequestMapping(value = "/test5", method    = RequestMethod.GET)
     @ResponseBody
     public Object test5(){
-        int a=3/0;
-        SpringContextUtil.printAllBeans();
+        String a = getHttpServletRequest().getParameter("name");
+        String b = (String) getHttpServletRequest().getAttribute("name");
 
-        return RequestUtil.getIpAddr(getHttpServletRequest());
+        return a+b;
 
     }
 }

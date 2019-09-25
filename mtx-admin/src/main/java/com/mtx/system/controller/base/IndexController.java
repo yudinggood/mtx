@@ -94,7 +94,6 @@ public class IndexController extends BaseController {
     }
 
     @ApiOperation(value = "个人信息页")
-    @RequiresPermissions("system:user:edit")
     @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
     public ModelAndView userInfo(){
         SystemUserVo systemUserVo=systemUserService.selectByIdWithLeft(super.getSystemUser().getUserId());

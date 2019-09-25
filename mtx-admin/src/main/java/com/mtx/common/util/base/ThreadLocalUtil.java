@@ -1,10 +1,14 @@
 package com.mtx.common.util.base;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.HashMap;
 import java.util.Map;
 /**
  * 线程变量工具类
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ThreadLocalUtil {
     /**
      * The constant threadContext.
@@ -77,6 +81,5 @@ public class ThreadLocalUtil {
      */
     public static void remove() {
         getContextMap().clear();
-        THREAD_CONTEXT.remove();
     }
 }

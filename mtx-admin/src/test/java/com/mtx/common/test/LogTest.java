@@ -51,6 +51,7 @@ public class LogTest {
     public void index() {
 
     }
+
 }
 
 
