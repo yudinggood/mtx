@@ -187,6 +187,8 @@
                     if (result.code == 200) {
                         location.href =result.message;
                     }else {
+                        $('#userLabel2').empty();
+                        $('#pwdLabel3').empty();
                         if (20000010 == result.code) {
                             $('#userLabel2').append('<span><i class="icon-tips"></i>'+result.message+'</span>');
                         }

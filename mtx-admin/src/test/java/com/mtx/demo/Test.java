@@ -229,6 +229,7 @@ public class Test {
 		manager.register("Strong message", underlinePen);
 		manager.register("Waring Box", mbox);
 		manager.register("Slash Box", sbox);
+
 		Product p1=manager.create("Strong message");
 		p1.use("hello world");
 		Product p2=manager.create("Waring Box");
