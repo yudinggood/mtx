@@ -30,6 +30,7 @@ public class SystemConstant {
     public static final String SERVER = "server";
     public static final String CLIENT = "client";
 
+
     //登录相关
     public static final String SESSION_SECURITY_CODE = "sessionSecCode";//登录验证码
     public static final String REGISTER_SESSION_SECURITY_CODE = "registersessionSecCode";//注册验证码
@@ -66,7 +67,9 @@ public class SystemConstant {
     public static final String FROM_ADDRESS_PORT=GlobalProperties.me().getValueByCode(PropertiesEnum.FROM_ADDRESS_PORT);       //系统邮箱的端口
     public static final String FROM_ADDRESS_SMTP=GlobalProperties.me().getValueByCode(PropertiesEnum.FROM_ADDRESS_SMTP);       //系统邮箱的smtp
 
-
+    //提醒
+    public static final String REMIND_TASK_GROUP="REMIND_TASK_GROUP"; // 任务组名称
+    public static final String REMIND_TRIGGER_GROUP="REMIND_TRIGGER_GROUP"; // 触发器组名称
 
 
 }

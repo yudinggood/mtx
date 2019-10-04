@@ -20,6 +20,9 @@ public class SystemGenerator {
     static {
         LAST_INSERT_ID_TABLES.put("system_user", "user_id");
         LAST_INSERT_ID_TABLES.put("system_dic", "dic_id");
+        LAST_INSERT_ID_TABLES.put("system_task","task_id");
+
+
     }
 
     /**

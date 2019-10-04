@@ -36,11 +36,11 @@
                     <!--账户密码登录   -->
                     <div class="register-con" id="rc">
                         <div class="aui-register-form-item">
-                            <input  type="text" name="username" maxlength="30" id="username" placeholder="手机号/邮箱" class="txt03 f-r3 required" tabindex="3" data-valid="isNonEmpty||isPhoneOrEmail" data-error="<i class='icon-tips'></i>您还没有输入账号||<i class='icon-tips'></i>只能手机号或邮箱" id="adminNo">
+                            <input value="13625538625" type="text" name="username" maxlength="30" id="username" placeholder="手机号/邮箱" class="txt03 f-r3 required" tabindex="3" data-valid="isNonEmpty||isPhoneOrEmail" data-error="<i class='icon-tips'></i>您还没有输入账号||<i class='icon-tips'></i>只能手机号或邮箱" id="adminNo">
                             <label class="focus valid" id="userLabel"></label>
                         </div>
                         <div class="aui-register-form-item">
-                            <input  type="password" name="password" placeholder="密码" id="password" maxlength="20" class="txt04 f-r3 required" tabindex="4" style="ime-mode:disabled;" onpaste="return  false" autocomplete="off" data-valid="isNonEmpty||between:6-20" data-error="<i class='icon-tips'></i>密码太短，最少6位||<i class='icon-tips'></i>密码长度6-20位">
+                            <input value="111111a" type="password" name="password" placeholder="密码" id="password" maxlength="20" class="txt04 f-r3 required" tabindex="4" style="ime-mode:disabled;" onpaste="return  false" autocomplete="off" data-valid="isNonEmpty||between:6-20" data-error="<i class='icon-tips'></i>密码太短，最少6位||<i class='icon-tips'></i>密码长度6-20位">
                             <label class="focus valid" id="pwdLabel"></label>
                         </div>
                         <div class="aui-register-form-item">

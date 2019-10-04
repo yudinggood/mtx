@@ -9,7 +9,7 @@ public enum  DictEnum {
     SEX("性别"),
     USER_STATE("用户状态"),
     ERROR_TYPE("错误类型"),
-
+    TASK_WAY("提醒方式"),
 
 
 

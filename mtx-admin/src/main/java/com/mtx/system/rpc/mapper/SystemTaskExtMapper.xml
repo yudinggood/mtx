@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mtx.system.rpc.mapper.SystemTaskExtMapper" >
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+    <resultMap id="BaseResultMap" type="com.mtx.system.dao.model.SystemTask">
+        <id column="task_id" jdbcType="INTEGER" property="taskId" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="type" jdbcType="TINYINT" property="type" />
+        <result column="state" jdbcType="TINYINT" property="state" />
+        <result column="cron" jdbcType="VARCHAR" property="cron" />
+        <result column="task_time" jdbcType="VARCHAR" property="taskTime" />
+        <result column="edit_date" jdbcType="TIMESTAMP" property="editDate" />
+        <result column="edit_user" jdbcType="INTEGER" property="editUser" />
+        <result column="deleted" jdbcType="TINYINT" property="deleted" />
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="SystemTaskVo" type="com.mtx.system.dao.vo.SystemTaskVo">
+    </resultMap>
+
+    <select id="list" resultMap="SystemTaskVo">
+        SELECT t.*,u.nick_name as nickName,d.dic_name as typeName FROM system_task t
+        LEFT JOIN SYSTEM_USER u ON u.user_id=t.edit_user
+        left join system_dic d on d.dic_code = t.type and d.dic_pid =
+        (select dic_id from system_dic where dic_code = 'TASK_WAY' ) where 1=1
+        <if test="systemTaskDto.search!= null and systemTaskDto.search != ''">
+            and
+            (
+            t.name LIKE CONCAT(CONCAT('%', #{systemTaskDto.search}),'%')
+            )
+        </if>
+
+        <choose>
+            <when test="orderByField != null and orderByField !=''">
+                <choose>
+                    <when test="isAsc == true">
+                        order by ${orderByField} ASC
+                    </when>
+                    <otherwise>
+                        order by ${orderByField} DESC
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                order by t.task_id asc
+            </otherwise>
+        </choose>
+
+    </select>
+
+
+
+
+</mapper>
