@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mtx.system.rpc.mapper.SystemRecordExtMapper" >
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+    <resultMap id="BaseResultMap" type="com.mtx.system.dao.model.SystemRecord">
+        <id column="record_id" jdbcType="INTEGER" property="recordId" />
+        <result column="type" jdbcType="TINYINT" property="type" />
+        <result column="biz_id" jdbcType="INTEGER" property="bizId" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="detail" jdbcType="VARCHAR" property="detail" />
+        <result column="edit_date" jdbcType="TIMESTAMP" property="editDate" />
+        <result column="edit_user" jdbcType="INTEGER" property="editUser" />
+        <result column="deleted" jdbcType="TINYINT" property="deleted" />
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="SystemRecordVo" type="com.mtx.system.dao.vo.SystemRecordVo">
+    </resultMap>
+
+    <select id="timeline" resultMap="SystemRecordVo">
+        select r.*,
+        TIMESTAMPDIFF(DAY,DATE_FORMAT(edit_date,'%Y-%m-%d'),DATE_FORMAT(NOW(),'%Y-%m-%d')) diffTime
+        from
+        system_record r
+        where
+        1=1 and deleted=0
+        order by edit_date desc
+        limit 0,200
+    </select>
+
+
+
+
+</mapper>

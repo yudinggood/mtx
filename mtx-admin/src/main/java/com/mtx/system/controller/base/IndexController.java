@@ -25,8 +25,10 @@ import com.mtx.system.dao.dto.SystemUserDto;
 import com.mtx.system.dao.model.SystemRole;
 import com.mtx.system.dao.model.SystemUser;
 import com.mtx.system.dao.vo.SystemUserVo;
+import com.mtx.system.dao.vo.TimeLineVo;
 import com.mtx.system.rpc.api.SystemApiService;
 import com.mtx.system.rpc.api.SystemPermissionService;
+import com.mtx.system.rpc.api.SystemRecordService;
 import com.mtx.system.rpc.api.SystemUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -59,6 +61,8 @@ public class IndexController extends BaseController {
     private SystemUserService systemUserService;
     @Autowired
     private MyMessageHandler handler;
+    @Autowired
+    SystemRecordService systemRecordService;
 
     @ApiOperation(value = "后台首页")
     @RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -212,4 +216,21 @@ public class IndexController extends BaseController {
         mv.setViewName(REDIRECT+"/");
         return mv;
     }
+
+    @ApiOperation(value = "后台主页")
+    @RequestMapping(value = "/main", method = RequestMethod.GET)
+    public ModelAndView main(){
+        ModelAndView mv =this.getModelAndView();
+        mv.setViewName("/system/admin/main");
+        return mv;
+    }
+
+    @ApiOperation(value = "后台时间轴数据")
+    @RequestMapping(value = "/timeline", method = RequestMethod.GET)
+    @ResponseBody
+    public Object timeline(){
+        TimeLineVo timeLineVo =systemRecordService.timeline();
+        return timeLineVo;
+    }
+
 }

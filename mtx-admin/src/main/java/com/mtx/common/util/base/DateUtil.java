@@ -25,6 +25,9 @@ public class DateUtil {
     public static String getFormat(Date date){
         return DateFormatUtils.format(new Date(), "yyyy/MM/dd");
     }
+    public static String getFormat2(Date date){
+        return DateFormatUtils.format(date, "yyyy-MM-dd HH:mm");
+    }
 
     //传入时间在n分钟以内
     public static boolean inMinute(Date initDate,int minute){

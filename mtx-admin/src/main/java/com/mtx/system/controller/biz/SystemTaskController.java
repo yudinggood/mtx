@@ -115,17 +115,14 @@ public class SystemTaskController extends BaseController {
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.DELETE)
     @ResponseBody
     public Object delete(@PathVariable("id") int id) {
-        int count = systemTaskService.deleteByPrimaryKey(id);
-
         //删除quartz任务
         SystemTask systemTask=systemTaskService.selectByPrimaryKey(id);
-        if(systemTask.getState()==1){
-            quartzService.removeJob(systemTask.getTaskId()+ SystemConstant.REMIND_TASK_GROUP,
-                    SystemConstant.REMIND_TASK_GROUP,
-                    systemTask.getTaskId()+SystemConstant.REMIND_TRIGGER_GROUP,
-                    SystemConstant.REMIND_TRIGGER_GROUP);
-        }
+        quartzService.removeJob(systemTask.getTaskId()+ SystemConstant.REMIND_TASK_GROUP,
+                SystemConstant.REMIND_TASK_GROUP,
+                systemTask.getTaskId()+SystemConstant.REMIND_TRIGGER_GROUP,
+                SystemConstant.REMIND_TRIGGER_GROUP);
 
+        int count = systemTaskService.deleteByPrimaryKey(id);
         return WrapMapper.wrap(count);
     }
 

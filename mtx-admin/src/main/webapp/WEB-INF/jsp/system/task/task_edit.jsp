@@ -76,7 +76,7 @@
                     <div class="form-group">
                         <select class="select2 form-control" name="state" id="state" style="">
                             <option value="1" >提醒</option>
-                            <option value="2" >不提醒</option>
+                            <%--<option value="2" >不提醒</option>--%>
                         </select>
                     </div>
                 </td>

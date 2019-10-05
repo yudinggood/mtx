@@ -5,7 +5,7 @@ import com.mtx.common.annotation.BaseService;
 import com.mtx.common.base.BaseServiceImpl;
 import com.mtx.common.constant.SystemConstant;
 import com.mtx.common.util.base.RegularUtil;
-import com.mtx.system.common.bean.QuartzJob;
+import com.mtx.system.common.task.QuartzJob;
 import com.mtx.system.dao.dto.SystemTaskDto;
 import com.mtx.system.dao.mapper.SystemTaskMapper;
 import com.mtx.system.dao.model.SystemTask;
@@ -81,9 +81,9 @@ public class SystemTaskServiceImpl extends BaseServiceImpl<SystemTaskMapper, Sys
         int count=systemTaskMapper.updateByPrimaryKey(systemTask);
 
         //修改quartz任务
-        if(oldTask.getState()==1&&systemTask.getState()==0){//暂停
+        if(oldTask.getState()==1&&systemTask.getState()==2){//暂停
             quartzService.pauseJob(systemTask.getTaskId()+SystemConstant.REMIND_TASK_GROUP,SystemConstant.REMIND_TASK_GROUP);
-        }else if(oldTask.getState()==0&&systemTask.getState()==1){//继续
+        }else if(oldTask.getState()==2&&systemTask.getState()==1){//继续
             quartzService.resumeJob(systemTask.getTaskId()+SystemConstant.REMIND_TASK_GROUP,SystemConstant.REMIND_TASK_GROUP);
         }else if(!oldTask.getCron().equals(systemTask.getCron())||!oldTask.getName().equals(systemTask.getName())){//修改
             quartzService.modifyJobTime(systemTask,oldTask.getTaskId()+SystemConstant.REMIND_TASK_GROUP,

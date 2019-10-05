@@ -104,21 +104,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.mtx.system.dao.model.SystemTask">
-    insert into system_task (task_id, name, type, 
-      state, cron, task_time, 
-      edit_date, edit_user, deleted
-      )
-    values (#{taskId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
-      #{state,jdbcType=TINYINT}, #{cron,jdbcType=VARCHAR}, #{taskTime,jdbcType=VARCHAR}, 
-      #{editDate,jdbcType=TIMESTAMP}, #{editUser,jdbcType=INTEGER}, #{deleted,jdbcType=TINYINT}
-      )
+    <selectKey keyProperty="taskId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into system_task (name, type, state, 
+      cron, task_time, edit_date, 
+      edit_user, deleted)
+    values (#{name,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{state,jdbcType=TINYINT}, 
+      #{cron,jdbcType=VARCHAR}, #{taskTime,jdbcType=VARCHAR}, #{editDate,jdbcType=TIMESTAMP}, 
+      #{editUser,jdbcType=INTEGER}, #{deleted,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.mtx.system.dao.model.SystemTask">
+    <selectKey keyProperty="taskId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into system_task
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="taskId != null">
-        task_id,
-      </if>
       <if test="name != null">
         name,
       </if>
@@ -145,9 +146,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="taskId != null">
-        #{taskId,jdbcType=INTEGER},
-      </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
