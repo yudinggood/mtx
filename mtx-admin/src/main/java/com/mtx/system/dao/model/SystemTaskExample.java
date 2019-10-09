@@ -498,6 +498,76 @@ public class SystemTaskExample implements Serializable {
             return (Criteria) this;
         }
 
+        public Criteria andTaskClassIsNull() {
+            addCriterion("task_class is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskClassIsNotNull() {
+            addCriterion("task_class is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskClassEqualTo(String value) {
+            addCriterion("task_class =", value, "taskClass");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskClassNotEqualTo(String value) {
+            addCriterion("task_class <>", value, "taskClass");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskClassGreaterThan(String value) {
+            addCriterion("task_class >", value, "taskClass");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskClassGreaterThanOrEqualTo(String value) {
+            addCriterion("task_class >=", value, "taskClass");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskClassLessThan(String value) {
+            addCriterion("task_class <", value, "taskClass");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskClassLessThanOrEqualTo(String value) {
+            addCriterion("task_class <=", value, "taskClass");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskClassLike(String value) {
+            addCriterion("task_class like", value, "taskClass");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskClassNotLike(String value) {
+            addCriterion("task_class not like", value, "taskClass");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskClassIn(List<String> values) {
+            addCriterion("task_class in", values, "taskClass");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskClassNotIn(List<String> values) {
+            addCriterion("task_class not in", values, "taskClass");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskClassBetween(String value1, String value2) {
+            addCriterion("task_class between", value1, value2, "taskClass");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskClassNotBetween(String value1, String value2) {
+            addCriterion("task_class not between", value1, value2, "taskClass");
+            return (Criteria) this;
+        }
+
         public Criteria andEditDateIsNull() {
             addCriterion("edit_date is null");
             return (Criteria) this;

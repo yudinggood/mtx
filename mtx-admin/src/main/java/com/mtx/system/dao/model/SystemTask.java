@@ -47,6 +47,13 @@ public class SystemTask implements Serializable {
     private String taskTime;
 
     /**
+     * 任务执行类
+     *
+     * @mbg.generated
+     */
+    private String taskClass;
+
+    /**
      * 修改时间
      *
      * @mbg.generated
@@ -117,6 +124,14 @@ public class SystemTask implements Serializable {
         this.taskTime = taskTime;
     }
 
+    public String getTaskClass() {
+        return taskClass;
+    }
+
+    public void setTaskClass(String taskClass) {
+        this.taskClass = taskClass;
+    }
+
     public Date getEditDate() {
         return editDate;
     }
@@ -153,6 +168,7 @@ public class SystemTask implements Serializable {
         sb.append(", state=").append(state);
         sb.append(", cron=").append(cron);
         sb.append(", taskTime=").append(taskTime);
+        sb.append(", taskClass=").append(taskClass);
         sb.append(", editDate=").append(editDate);
         sb.append(", editUser=").append(editUser);
         sb.append(", deleted=").append(deleted);
@@ -178,6 +194,7 @@ public class SystemTask implements Serializable {
             && (this.getState() == null ? other.getState() == null : this.getState().equals(other.getState()))
             && (this.getCron() == null ? other.getCron() == null : this.getCron().equals(other.getCron()))
             && (this.getTaskTime() == null ? other.getTaskTime() == null : this.getTaskTime().equals(other.getTaskTime()))
+            && (this.getTaskClass() == null ? other.getTaskClass() == null : this.getTaskClass().equals(other.getTaskClass()))
             && (this.getEditDate() == null ? other.getEditDate() == null : this.getEditDate().equals(other.getEditDate()))
             && (this.getEditUser() == null ? other.getEditUser() == null : this.getEditUser().equals(other.getEditUser()))
             && (this.getDeleted() == null ? other.getDeleted() == null : this.getDeleted().equals(other.getDeleted()));
@@ -193,6 +210,7 @@ public class SystemTask implements Serializable {
         result = prime * result + ((getState() == null) ? 0 : getState().hashCode());
         result = prime * result + ((getCron() == null) ? 0 : getCron().hashCode());
         result = prime * result + ((getTaskTime() == null) ? 0 : getTaskTime().hashCode());
+        result = prime * result + ((getTaskClass() == null) ? 0 : getTaskClass().hashCode());
         result = prime * result + ((getEditDate() == null) ? 0 : getEditDate().hashCode());
         result = prime * result + ((getEditUser() == null) ? 0 : getEditUser().hashCode());
         result = prime * result + ((getDeleted() == null) ? 0 : getDeleted().hashCode());

@@ -110,9 +110,9 @@
         var value =row.state;
         var lastValue;
         if (value=="1"){
-            lastValue='<span class="label bg-blue">提醒</span>';
+            lastValue='<span class="label bg-green">开启</span>';
         }else if (value=="2"){
-            lastValue='<span class="label bg-orange">不提醒</span>';
+            lastValue='<span class="label bg-red">关闭</span>';
         }
         return lastValue;
     }
@@ -146,6 +146,9 @@
             }
             if(key=='taskId'){
                 html.push('<p><b>id:</b> ' + value + '</p>');
+            }
+            if(key=='taskClass'){
+                html.push('<p><b>任务执行类:</b> ' + value + '</p>');
             }
             if(key=='cron'){
                 html.push('<p><b>CRON表达式:</b> ' + value + '</p>');

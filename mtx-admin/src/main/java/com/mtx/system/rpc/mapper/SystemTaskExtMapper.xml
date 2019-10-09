@@ -9,6 +9,7 @@
         <result column="state" jdbcType="TINYINT" property="state" />
         <result column="cron" jdbcType="VARCHAR" property="cron" />
         <result column="task_time" jdbcType="VARCHAR" property="taskTime" />
+        <result column="task_class" jdbcType="VARCHAR" property="taskClass" />
         <result column="edit_date" jdbcType="TIMESTAMP" property="editDate" />
         <result column="edit_user" jdbcType="INTEGER" property="editUser" />
         <result column="deleted" jdbcType="TINYINT" property="deleted" />

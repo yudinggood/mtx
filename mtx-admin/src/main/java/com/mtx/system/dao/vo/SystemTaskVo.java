@@ -50,7 +50,12 @@ public class SystemTaskVo implements Serializable {
      * @mbg.generated
      */
     private String taskTime;
-
+    /**
+     * 任务执行类
+     *
+     * @mbg.generated
+     */
+    private String taskClass;
     /**
      * 修改时间
      *

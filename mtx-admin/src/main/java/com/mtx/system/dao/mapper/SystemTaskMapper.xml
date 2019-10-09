@@ -8,6 +8,7 @@
     <result column="state" jdbcType="TINYINT" property="state" />
     <result column="cron" jdbcType="VARCHAR" property="cron" />
     <result column="task_time" jdbcType="VARCHAR" property="taskTime" />
+    <result column="task_class" jdbcType="VARCHAR" property="taskClass" />
     <result column="edit_date" jdbcType="TIMESTAMP" property="editDate" />
     <result column="edit_user" jdbcType="INTEGER" property="editUser" />
     <result column="deleted" jdbcType="TINYINT" property="deleted" />
@@ -71,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    task_id, name, type, state, cron, task_time, edit_date, edit_user, deleted
+    task_id, name, type, state, cron, task_time, task_class, edit_date, edit_user, deleted
   </sql>
   <select id="selectByExample" parameterType="com.mtx.system.dao.model.SystemTaskExample" resultMap="BaseResultMap">
     select
@@ -108,11 +109,13 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into system_task (name, type, state, 
-      cron, task_time, edit_date, 
-      edit_user, deleted)
+      cron, task_time, task_class, 
+      edit_date, edit_user, deleted
+      )
     values (#{name,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{state,jdbcType=TINYINT}, 
-      #{cron,jdbcType=VARCHAR}, #{taskTime,jdbcType=VARCHAR}, #{editDate,jdbcType=TIMESTAMP}, 
-      #{editUser,jdbcType=INTEGER}, #{deleted,jdbcType=TINYINT})
+      #{cron,jdbcType=VARCHAR}, #{taskTime,jdbcType=VARCHAR}, #{taskClass,jdbcType=VARCHAR}, 
+      #{editDate,jdbcType=TIMESTAMP}, #{editUser,jdbcType=INTEGER}, #{deleted,jdbcType=TINYINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.mtx.system.dao.model.SystemTask">
     <selectKey keyProperty="taskId" order="AFTER" resultType="java.lang.Integer">
@@ -134,6 +137,9 @@
       </if>
       <if test="taskTime != null">
         task_time,
+      </if>
+      <if test="taskClass != null">
+        task_class,
       </if>
       <if test="editDate != null">
         edit_date,
@@ -160,6 +166,9 @@
       </if>
       <if test="taskTime != null">
         #{taskTime,jdbcType=VARCHAR},
+      </if>
+      <if test="taskClass != null">
+        #{taskClass,jdbcType=VARCHAR},
       </if>
       <if test="editDate != null">
         #{editDate,jdbcType=TIMESTAMP},
@@ -199,6 +208,9 @@
       <if test="record.taskTime != null">
         task_time = #{record.taskTime,jdbcType=VARCHAR},
       </if>
+      <if test="record.taskClass != null">
+        task_class = #{record.taskClass,jdbcType=VARCHAR},
+      </if>
       <if test="record.editDate != null">
         edit_date = #{record.editDate,jdbcType=TIMESTAMP},
       </if>
@@ -221,6 +233,7 @@
       state = #{record.state,jdbcType=TINYINT},
       cron = #{record.cron,jdbcType=VARCHAR},
       task_time = #{record.taskTime,jdbcType=VARCHAR},
+      task_class = #{record.taskClass,jdbcType=VARCHAR},
       edit_date = #{record.editDate,jdbcType=TIMESTAMP},
       edit_user = #{record.editUser,jdbcType=INTEGER},
       deleted = #{record.deleted,jdbcType=TINYINT}
@@ -246,6 +259,9 @@
       <if test="taskTime != null">
         task_time = #{taskTime,jdbcType=VARCHAR},
       </if>
+      <if test="taskClass != null">
+        task_class = #{taskClass,jdbcType=VARCHAR},
+      </if>
       <if test="editDate != null">
         edit_date = #{editDate,jdbcType=TIMESTAMP},
       </if>
@@ -265,6 +281,7 @@
       state = #{state,jdbcType=TINYINT},
       cron = #{cron,jdbcType=VARCHAR},
       task_time = #{taskTime,jdbcType=VARCHAR},
+      task_class = #{taskClass,jdbcType=VARCHAR},
       edit_date = #{editDate,jdbcType=TIMESTAMP},
       edit_user = #{editUser,jdbcType=INTEGER},
       deleted = #{deleted,jdbcType=TINYINT}

@@ -75,9 +75,17 @@
                 <td>
                     <div class="form-group">
                         <select class="select2 form-control" name="state" id="state" style="">
-                            <option value="1" >提醒</option>
-                            <%--<option value="2" >不提醒</option>--%>
+                            <option value="1" >开启</option>
+                            <%--<option value="2" >关闭</option>--%>
                         </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th width="20%"><label class="Validform_label">任务执行类:</label></th>
+                <td width="80%">
+                    <div class="form-group">
+                        <input value="com.mtx.system.common.task.QuartzJob" class="form-control" type="text" name="taskClass" id="taskClass" placeholder="任务执行类" maxlength="50">
                     </div>
                 </td>
             </tr>
@@ -132,9 +140,17 @@
                 <td>
                     <div class="form-group">
                         <select class="select2 form-control" name="state" id="state" style="">
-                            <option value="1"  <c:if test="${systemTaskVo.state == 1 }">selected</c:if>>提醒</option>
-                            <option value="2"  <c:if test="${systemTaskVo.state == 2 }">selected</c:if>>不提醒</option>
+                            <option value="1"  <c:if test="${systemTaskVo.state == 1 }">selected</c:if>>开启</option>
+                            <option value="2"  <c:if test="${systemTaskVo.state == 2 }">selected</c:if>>关闭</option>
                         </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th width="20%"><label class="Validform_label">任务执行类:</label></th>
+                <td width="80%">
+                    <div class="form-group">
+                        <input value="${systemTaskVo.taskClass}" class="form-control" type="text" name="taskClass" id="taskClass" placeholder="任务执行类" maxlength="50">
                     </div>
                 </td>
             </tr>
@@ -225,6 +241,7 @@
             $("input[name='remind_time_week']").css("display","block");
             $("#select_week").css("display","block");
         }
+        $("input[name='taskClass']").css("display","block");
     }
     function commit() {
         $('#form').bootstrapValidator('validate');
