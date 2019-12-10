@@ -34,11 +34,11 @@
                     </c:if>
                     <c:if test="${systemUser.avatar != null }">
                         <c:if test="${systemUser.addressType == 1 }">
-                            <img style="float:left;width: 95px; height: 95px;border: 1px solid #999;" class="am-circle" alt="点击图片上传"
+                            <img style="float:left;width: 95px; height: 95px;border: 1px solid #999;" class="am-circle" alt="点击图片上传" onerror="this.src='${basePath}/resources/mtx-admin/image/error.png'"
                                  src="${basePath}/upload/${systemUser.avatar}" data-am-popover="{content: '点击修改头像', trigger: 'hover focus'}" >
                         </c:if>
                         <c:if test="${systemUser.addressType == 2 }">
-                            <img style="float:left;width: 95px; height: 95px;border: 1px solid #999;" class="am-circle" alt="点击图片上传"
+                            <img style="float:left;width: 95px; height: 95px;border: 1px solid #999;" class="am-circle" alt="点击图片上传" onerror="this.src='${basePath}/resources/mtx-admin/image/error.png'"
                                  src="${systemUser.yunPath}" data-am-popover="{content: '点击修改头像', trigger: 'hover focus'}" >
                         </c:if>
                     </c:if>

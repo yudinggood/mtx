@@ -130,11 +130,12 @@
                     if(!row.suffix.indexOf("image")){
                         if(row.addressType == 1){
                             return '<div id=image'+row.attachId+' class="layer-photos-demo">' +
-                                '<img onclick=image('+row.attachId+') layer-src='+${basePath}/upload/+value+' src='+${basePath}/upload/+value+' width="50" height="50" class="img-rounded" >'+
+                                '<img onclick=image('+row.attachId+') layer-src='+${basePath}/upload/+value+' src='+${basePath}/upload/+value
+                                +' width="50" height="50" class="img-rounded" onerror="this.src=\'${basePath}/resources/mtx-admin/image/error.png\'" >'+
                                 '</div>';
                         }else {
                             return '<div id=image'+row.attachId+' class="layer-photos-demo">' +
-                                '<img onclick=image('+row.attachId+') layer-src='+row.yunPath+' src='+row.yunPath+' width="50" height="50" class="img-rounded" >'+
+                                '<img onclick=image('+row.attachId+') layer-src='+row.yunPath+' src='+row.yunPath+' width="50" height="50" class="img-rounded" onerror="this.src=\'${basePath}/resources/mtx-admin/image/error.png\'" >'+
                                 '</div>';
                         }
                     }

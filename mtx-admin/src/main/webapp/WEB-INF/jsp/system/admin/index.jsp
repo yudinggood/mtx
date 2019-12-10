@@ -79,7 +79,7 @@
                                     <img id="headimg1" src="${basePath}/upload/${systemUser.avatar}" class="user-image" alt="Image">
                                 </c:if>
                                 <c:if test="${systemUser.addressType == 2 }">
-                                    <img id="headimg1" src="${systemUser.yunPath}" class="user-image" alt="Image">
+                                    <img id="headimg1" src="${systemUser.yunPath}" class="user-image" alt="Image" onerror="this.src='${basePath}/resources/mtx-admin/image/error.png'">
                                 </c:if>
                             </c:if>
                             <span class="hidden-xs" id="nickName1">${systemUser.nickName}</span>
@@ -95,7 +95,7 @@
                                         <img id="headimg2" src="${basePath}/upload/${systemUser.avatar}" class="img-circle" alt="Image">
                                     </c:if>
                                     <c:if test="${systemUser.addressType == 2 }">
-                                        <img id="headimg2" src="${systemUser.yunPath}" class="img-circle" alt="Image">
+                                        <img id="headimg2" src="${systemUser.yunPath}" class="img-circle" alt="Image" onerror="this.src='${basePath}/resources/mtx-admin/image/error.png'">
                                     </c:if>
                                 </c:if>
                                 <p id="nickName2">
